@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ============================================================ -->
+<!--  JBoss, the OpenSource J2EE webOS                            -->
+<!--  Distributable under LGPL license.                           -->
+<!--  See terms of license at http://www.gnu.org.                 -->
+<!-- ============================================================ -->
+
+<project>
+  
+  <!-- ================================================================== -->
+  <!-- Initialization                                                     -->
+  <!-- ================================================================== -->
+  
+  <target name="tests-prepare" depends="prepare">
+    
+    <!-- Define jboss.home -->
+    <condition property="jboss.home" value="${jboss501.home}">
+      <equals arg1="${jbossws.integration.target}" arg2="jboss501"/>
+    </condition>
+    <condition property="jboss.home" value="${jboss510.home}">
+      <equals arg1="${jbossws.integration.target}" arg2="jboss510"/>
+    </condition>
+    <condition property="jboss.home" value="${jboss600.home}">
+      <equals arg1="${jbossws.integration.target}" arg2="jboss600"/>
+    </condition>
+    <condition property="jboss.home" value="${jboss601.home}">
+      <equals arg1="${jbossws.integration.target}" arg2="jboss601"/>
+    </condition>
+    
+    <!-- Verify required properties that must be set before this file is imported -->
+    <fail message="Tests output dir not set." unless="tests.output.dir"/>
+    
+    <!-- Verify availabililty of tools.jar -->
+    <condition property="tools.jar" value="${java.home}/lib/tools.jar">
+      <available file="${java.home}/lib/tools.jar"/>
+    </condition>
+    <condition property="tools.jar" value="${java.home}/../lib/tools.jar">
+      <available file="${java.home}/../lib/tools.jar"/>
+    </condition>
+    <!-- [JBWS-2113] tools.jar not available on Mac OS X -->
+    <condition property="tools.jar" value="${java.home}/../Classes/classes.jar">
+      <available file="${java.home}/../Classes/classes.jar"/>
+    </condition>
+    <fail message="Not available: ${java.home}/lib/tools.jar, ${java.home}/../lib/tools.jar" unless="tools.jar"/>
+    
+    <!-- Use -Ddebug=true for remote debugging -->
+    <condition property="remote.debug.line" value="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005">
+      <isset property="debug"/>
+    </condition>
+    <condition property="remote.debug.line" value="">
+      <not>
+        <isset property="debug"/>
+      </not>
+    </condition>
+    
+    <!-- Set a hostname property based on COMPUTERNAME for win32, HOSTNAME
+    otherwise and initialize the node0/node1 cluster hostnames to localhost
+    and ${hostname} by default. If you cannot route multicast traffic between
+    localhost and hostname, then you need to specify node0 and node1 binding
+    in the local.properties that can in order to be able to run the clustering
+    tests.
+    -->
+    <property environment="env"/>
+    <condition property="hostname" value="${env.COMPUTERNAME}">
+      <os family="windows"/>
+    </condition>
+    <condition property="hostname" value="${env.HOSTNAME}">
+      <not>
+        <os family="windows"/>
+      </not>
+    </condition>
+    
+    <!-- node0 defaults -->
+    <property name="node0" value="${jboss.bind.address}"/>
+    <property name="node0.http.url" value="http://${node0}:8080"/>
+    <property name="node0.jndi.url" value="jnp://${node0}:1099"/>
+    <property name="node0.hajndi.url" value="jnp://${node0}:1100"/>
+    
+    <mkdir dir="${tests.output.dir}"/>
+    <delete file="${tests.output.dir}/test.log" failonerror="false"/>
+    
+    <property name="jboss.client" value="${jboss.home}/client"/>
+    <property name="jboss.lib" value="${jboss.home}/lib"/>
+    <property name="jboss.server" value="${jboss.home}/server/${jboss.server.instance}"/>
+  	
+    <condition property="jboss.server.lib" value="${jboss.home}/common/lib" else="${jboss.server}/lib">
+      <available file="${jboss.home}/common/lib"/>
+    </condition>
+    <property name="jboss.server.deploy" value="${jboss.server}/deploy"/>
+    <property name="jboss.server.deployers" value="${jboss.server}/deployers"/>
+    
+    <!-- Java Endorsed -->
+    <condition property="endorsed.dirs" value="${jboss.home}/lib/endorsed">
+      <isset property="jboss.home"/>
+    </condition>
+    
+    <echo/>
+    <echo message="-----------------------------------------------"/>
+    <echo message="jboss.home   = ${jboss.home}"/>
+    <echo message="excludesfile = ${excludesfile}"/>
+    <echo message="java.home    = ${java.home}"/>
+    <echo message="jboss.bind   = ${jboss.bind.address}"/>
+    <echo message="-----------------------------------------------"/>
+    
+    <tstamp>
+      <format property="build.id" pattern="yyyyMMddHHmm"/>
+    </tstamp>
+  </target>
+  
+  <target name="tests-classpath" depends="tests-classpath-jboss60,tests-classpath-jboss51,tests-classpath-jboss50">
+    <path id="tests.javac.classpath">
+      <path refid="ws.stack.classpath"/>
+      <path refid="integration.target.javac.classpath"/>
+    </path>
+    <path id="tests.client.classpath">
+      <path refid="ws.stack.classpath"/>
+      <path refid="integration.target.client.classpath"/>
+    </path>
+  </target>
+  
+  <target name="tests-classpath-jboss50" depends="tests-prepare" if="jbossws.integration.jboss50">
+    
+    <path id="integration.target.javac.classpath">
+      <pathelement location="${jboss.client}/activation.jar"/>
+      <pathelement location="${jboss.client}/jaxws-tools.jar"/>
+      <pathelement location="${jboss.client}/jboss-annotations-ejb3.jar"/>
+      <pathelement location="${jboss.client}/jboss-appclient.jar"/>
+      <pathelement location="${jboss.client}/jboss-common-core.jar"/>
+      <pathelement location="${jboss.client}/jboss-ejb3-client.jar"/>
+      <pathelement location="${jboss.client}/jboss-ejb3-ext-api.jar"/>
+      <pathelement location="${jboss.client}/jboss-logging-spi.jar"/>
+      <pathelement location="${jboss.client}/jboss-metadata.jar"/>
+      <pathelement location="${jboss.client}/jboss-remoting.jar"/>
+      <pathelement location="${jboss.client}/jboss-wsit-tools.jar"/>
+      <pathelement location="${jboss.client}/jboss-xml-binding.jar"/>
+      <pathelement location="${jboss.client}/jbossxb.jar"/>
+      <pathelement location="${jboss.client}/mail.jar"/>
+      <pathelement location="${jboss.client}/stax-api.jar"/>
+      <pathelement location="${jboss.client}/wsdl4j.jar"/>
+      <pathelement location="${jboss.server.lib}/jboss-javaee.jar"/>
+      <pathelement location="${jboss.server.lib}/jbosssx.jar"/>
+      <pathelement location="${jboss.server.lib}/servlet-api.jar"/>
+    </path>
+    
+    <!-- 
+    The 's.client.classpath' contains jars that are available in the target container's client directory.
+    There jars apply to all supported stacks. It MUST NOT contains jars from a local thirdparty dir.
+    
+    The 'ws.stack.classpath' contains jars that come with a specific stack distribution.
+    The 's.extra.classpath' contains stack specific jars that are needed to run the stack specific tests.
+    -->
+    <path id="integration.target.client.classpath">
+      <pathelement location="${jboss.client}/activation.jar"/>
+      <pathelement location="${jboss.client}/javassist.jar"/>
+      <pathelement location="${jboss.client}/jaxb-api.jar"/>
+      <pathelement location="${jboss.client}/jaxb-impl.jar"/>
+      <pathelement location="${jboss.client}/jaxb-xjc.jar"/>
+      <pathelement location="${jboss.client}/jaxws-tools.jar"/>
+      <pathelement location="${jboss.client}/jboss-appclient.jar"/>
+      <pathelement location="${jboss.client}/jboss-container-metadata.jar"/>
+      <pathelement location="${jboss.client}/jboss-ejb3-ext-api.jar"/>
+      <pathelement location="${jboss.client}/jboss-metadata.jar"/>
+      <pathelement location="${jboss.client}/jboss-remoting.jar"/>
+      <pathelement location="${jboss.client}/jboss-wsit-tools.jar"/>
+      <pathelement location="${jboss.client}/jboss-xml-binding.jar"/>
+      <pathelement location="${jboss.client}/jbossxb.jar"/>
+      <pathelement location="${jboss.client}/jbossall-client.jar"/>
+      <pathelement location="${jboss.client}/jaxws-tools.jar"/>
+      <pathelement location="${jboss.client}/jboss-wsit-tools.jar"/>
+      <pathelement location="${jboss.client}/log4j.jar"/>
+      <pathelement location="${jboss.client}/mail.jar"/>
+      <pathelement location="${jboss.client}/stax-api.jar"/>
+      <pathelement location="${jboss.client}/trove.jar"/>
+      <pathelement location="${jboss.client}/jboss-javaee.jar"/>
+      <!-- FIXME jars should be available in the client dir -->
+      <pathelement location="${jboss.lib}/jboss-aop-jdk50.jar"/>
+      <pathelement location="${jboss.lib}/jboss-classloader.jar"/>
+      <pathelement location="${jboss.lib}/jboss-classloading.jar"/>
+      <pathelement location="${jboss.lib}/jboss-classloading-vfs.jar"/>
+      <pathelement location="${jboss.lib}/jboss-container.jar"/>
+      <pathelement location="${jboss.lib}/jboss-dependency.jar"/>
+      <pathelement location="${jboss.lib}/jboss-vfs.jar"/>
+      <pathelement location="${jboss.lib}/jboss-kernel.jar"/>
+      <pathelement location="${jboss.lib}/jboss-reflect.jar"/>
+      <pathelement location="${jboss.server.lib}/jboss.jar"/>
+      <pathelement location="${jboss.server.lib}/jbosssx.jar"/>
+      <pathelement location="${jboss.server.lib}/jbossws-native-core.jar"/> <!-- For jaxrpc tests -->
+      <pathelement location="${jboss.server.lib}/hibernate3.jar"/>
+      <pathelement location="${jboss.server.lib}/jnpserver.jar"/>
+      <pathelement location="${jboss.server.lib}/jboss-ejb3-core.jar"/>
+      <pathelement location="${jboss.server.lib}/hibernate-core.jar"/>
+      <pathelement location="${jboss.server.lib}/netty.jar"/> <!-- For jaxrpc tests -->
+      <pathelement location="${jboss.server.lib}/servlet-api.jar"/>
+      <pathelement location="${jboss.server.deploy}/juddi-service.sar/juddi.jar"/>
+      <pathelement location="${jboss.server.deploy}/juddi-service.sar/juddi-saaj.jar"/>
+      <pathelement location="${jboss.server.deploy}/juddi-service.sar/scout.jar"/>
+      <pathelement location="${tools.jar}"/>
+    </path>
+  </target>
+  
+  <target name="tests-classpath-jboss51" depends="tests-prepare" if="jbossws.integration.jboss51">
+    
+    <path id="integration.target.javac.classpath">
+      <pathelement location="${jboss.client}/activation.jar"/>
+      <pathelement location="${jboss.client}/jaxws-tools.jar"/>
+      <pathelement location="${jboss.client}/jboss-annotations-ejb3.jar"/>
+      <pathelement location="${jboss.client}/jboss-appclient.jar"/>
+      <pathelement location="${jboss.client}/jboss-common-core.jar"/>
+      <pathelement location="${jboss.client}/jboss-ejb3-client.jar"/>
+      <pathelement location="${jboss.client}/jboss-ejb3-ext-api.jar"/>
+      <pathelement location="${jboss.client}/jboss-logging-spi.jar"/>
+      <pathelement location="${jboss.client}/jboss-metadata.jar"/>
+      <pathelement location="${jboss.client}/jboss-remoting.jar"/>
+      <pathelement location="${jboss.client}/jboss-wsit-tools.jar"/>
+      <pathelement location="${jboss.client}/jboss-xml-binding.jar"/>
+      <pathelement location="${jboss.client}/jbossxb.jar"/>
+      <pathelement location="${jboss.client}/mail.jar"/>
+      <pathelement location="${jboss.client}/stax-api.jar"/>
+      <pathelement location="${jboss.client}/wsdl4j.jar"/>
+      <pathelement location="${jboss.server.lib}/jboss-javaee.jar"/>
+      <pathelement location="${jboss.server.lib}/jbosssx.jar"/>
+      <pathelement location="${jboss.server.lib}/servlet-api.jar"/>
+    </path>
+    
+    <!-- 
+    The 's.client.classpath' contains jars that are available in the target container's client directory.
+    There jars apply to all supported stacks. It MUST NOT contains jars from a local thirdparty dir.
+    
+    The 'ws.stack.classpath' contains jars that come with a specific stack distribution.
+    The 's.extra.classpath' contains stack specific jars that are needed to run the stack specific tests.
+    -->
+    <path id="integration.target.client.classpath">
+      <pathelement location="${jboss.client}/activation.jar"/>
+      <pathelement location="${jboss.client}/javassist.jar"/>
+      <pathelement location="${jboss.client}/jaxb-api.jar"/>
+      <pathelement location="${jboss.client}/jaxb-impl.jar"/>
+      <pathelement location="${jboss.client}/jaxb-xjc.jar"/>
+      <pathelement location="${jboss.client}/jaxws-tools.jar"/>
+      <pathelement location="${jboss.client}/jboss-appclient.jar"/>
+      <pathelement location="${jboss.client}/jboss-container-metadata.jar"/>
+      <pathelement location="${jboss.client}/jboss-ejb3-ext-api.jar"/>
+      <pathelement location="${jboss.client}/jboss-metadata.jar"/>
+      <pathelement location="${jboss.client}/jboss-remoting.jar"/>
+      <pathelement location="${jboss.client}/jboss-wsit-tools.jar"/>
+      <pathelement location="${jboss.client}/jboss-xml-binding.jar"/>
+      <pathelement location="${jboss.client}/jbossxb.jar"/>
+      <pathelement location="${jboss.client}/jbossall-client.jar"/>
+      <pathelement location="${jboss.client}/jaxws-tools.jar"/>
+      <pathelement location="${jboss.client}/jboss-wsit-tools.jar"/>
+      <pathelement location="${jboss.client}/log4j.jar"/>
+      <pathelement location="${jboss.client}/mail.jar"/>
+      <pathelement location="${jboss.client}/stax-api.jar"/>
+      <pathelement location="${jboss.client}/trove.jar"/>
+      <pathelement location="${jboss.client}/jboss-javaee.jar"/>
+      <!-- FIXME jars should be available in the client dir -->
+      <pathelement location="${jboss.lib}/jboss-aop-jdk50.jar"/>
+      <pathelement location="${jboss.lib}/jboss-classloader.jar"/>
+      <pathelement location="${jboss.lib}/jboss-classloading.jar"/>
+      <pathelement location="${jboss.lib}/jboss-classloading-vfs.jar"/>
+      <pathelement location="${jboss.lib}/jboss-container.jar"/>
+      <pathelement location="${jboss.lib}/jboss-dependency.jar"/>
+      <pathelement location="${jboss.lib}/jboss-vfs.jar"/>
+      <pathelement location="${jboss.lib}/jboss-kernel.jar"/>
+      <pathelement location="${jboss.lib}/jboss-reflect.jar"/>
+      <pathelement location="${jboss.server.lib}/jboss.jar"/>
+      <pathelement location="${jboss.server.lib}/jbosssx.jar"/>
+      <pathelement location="${jboss.server.lib}/jbossws-native-core.jar"/> <!-- For jaxrpc tests -->
+      <pathelement location="${jboss.server.lib}/hibernate3.jar"/>
+      <pathelement location="${jboss.server.lib}/jnpserver.jar"/>
+      <pathelement location="${jboss.server.lib}/jboss-ejb3-core.jar"/>
+      <pathelement location="${jboss.server.lib}/hibernate-core.jar"/>
+      <pathelement location="${jboss.server.lib}/netty.jar"/> <!-- For jaxrpc tests -->
+      <pathelement location="${jboss.server.lib}/servlet-api.jar"/>
+      <pathelement location="${jboss.server.deploy}/juddi-service.sar/juddi.jar"/>
+      <pathelement location="${jboss.server.deploy}/juddi-service.sar/juddi-saaj.jar"/>
+      <pathelement location="${jboss.server.deploy}/juddi-service.sar/scout.jar"/>
+      <pathelement location="${tools.jar}"/>
+    </path>
+  </target>
+
+  <target name="tests-classpath-jboss60" depends="tests-prepare" if="jbossws.integration.jboss60">
+    
+    <path id="integration.target.javac.classpath">
+      <pathelement location="${jboss.client}/activation.jar"/>
+      <pathelement location="${jboss.client}/jaxws-tools.jar"/>
+      <pathelement location="${jboss.client}/jboss-annotations-api_1.1_spec.jar"/>
+      <pathelement location="${jboss.client}/jboss-annotations-ejb3.jar"/>
+      <pathelement location="${jboss.client}/jboss-appclient.jar"/>
+      <pathelement location="${jboss.client}/jboss-common-core.jar"/>
+      <pathelement location="${jboss.client}/jboss-ejb-api_3.1_spec.jar"/>
+      <pathelement location="${jboss.client}/jboss-ejb3-client.jar"/>
+      <pathelement location="${jboss.client}/jboss-ejb3-ext-api.jar"/>
+      <pathelement location="${jboss.client}/jboss-jaxr-api_1.0_spec.jar"/>
+      <pathelement location="${jboss.client}/jboss-logging.jar"/>
+      <pathelement location="${jboss.client}/jboss-logging-spi.jar"/>
+      <pathelement location="${jboss.client}/jboss-metadata-client.jar"/>
+      <pathelement location="${jboss.client}/jboss-metadata-common.jar"/>
+      <pathelement location="${jboss.client}/jboss-remoting.jar"/>
+      <pathelement location="${jboss.client}/jboss-servlet-api_3.0_spec.jar"/>
+      <pathelement location="${jboss.client}/jbossxb.jar"/>
+      <pathelement location="${jboss.client}/mail.jar"/>
+      <pathelement location="${jboss.client}/stax-api.jar"/>
+      <pathelement location="${jboss.client}/wsdl4j.jar"/>
+      <pathelement location="${jboss.server.lib}/jboss-javaee.jar"/>
+      <pathelement location="${jboss.server.lib}/jbosssx.jar"/>
+      <pathelement location="${jboss.server.lib}/servlet-api.jar"/>
+    </path>
+    
+    <!-- 
+    The 's.client.classpath' contains jars that are available in the target container's client directory.
+    There jars apply to all supported stacks. It MUST NOT contains jars from a local thirdparty dir.
+    
+    The 'ws.stack.classpath' contains jars that come with a specific stack distribution.
+    The 's.extra.classpath' contains stack specific jars that are needed to run the stack specific tests.
+    -->
+    <path id="integration.target.client.classpath">
+      <pathelement location="${jboss.client}/activation.jar"/>
+      <pathelement location="${jboss.client}/javassist.jar"/>
+      <pathelement location="${jboss.client}/jaxb-api.jar"/>
+      <pathelement location="${jboss.client}/jaxb-impl.jar"/>
+      <pathelement location="${jboss.client}/jaxb-xjc.jar"/>
+      <pathelement location="${jboss.client}/jaxws-tools.jar"/>
+      <pathelement location="${jboss.client}/jboss-appclient.jar"/>
+      <pathelement location="${jboss.client}/jboss-ejb3-ext-api.jar"/>
+      <pathelement location="${jboss.client}/jboss-metadata-client.jar"/>
+      <pathelement location="${jboss.client}/jboss-metadata-common.jar"/>
+      <pathelement location="${jboss.client}/jboss-remoting.jar"/>
+      <pathelement location="${jboss.client}/jbossxb.jar"/>
+      <pathelement location="${jboss.client}/jbossall-client.jar"/>
+      <pathelement location="${jboss.client}/jaxws-tools.jar"/>
+      <pathelement location="${jboss.client}/log4j.jar"/>
+      <pathelement location="${jboss.client}/mail.jar"/>
+      <pathelement location="${jboss.client}/stax-api.jar"/>
+      <pathelement location="${jboss.client}/trove.jar"/>
+      <pathelement location="${jboss.client}/jboss-javaee.jar"/>
+      <!-- FIXME jars should be available in the client dir -->
+      <pathelement location="${jboss.lib}/jboss-classloader.jar"/>
+      <pathelement location="${jboss.lib}/jboss-classloading.jar"/>
+      <pathelement location="${jboss.lib}/jboss-classloading-vfs.jar"/>
+      <pathelement location="${jboss.lib}/jboss-dependency.jar"/>
+      <pathelement location="${jboss.lib}/jboss-vfs.jar"/>
+      <pathelement location="${jboss.lib}/jboss-kernel.jar"/>
+      <pathelement location="${jboss.lib}/jboss-reflect.jar"/>
+      <pathelement location="${jboss.lib}/jboss-system.jar"/>
+      <pathelement location="${jboss.server.lib}/jboss.jar"/>
+      <pathelement location="${jboss.server.lib}/jbosssx.jar"/>
+      <pathelement location="${jboss.server.lib}/jbossws-native-core.jar"/> <!-- For jaxrpc tests -->
+      <pathelement location="${jboss.server.lib}/jnpserver.jar"/>
+      <pathelement location="${jboss.server.lib}/jboss-ejb3-core.jar"/>
+      <pathelement location="${jboss.server.lib}/jboss-ejb3-vfs-spi.jar"/>
+      <pathelement location="${jboss.server.lib}/hibernate-core.jar"/>
+      <pathelement location="${jboss.server.lib}/netty.jar"/> <!-- For jaxrpc tests -->
+      <pathelement location="${jboss.server.lib}/servlet-api.jar"/>
+      <pathelement location="${jboss.server.deploy}/juddi-service.sar/juddi.jar"/>
+      <pathelement location="${jboss.server.deploy}/juddi-service.sar/juddi-saaj.jar"/>
+      <pathelement location="${jboss.server.deploy}/juddi-service.sar/scout.jar"/>
+      <pathelement location="${tools.jar}"/>
+    </path>
+  </target>
+  
+  <!-- ================================================================== -->
+  <!-- Compiling                                                          -->
+  <!-- ================================================================== -->
+  
+  <macrodef name="macro-compile-classes">
+    <attribute name="excludesfile"/>
+    <attribute name="srcdir"/>
+    <sequential>
+      <mkdir dir="${tests.output.dir}/test-classes"/>
+      <javac destdir="${tests.output.dir}/test-classes" debug="${javac.debug}" encoding="utf-8" verbose="${javac.verbose}" deprecation="${javac.deprecation}"
+        failonerror="${javac.fail.onerror}" excludesfile="${excludesfile}">
+        <src path="@{srcdir}"/>
+        <classpath refid="tests.javac.classpath"/>
+      </javac>
+    </sequential>
+  </macrodef>
+  
+  <!-- ================================================================== -->
+  <!-- Building                                                           -->
+  <!-- ================================================================== -->
+  
+  <macrodef name="macro-copy-resources">
+    <attribute name="srcdir"/>
+    <sequential>
+      
+      <!-- copy etc -->
+      <copy todir="${tests.output.dir}/test-classes">
+        <fileset dir="@{srcdir}/etc">
+          <include name="jndi.properties"/>
+          <include name="tst.policy"/>
+          <include name="log4j.xml"/>
+        </fileset>
+        <filterset>
+          <filter token="jboss.bind.address" value="${node0}"/>
+        </filterset>
+      </copy>
+      
+      <!-- copy handler definitions -->
+      <copy todir="${tests.output.dir}/test-classes">
+        <fileset dir="@{srcdir}/java">
+          <include name="**/*.xml"/>
+        </fileset>
+      </copy>
+      
+      <!-- copy non binary files -->
+      <copy todir="${tests.output.dir}/test-resources">
+        <fileset dir="@{srcdir}/resources">
+          <include name="**/*.wsdl"/>
+          <include name="**/*.xml"/>
+          <exclude name="jaxrpc/samples-override/**"/>
+        </fileset>
+        <filterset>
+          <filter token="java.home" value="${java.home}"/>
+          <filter token="jboss.bind.address" value="${node0}"/>
+          <filter token="tests.output.dir" value="${tests.output.dir}"/>
+          <filter token="wsdl-publish-location" value="${tests.output.dir}/wsdl-publish"/>
+        </filterset>
+      </copy>
+      
+      <!-- Copy binary files -->
+      <copy todir="${tests.output.dir}/test-resources">
+        <fileset dir="@{srcdir}/resources">
+          <exclude name="**/*.wsdl"/>
+          <exclude name="**/*.xml"/>
+        </fileset>
+      </copy>
+    </sequential>
+  </macrodef>
+  
+  <!-- ================================================================== -->
+  <!-- Testing                                                            -->
+  <!-- ================================================================== -->
+  
+  <!-- Run all unit tests and generate a report -->
+  <target name="tests" depends="tests-jars" description="Run all unit tests and generate a report">
+    <antcall target="tests-run-internal">
+      <param name="include.wildcard" value="org/jboss/test/ws/**/*TestCase.class"/>
+      <param name="exclude.wildcard" value="no-wildcard-exclude-see-excludesfile"/>
+      <param name="haltonfailure" value="false"/>
+    </antcall>
+    <antcall target="tests-report"/>
+  </target>
+  
+  <!-- Run smoke test cases -->
+  <target name="tests-smoke" depends="tests-init" description="Run smoke unit tests">
+    <antcall target="tests-run-internal">
+      <param name="include.wildcard" value="org/jboss/test/ws/jaxws/samples/**/*TestCase.class org/jboss/test/ws/*/smoke/**/*TestCase.class"/>
+      <param name="exclude.wildcard" value="org/jboss/test/ws/*/samples/jaxr/**"/>
+      <!--
+      According to our commit policy, haltonfailure MUST be be true for tests-smoke
+      It is a prerequisite for any commit that this target passes without failure.
+      -->
+      <param name="haltonfailure" value="true"/>
+    </antcall>
+    <antcall target="tests-report"/>
+  </target>
+  
+  <!-- Run samples test cases -->
+  <target name="tests-samples" depends="tests-init" description="Run samples unit tests">
+    <antcall target="tests-run-internal">
+      <param name="include.wildcard" value="org/jboss/test/ws/*/samples/**/*TestCase.class"/>
+      <param name="exclude.wildcard" value="org/jboss/test/ws/*/samples/jaxr/**"/>
+      <param name="haltonfailure" value="false"/>
+    </antcall>
+  </target>
+  
+  <!-- Run integration test cases -->
+  <target name="tests-integration" depends="tests-jars" description="Run integration unit tests">
+    <antcall target="tests-run-internal">
+      <param name="include.wildcard" value="org/jboss/test/ws/jaxws/samples/**/*TestCase.class org/jboss/test/ws/*/smoke/**/*TestCase.class"/>
+      <param name="exclude.wildcard" value="org/jboss/test/ws/*/samples/jaxr/**"/>
+      <param name="haltonfailure" value="false"/>
+    </antcall>
+    <antcall target="tests-report"/>
+  </target>
+  
+  <!--
+  Run a collection of unit tests.
+  ant -Dtest=jaxws/samples/provider test
+  -->
+  <target name="test" depends="tests-init" if="test" description="Run all unit tests in a given directory">
+    <antcall target="tests-run-internal">
+      <param name="include.wildcard" value="org/jboss/test/ws/${test}/**/*TestCase.class"/>
+      <param name="exclude.wildcard" value="no-wildcard-exclude-see-excludesfile"/>
+      <param name="haltonfailure" value="false"/>
+    </antcall>
+  </target>
+  
+  <!-- Common test target -->
+  <target name="tests-run-internal" depends="tests-init">
+    <mkdir dir="${tests.output.dir}/test-reports"/>
+    <junit printsummary="yes" showoutput="yes" dir="${tests.output.dir}" haltonfailure="${haltonfailure}">
+      <jvmarg value="-Djava.security.manager"/>
+      <jvmarg value="-ea"/>
+      <!--jvmarg value="-Dcom.sun.xml.ws.transport.http.HttpAdapter.dump=true"/>
+      <jvmarg value="-Dcom.sun.xml.ws.transport.http.client.HttpTransportPipe.dump=true"/-->
+      
+      <sysproperty key="jdk.home" value="${env.JAVA_HOME}"/>
+      <sysproperty key="log4j.output.dir" value="${tests.output.dir}"/>
+      <sysproperty key="client.scenario" value="${client.scenario}"/>
+      <sysproperty key="interop" value="${interop}"/>
+      <sysproperty key="java.endorsed.dirs" value="${endorsed.dirs}"/>
+      <sysproperty key="java.naming.provider.url" value="${node0.jndi.url}"/>
+      <sysproperty key="java.protocol.handler.pkgs" value="org.jboss.net.protocol|org.jboss.vfs.protocol|org.jboss.virtual.protocol"/>
+      <sysproperty key="java.security.policy" value="${tests.output.dir}/test-classes/tst.policy"/>
+      <sysproperty key="java.util.logging.manager" value="org.jboss.wsf.common.logging.JDKLogManager"/>
+      <sysproperty key="jboss.home" value="${jboss.home}"/>
+      <sysproperty key="jboss.server.instance" value="${jboss.server.instance}"/>
+      <sysproperty key="jboss.bind.address" value="${node0}"/>
+      <sysproperty key="jbossws.integration.target" value="${jbossws.integration.target}"/>
+      <sysproperty key="jmx.authentication.username" value="${jmx.authentication.username}"/>
+      <sysproperty key="jmx.authentication.password" value="${jmx.authentication.password}"/>
+      <sysproperty key="org.jboss.ws.wsse.keyStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.keystore"/>
+      <sysproperty key="org.jboss.ws.wsse.trustStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.truststore"/>
+      <sysproperty key="org.jboss.ws.wsse.keyStorePassword" value="jbossws"/>
+      <sysproperty key="org.jboss.ws.wsse.trustStorePassword" value="jbossws"/>
+      <sysproperty key="org.jboss.ws.wsse.keyStoreType" value="jks"/>
+      <sysproperty key="org.jboss.ws.wsse.trustStoreType" value="jks"/>
+      <sysproperty key="test.archive.directory" value="${tests.output.dir}/test-libs"/>
+      <sysproperty key="test.classes.directory" value="${tests.output.dir}/test-classes"/>
+      <sysproperty key="test.resources.directory" value="${tests.output.dir}/test-resources"/>
+      <sysproperty key="binary.distribution" value="true"/>
+      <classpath>
+        <path refid="tests.client.classpath"/>
+        <pathelement location="${tests.output.dir}/test-classes"/>
+      </classpath>
+      <formatter type="plain" usefile="true"/>
+      <formatter type="xml" usefile="true"/>
+      <batchtest todir="${tests.output.dir}/test-reports" fork="true">
+        <fileset dir="${tests.output.dir}/test-classes" includes="${include.wildcard}" excludes="${exclude.wildcard}"/>
+      </batchtest>
+    </junit>
+  </target>
+  
+  <!--
+  Run a single unit test.
+  ant -Dtest=org.jboss.test.ws.jaxws.samples.provider.ProviderPayloadTestCase one-test
+  -->
+  <target name="one-test" depends="tests-init" if="test" description="Run a single unit test">
+    <mkdir dir="${tests.output.dir}/test-reports"/>
+    
+    <junit printsummary="yes" showoutput="yes" dir="${tests.output.dir}">
+      <jvmarg line="${remote.debug.line}"/>
+      <jvmarg value="-Djava.security.manager"/>
+      <jvmarg value="-ea"/>
+      <!--jvmarg value="-Dcom.sun.xml.ws.transport.http.HttpAdapter.dump=true"/>
+      <jvmarg value="-Dcom.sun.xml.ws.transport.http.client.HttpTransportPipe.dump=true"/-->
+      
+      <sysproperty key="jdk.home" value="${env.JAVA_HOME}"/>
+      <sysproperty key="log4j.output.dir" value="${tests.output.dir}"/>
+      <sysproperty key="client.scenario" value="${client.scenario}"/>
+      <sysproperty key="interop" value="${interop}"/>
+      <sysproperty key="java.endorsed.dirs" value="${endorsed.dirs}"/>
+      <sysproperty key="java.naming.provider.url" value="${node0.jndi.url}"/>
+      <sysproperty key="java.protocol.handler.pkgs" value="org.jboss.net.protocol|org.jboss.vfs.protocol|org.jboss.virtual.protocol"/>
+      <sysproperty key="java.security.policy" value="${tests.output.dir}/test-classes/tst.policy"/>
+      <sysproperty key="java.util.logging.manager" value="org.jboss.wsf.common.logging.JDKLogManager"/>
+      <sysproperty key="jboss.home" value="${jboss.home}"/>
+      <sysproperty key="jboss.server.instance" value="${jboss.server.instance}"/>
+      <sysproperty key="jboss.bind.address" value="${node0}"/>
+      <sysproperty key="jbossws.integration.target" value="${jbossws.integration.target}"/>
+      <sysproperty key="jmx.authentication.username" value="${jmx.authentication.username}"/>
+      <sysproperty key="jmx.authentication.password" value="${jmx.authentication.password}"/>
+      <!--
+      http://jira.jboss.com/jira/browse/JBWS-917
+      <sysproperty key="javax.net.ssl.keyStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.keystore"/>
+      <sysproperty key="javax.net.ssl.trustStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.truststore"/>
+      <sysproperty key="javax.net.ssl.keyStorePassword" value="jbossws"/>
+      <sysproperty key="javax.net.ssl.trustStorePassword" value="jbossws"/>
+      <sysproperty key="javax.net.ssl.keyStoreType" value="jks"/>
+      <sysproperty key="javax.net.ssl.trustStoreType" value="jks"/>
+      -->
+      <!-- HTTPS hostname wrong:  should be <localhost> -->
+      <sysproperty key="org.jboss.security.ignoreHttpsHost" value="true"/>
+      <sysproperty key="org.jboss.ws.wsse.keyStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.keystore"/>
+      <sysproperty key="org.jboss.ws.wsse.trustStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.truststore"/>
+      <sysproperty key="org.jboss.ws.wsse.keyStorePassword" value="jbossws"/>
+      <sysproperty key="org.jboss.ws.wsse.trustStorePassword" value="jbossws"/>
+      <sysproperty key="org.jboss.ws.wsse.keyStoreType" value="jks"/>
+      <sysproperty key="org.jboss.ws.wsse.trustStoreType" value="jks"/>
+      <sysproperty key="test.archive.directory" value="${tests.output.dir}/test-libs"/>
+      <sysproperty key="test.classes.directory" value="${tests.output.dir}/test-classes"/>
+      <sysproperty key="test.resources.directory" value="${tests.output.dir}/test-resources"/>
+      <sysproperty key="binary.distribution" value="true"/>
+      <classpath>
+        <path refid="tests.client.classpath"/>
+        <pathelement location="${tests.output.dir}/test-classes"/>
+      </classpath>
+      <formatter type="plain" usefile="true"/>
+      <formatter type="xml" usefile="true"/>
+      <test todir="${tests.output.dir}/test-reports" name="${test}" fork="true"/>
+    </junit>
+  </target>
+  
+  <!-- ================================================================== -->
+  <!-- Reporting                                                          -->
+  <!-- ================================================================== -->
+  
+  <!-- Build the tests report -->
+  <target name="tests-report" depends="tests-init" description="Build the tests report">
+    <mkdir dir="${tests.output.dir}/test-reports"/>
+    <junitreport todir="${tests.output.dir}/test-reports">
+      <fileset dir="${tests.output.dir}/test-reports">
+        <include name="TEST-*.xml"/>
+      </fileset>
+      <report format="frames" todir="${tests.output.dir}/test-reports/html"/>
+    </junitreport>
+    <zip destfile="${tests.output.dir}/test-report-${build.id}.zip">
+      <fileset dir="${tests.output.dir}" includes="test-reports/**"/>
+    </zip>
+  </target>
+  
+  <!-- ================================================================== -->
+  <!-- Cleaning                                                           -->
+  <!-- ================================================================== -->
+  
+  <target name="tests-clean" description="Delete all generated test files.">
+    <delete dir="${tests.output.dir}"/>
+  </target>
+  
+  <!-- ================================================================== -->
+  <!-- Eclipse conf generation                                            -->
+  <!-- ================================================================== -->
+  
+  <target name="eclipse" depends="tests-jars" description="Generates the JBossWS Testsuite Eclipse project">
+    <fail message="Sorry, this target is for src/binary distribution only.">
+      <condition>
+        <not>
+          <isset property="build.dir"/>
+        </not>
+      </condition>
+    </fail>
+    <path id="tests.eclipse.classpath">
+      <path refid="tests.client.classpath"/>
+      <path refid="tests.javac.classpath"/>
+    </path>
+    <taskdef name="eclipseClasspathGenerator" classname="org.jboss.ws.tools.ant.EclipseClasspathTask" classpathref="ws.stack.classpath"/>
+    <taskdef name="eclipseProjectGenerator" classname="org.jboss.ws.tools.ant.EclipseProjectTask" classpathref="ws.stack.classpath"/>
+    <taskdef name="eclipseJUnitTestGenerator" classname="org.jboss.ws.tools.ant.EclipseJUnitTestsTask" classpathref="ws.stack.classpath"/>
+    <eclipseClasspathGenerator pathId="tests.eclipse.classpath" excludesFile="${excludesfile}" srcPath="tests/java"/>
+    <eclipseProjectGenerator projectName="JBossWS Testsuite"/>
+    <eclipseJUnitTestGenerator projectName="JBossWS Testsuite" projectWorkingDir="${tests.output.dir}" srcDir="${tests.dir}/test-java"
+      integrationTarget="${jbossws.integration.target}" endorsedDir="${jboss.lib}/endorsed" jbossHome="${jboss.home}" namingProviderUrl="${node0.jndi.url}"
+      securityPolicy="${tests.output.dir}/test-classes/tst.policy" testResourcesDir="${tests.output.dir}/test-resources" testLibsDir="${tests.output.dir}/test-libs">
+      <fileset dir="${tests.output.dir}/test-classes" includes="org/jboss/test/ws/**/*TestCase.class" excludes="exclude.wildcard"/>
+    </eclipseJUnitTestGenerator>
+  </target>
+  
+</project>
