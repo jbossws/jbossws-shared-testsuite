@@ -30,7 +30,6 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <executions>
           <execution>
-            <id>testsuite</id>
             <phase>package</phase>
             <goals>
               <goal>single</goal>
