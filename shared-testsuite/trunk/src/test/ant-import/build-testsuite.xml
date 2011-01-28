@@ -504,7 +504,6 @@
       <sysproperty key="java.naming.provider.url" value="${node0.jndi.url}"/>
       <sysproperty key="java.protocol.handler.pkgs" value="org.jboss.net.protocol|org.jboss.vfs.protocol|org.jboss.virtual.protocol"/>
       <sysproperty key="java.security.policy" value="${tests.output.dir}/test-classes/tst.policy"/>
-      <sysproperty key="java.util.logging.manager" value="org.jboss.wsf.common.logging.JDKLogManager"/>
       <sysproperty key="jboss.home" value="${jboss.home}"/>
       <sysproperty key="jboss.server.instance" value="${jboss.server.instance}"/>
       <sysproperty key="jboss.bind.address" value="${node0}"/>
@@ -555,7 +554,6 @@
       <sysproperty key="java.naming.provider.url" value="${node0.jndi.url}"/>
       <sysproperty key="java.protocol.handler.pkgs" value="org.jboss.net.protocol|org.jboss.vfs.protocol|org.jboss.virtual.protocol"/>
       <sysproperty key="java.security.policy" value="${tests.output.dir}/test-classes/tst.policy"/>
-      <sysproperty key="java.util.logging.manager" value="org.jboss.wsf.common.logging.JDKLogManager"/>
       <sysproperty key="jboss.home" value="${jboss.home}"/>
       <sysproperty key="jboss.server.instance" value="${jboss.server.instance}"/>
       <sysproperty key="jboss.bind.address" value="${node0}"/>
