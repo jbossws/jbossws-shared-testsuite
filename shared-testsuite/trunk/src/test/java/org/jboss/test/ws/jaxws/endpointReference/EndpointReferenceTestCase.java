@@ -37,7 +37,6 @@ import javax.xml.ws.wsaddressing.W3CEndpointReference;
 
 import junit.framework.Test;
 
-import org.jboss.util.NotImplementedException;
 import org.jboss.wsf.common.DOMUtils;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
@@ -46,7 +45,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * Test EPR related methods
- * 
+ *
  * @author alessio.soldano@jboss.com
  * @author ropalka@redhat.com
  * @since 13-Jan-2009
@@ -58,25 +57,25 @@ public class EndpointReferenceTestCase extends JBossWSTest
    private static final String WSDL_NS = "http://org.jboss.ws/endpointReference";
    private static final QName SERVICE_QNAME = new QName(WSDL_NS, "EndpointService");
    private static final QName PORT_QNAME = new QName(WSDL_NS, "EndpointPort");
-   
+
    private Service service;
-   
+
    public static Test suite()
    {
       return new JBossWSTestSetup(EndpointReferenceTestCase.class, "jaxws-endpointReference.jar");
    }
-   
+
    public void setUp() throws Exception
    {
       this.service = Service.create(new URL(ENDPOINT_WSDL), SERVICE_QNAME);
    }
-   
+
    public void testDispatch() throws Exception
    {
       final Dispatch<Source> dispatch = this.service.createDispatch(PORT_QNAME, Source.class, Mode.PAYLOAD);
       this.validateEndpointReferences(dispatch);
    }
-   
+
    public void testDispatchWithFeatures() throws Exception
    {
       final Dispatch<Source> dispatch = this.service.createDispatch(PORT_QNAME, Source.class, Mode.PAYLOAD, new AddressingFeature(false, false));
@@ -88,7 +87,7 @@ public class EndpointReferenceTestCase extends JBossWSTest
       final Endpoint port = this.service.getPort(Endpoint.class);
       this.validateEndpointReferences((BindingProvider)port);
    }
-   
+
    private void validateEndpointReferences(final BindingProvider bp) throws Exception
    {
       assertEndpointReference(bp.getEndpointReference());
@@ -117,7 +116,7 @@ public class EndpointReferenceTestCase extends JBossWSTest
       retObj = port.echo("Hello");
       assertEquals("Hello", retObj);
    }
-   
+
    private void assertEndpointReference(EndpointReference epr) throws Exception
    {
       assertEquals(W3CEndpointReference.class.getName(), epr.getClass().getName());
@@ -130,14 +129,13 @@ public class EndpointReferenceTestCase extends JBossWSTest
       eprAddress = eprAddress.replace("127.0.0.1", "localhost");
       assertEquals(ENDPOINT_ADDRESS.replace("127.0.0.1", "localhost"), eprAddress);
    }
-   
+
    private static class MyEndpointReference extends EndpointReference
    {
       @Override
       public void writeTo(Result result)
       {
-         throw new NotImplementedException();
+         throw new UnsupportedOperationException();
       }
-      
    }
 }
