@@ -1013,6 +1013,26 @@
 		    </webinf>
 		</war>
 		
+		<!-- jaxws-jbws3223 -->
+		<war warfile="${tests.output.dir}/test-libs/jaxws-jbws3223.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3223/WEB-INF/web-ws.xml">
+			<classes dir="${tests.output.dir}/test-classes">
+				<include name="org/jboss/test/ws/jaxws/jbws3223/EndpointBean.class" />
+				<include name="org/jboss/test/ws/jaxws/jbws3223/EndpointInterface.class" />
+			</classes>
+		</war>
+
+		<!-- jaxws-jbws3223-servlet -->
+		<war warfile="${tests.output.dir}/test-libs/jaxws-jbws3223-servlet.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3223/WEB-INF/web.xml">
+			<classes dir="${tests.output.dir}/test-classes">
+				<include name="org/jboss/test/ws/jaxws/jbws3223/TestServlet.class" />
+				<include name="org/jboss/test/ws/jaxws/jbws3223/Client.class" />
+				<include name="org/jboss/test/ws/jaxws/jbws3223/EndpointInterface.class" />
+			</classes>
+			<webinf dir="${tests.output.dir}/test-resources/jaxws/jbws3223/WEB-INF">
+				<include name="wsdl/**" />
+			</webinf>
+		</war>
+		
 		<!-- jaxws-endpoint-servlet -->
 		<war warfile="${tests.output.dir}/test-libs/jaxws-endpoint-servlet.war" webxml="${tests.output.dir}/test-resources/jaxws/endpoint/WEB-INF/web.xml">
 			<classes dir="${tests.output.dir}/test-classes">
