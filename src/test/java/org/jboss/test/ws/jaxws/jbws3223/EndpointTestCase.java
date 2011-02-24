@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2006, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2011, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -28,8 +28,6 @@ import java.net.URL;
 import javax.wsdl.Definition;
 import javax.wsdl.factory.WSDLFactory;
 import javax.wsdl.xml.WSDLReader;
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
 
 import junit.extensions.TestSetup;
 import junit.framework.Test;
@@ -59,14 +57,15 @@ public class EndpointTestCase extends JBossWSTest
    public void testClientAccess() throws Exception
    {
       String helloWorld = "Hello world!";
-      Client client = new Client();
+      Client client = new Client(false);
       Object retObj = client.run(helloWorld, getResourceURL("jaxws/jbws3223/WEB-INF/wsdl/TestService.wsdl"));
       assertEquals(helloWorld, retObj);
    }
 
    public void testServletAccess() throws Exception
    {
-      URL url = new URL("http://" + getServerHost() + ":8080/jaxws-jbws3223-servlet?param=hello-world");
+      boolean clCheck = !(isTargetJBoss5() || isTargetJBoss6());
+      URL url = new URL("http://" + getServerHost() + ":8080/jaxws-jbws3223-servlet?param=hello-world&clCheck=" + clCheck);
       BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
       assertEquals("hello-world", br.readLine());
    }

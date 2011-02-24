@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.net.URL;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +40,8 @@ public class TestServlet extends HttpServlet
    {
       // Invoke the endpoint
       String param = req.getParameter("param");
-      Client client = new Client();
+      boolean clCheck = Boolean.parseBoolean(req.getParameter("clCheck"));
+      Client client = new Client(clCheck);
       //URL wsdlURL = getServletContext().getResource("/WEB-INF/wsdl/TestService.wsdl");
       URL wsdlURL = new URL("http://localhost:8080/jaxws-jbws3223?wsdl");
       String retStr = client.run(param, wsdlURL);
@@ -48,4 +51,6 @@ public class TestServlet extends HttpServlet
       pw.print(retStr);
       pw.close();
    }
+   
+   
 }
