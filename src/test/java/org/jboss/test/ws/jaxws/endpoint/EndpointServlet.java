@@ -80,7 +80,9 @@ public class EndpointServlet extends HttpServlet
    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
    {
       // Create the port
-      URL wsdlURL = getServletContext().getResource("/WEB-INF/wsdl/TestService.wsdl");
+      String hostName = System.getProperty("jboss.bind.address", "localhost");
+//    URL wsdlURL = getServletContext().getResource("/WEB-INF/wsdl/TestService.wsdl");
+      URL wsdlURL = new URL("http://" + hostName + ":8081/jaxws-endpoint?wsdl");
       QName qname = new QName("http://org.jboss.ws/jaxws/endpoint", "EndpointService");
       Service service = Service.create(wsdlURL, qname);
       EndpointInterface port = (EndpointInterface)service.getPort(EndpointInterface.class);

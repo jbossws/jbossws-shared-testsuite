@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.net.URL;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,8 +40,9 @@ public class TestServlet extends HttpServlet
       String param = req.getParameter("param");
       boolean clCheck = Boolean.parseBoolean(req.getParameter("clCheck"));
       Client client = new Client(clCheck);
+      String hostName = System.getProperty("jboss.bind.address", "localhost");
       //URL wsdlURL = getServletContext().getResource("/WEB-INF/wsdl/TestService.wsdl");
-      URL wsdlURL = new URL("http://localhost:8080/jaxws-jbws3223?wsdl");
+      URL wsdlURL = new URL("http://" + hostName + ":8080/jaxws-jbws3223?wsdl");
       String retStr = client.run(param, wsdlURL);
       
       // Return the result
