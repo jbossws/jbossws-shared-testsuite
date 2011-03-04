@@ -435,7 +435,7 @@
   <!-- Run all unit tests and generate a report -->
   <target name="tests" depends="tests-jars" description="Run all unit tests and generate a report">
     <antcall target="tests-run-internal">
-      <param name="include.wildcard" value="org/jboss/test/ws/**/*TestCase.class"/>
+      <param name="include.wildcard" value="org/jboss/test/ws/**/*TestCase*.class"/>
       <param name="exclude.wildcard" value="no-wildcard-exclude-see-excludesfile"/>
       <param name="haltonfailure" value="false"/>
     </antcall>
