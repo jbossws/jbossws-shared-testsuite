@@ -24,7 +24,7 @@ package org.jboss.test.ws.jaxws.smoke.tools;
 /**
  * @author Heiko.Braun@jboss.com
  */
-public class WSProviderTestCase extends PluginBase implements WSProviderPluginDelegate
+public class WSProviderTestCaseForked extends PluginBase implements WSProviderPluginDelegate
 {
    /**
     * Recreates a tools delegate for every test
