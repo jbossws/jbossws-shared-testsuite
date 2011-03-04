@@ -28,7 +28,7 @@ package org.jboss.test.ws.jaxws.smoke.tools;
  * @author Heiko.Braun@jboss.com
  * @author alessio.soldano@jboss.com
  */
-public class WSConsumerTestCase extends PluginBase implements WSConsumerPluginDelegate
+public class WSConsumerTestCaseForked extends PluginBase implements WSConsumerPluginDelegate
 {
 
    /**
