@@ -435,7 +435,7 @@
   <!-- Run all unit tests and generate a report -->
   <target name="tests" depends="tests-jars" description="Run all unit tests and generate a report">
     <antcall target="tests-run-internal">
-      <param name="include.wildcard" value="org/jboss/test/ws/**/*TestCase*.class"/>
+      <param name="include.wildcard" value="org/jboss/test/ws/**/*TestCase.class org/jboss/test/ws/**/*TestCaseForked.class"/>
       <param name="exclude.wildcard" value="no-wildcard-exclude-see-excludesfile"/>
       <param name="haltonfailure" value="false"/>
     </antcall>
@@ -445,7 +445,7 @@
   <!-- Run smoke test cases -->
   <target name="tests-smoke" depends="tests-init" description="Run smoke unit tests">
     <antcall target="tests-run-internal">
-      <param name="include.wildcard" value="org/jboss/test/ws/jaxws/samples/**/*TestCase.class org/jboss/test/ws/*/smoke/**/*TestCase.class"/>
+      <param name="include.wildcard" value="org/jboss/test/ws/jaxws/samples/**/*TestCase.class org/jboss/test/ws/*/smoke/**/*TestCase.class org/jboss/test/ws/*/smoke/**/*TestCaseForked.class"/>
       <param name="exclude.wildcard" value="org/jboss/test/ws/*/samples/jaxr/**"/>
       <!--
       According to our commit policy, haltonfailure MUST be be true for tests-smoke
