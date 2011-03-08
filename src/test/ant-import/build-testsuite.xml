@@ -27,6 +27,9 @@
     <condition property="jboss.home" value="${jboss601.home}">
       <equals arg1="${jbossws.integration.target}" arg2="jboss601"/>
     </condition>
+    <condition property="jboss.home" value="${jboss700.home}">
+      <equals arg1="${jbossws.integration.target}" arg2="jboss700"/>
+    </condition>
     
     <!-- Verify required properties that must be set before this file is imported -->
     <fail message="Tests output dir not set." unless="tests.output.dir"/>
@@ -108,7 +111,7 @@
     </tstamp>
   </target>
   
-  <target name="tests-classpath" depends="tests-classpath-jboss60,tests-classpath-jboss51,tests-classpath-jboss50">
+  <target name="tests-classpath" depends="tests-classpath-jboss70,tests-classpath-jboss60,tests-classpath-jboss51,tests-classpath-jboss50">
     <path id="tests.javac.classpath">
       <path refid="ws.stack.classpath"/>
       <path refid="integration.target.javac.classpath"/>
@@ -359,6 +362,72 @@
     </path>
   </target>
   
+  <target name="tests-classpath-jboss70" depends="tests-prepare" if="jbossws.integration.jboss70">
+    
+    <path id="integration.target.javac.classpath">
+      <fileset dir="${jboss.home}/modules/javax/activation/api/main/">
+        <include name="activation-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/common-core/main/">
+        <include name="jboss-common-core-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/logging/main/">
+        <include name="jboss-logging-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/javax/servlet/api/main/">
+        <include name="jboss-servlet-api_3.0_spec-*.jar"/>
+      </fileset>
+    </path>
+    
+    <!-- 
+    The 's.client.classpath' contains jars that are available in the target container's client directory.
+    There jars apply to all supported stacks. It MUST NOT contains jars from a local thirdparty dir.
+    
+    The 'ws.stack.classpath' contains jars that come with a specific stack distribution.
+    The 's.extra.classpath' contains stack specific jars that are needed to run the stack specific tests.
+    -->
+    <path id="integration.target.client.classpath">
+      <pathelement location="${thirdparty.dir}/jboss-as-webservices-tests-integration.jar"/> <!-- included from thirdparty local dir as it's not installed on AS -->
+      <pathelement location="${jboss.home}/jboss-modules.jar"/>
+      <fileset dir="${jboss.home}/modules/org/jboss/logging/main/">
+        <include name="jboss-logging-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/as/controller/main/">
+        <include name="jboss-as-controller-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/as/controller-client/main/">
+        <include name="jboss-as-controller-client-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/as/server/main/">
+        <include name="jboss-as-server-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/as/protocol/main/">
+        <include name="jboss-as-protocol-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/dmr/main/">
+        <include name="jboss-dmr-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/marshalling/main/">
+        <include name="jboss-marshalling-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/slf4j/main/">
+        <include name="slf4j-api-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/slf4j/jcl-over-slf4j/main/">
+        <include name="jcl-over-slf4j-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/slf4j/impl/main/">
+        <include name="slf4j-jboss-logmanager-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/logmanager/main/">
+        <include name="jboss-logmanager-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/apache/log4j/main/">
+        <include name="log4j-*.jar"/>
+      </fileset>
+    </path>
+  </target>
+	  
   <!-- ================================================================== -->
   <!-- Compiling                                                          -->
   <!-- ================================================================== -->
