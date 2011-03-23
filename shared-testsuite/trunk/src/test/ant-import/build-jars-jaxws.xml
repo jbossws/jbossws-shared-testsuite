@@ -206,7 +206,7 @@
 		</jar>
 
 		<!-- jaxws-jbws1446 -->
-		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws1446.jar">
+		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws1446.jar" manifest="${tests.output.dir}/test-resources/jaxws/jbws1446/META-INF/MANIFEST.MF">
 			<fileset dir="${tests.output.dir}/test-classes">
 				<include name="org/jboss/test/ws/jaxws/jbws1446/EJB3Bean.class" />
 			</fileset>
@@ -365,7 +365,7 @@
 		</war>
 
 		<!-- jaxws-jbws1813 -->
-		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws1813.jar">
+		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws1813.jar" manifest="${tests.output.dir}/test-resources/jaxws/jbws1813/META-INF/MANIFEST.MF">
 			<fileset dir="${tests.output.dir}/test-classes">
 				<include name="org/jboss/test/ws/jaxws/jbws1813/EndpointImpl.class" />
 			</fileset>
@@ -612,7 +612,7 @@
 		</war>
 
 		<!-- jaxws-jbws2183 -->
-		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws2183.jar">
+		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws2183.jar" manifest="${tests.output.dir}/test-resources/jaxws/jbws2183/META-INF/MANIFEST.MF">
 			<fileset dir="${tests.output.dir}/test-classes">
 				<include name="org/jboss/test/ws/jaxws/jbws2183/**/*.class" />
 				<exclude name="org/jboss/test/ws/jaxws/jbws2183/**/*TestCase.class" />
@@ -652,7 +652,7 @@
 		</war>
 
 		<!-- jbws2257 -->
-		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws2257.jar">
+		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws2257.jar" manifest="${tests.output.dir}/test-resources/jaxws/jbws2257/META-INF/MANIFEST.MF">
 			<fileset dir="${tests.output.dir}/test-classes">
 				<include name="org/jboss/test/ws/jaxws/jbws2257/Service*.class" />
 				<include name="org/jboss/test/ws/jaxws/jbws2257/jaxws/*.class" />
@@ -1034,7 +1034,7 @@
 		</war>
 		
 		<!-- jaxws-endpoint-servlet -->
-		<war warfile="${tests.output.dir}/test-libs/jaxws-endpoint-servlet.war" manifest="${tests.output.dir}/test-resources/jaxws/endpoint/MANIFEST.MF"
+		<war warfile="${tests.output.dir}/test-libs/jaxws-endpoint-servlet.war" manifest="${tests.output.dir}/test-resources/jaxws/endpoint/META-INF/MANIFEST.MF"
 			webxml="${tests.output.dir}/test-resources/jaxws/endpoint/WEB-INF/web.xml">
 			<classes dir="${tests.output.dir}/test-classes">
 				<include name="org/jboss/test/ws/jaxws/endpoint/EndpointServlet.class" />
