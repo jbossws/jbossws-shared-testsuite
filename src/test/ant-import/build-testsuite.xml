@@ -374,6 +374,9 @@
       <fileset dir="${jboss.home}/modules/org/jboss/logging/main/">
         <include name="jboss-logging-*.jar"/>
       </fileset>
+      <fileset dir="${jboss.home}/modules/javax/ejb/api/main/">
+        <include name="jboss-ejb-api_3.1_spec-*.jar"/>
+      </fileset>
       <fileset dir="${jboss.home}/modules/javax/servlet/api/main/">
         <include name="jboss-servlet-api_3.0_spec-*.jar"/>
       </fileset>
