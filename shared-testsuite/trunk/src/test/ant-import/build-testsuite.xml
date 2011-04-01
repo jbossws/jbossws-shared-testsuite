@@ -431,6 +431,9 @@
       <fileset dir="${jboss.home}/modules/javax/mail/api/main/">
         <include name="mail-*.jar"/>
       </fileset>
+      <fileset dir="${jboss.home}/modules/javax/servlet/api/main/">
+        <include name="jboss-servlet-api_3.0_spec-*.jar"/>
+      </fileset>
     </path>
   </target>
 	  
