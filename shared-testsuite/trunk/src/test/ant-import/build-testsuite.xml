@@ -434,6 +434,9 @@
       <fileset dir="${jboss.home}/modules/javax/servlet/api/main/">
         <include name="jboss-servlet-api_3.0_spec-*.jar"/>
       </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/threads/main/">
+        <include name="jboss-threads-*.jar"/>
+      </fileset>
     </path>
   </target>
 	  
