@@ -24,6 +24,9 @@ package org.jboss.test.ws.jaxws.jbws1807;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.BindingType;
@@ -34,8 +37,8 @@ import javax.xml.ws.WebServiceProvider;
 import javax.xml.ws.http.HTTPBinding;
 
 import org.jboss.logging.Logger;
-import org.jboss.wsf.common.DOMUtils;
-import org.jboss.wsf.common.DOMWriter;
+import org.jboss.test.helper.DOMWriter;
+import org.jboss.wsf.util.DOMUtils;
 
 @WebServiceProvider(wsdlLocation = "WEB-INF/wsdl/provider.wsdl", portName = "ProviderPort", serviceName = "ProviderService", targetNamespace = "http://ws.com/")
 @ServiceMode(value = Service.Mode.PAYLOAD)
@@ -49,7 +52,7 @@ public class ProviderImpl implements Provider<Source>
    {
       try
       {
-         String input = DOMWriter.printNode(DOMUtils.sourceToElement(source), false);
+         String input = DOMWriter.printNode(DOMUtils.sourceToElement(source, getDocumentBuilder()), false);
          log.info("invoke: " + input);
          
          String reply = "<reply>" + input + "</reply>";
@@ -58,6 +61,25 @@ public class ProviderImpl implements Provider<Source>
       catch (IOException ex)
       {
          throw new RuntimeException(ex);
+      }
+   }
+   
+   private DocumentBuilder getDocumentBuilder()
+   {
+      DocumentBuilderFactory factory = null;
+      try
+      {
+         factory = DocumentBuilderFactory.newInstance();
+         factory.setValidating(false);
+         factory.setNamespaceAware(true);
+         factory.setExpandEntityReferences(false);
+         factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+         DocumentBuilder builder = factory.newDocumentBuilder();
+         return builder;
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Unable to create document builder", e);
       }
    }
 }

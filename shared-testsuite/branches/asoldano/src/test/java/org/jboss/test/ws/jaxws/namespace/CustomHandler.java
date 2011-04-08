@@ -31,7 +31,7 @@ import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
 import org.jboss.logging.Logger;
-import org.jboss.wsf.common.DOMWriter;
+import org.jboss.test.helper.DOMWriter;
 
 /**
  * A simple SOAPHandler checking the exchanged message uses the SEI namespace.
