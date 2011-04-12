@@ -26,13 +26,14 @@ import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.MessageContext.Scope;
 
 import org.jboss.logging.Logger;
-import org.jboss.wsf.common.DOMUtils;
 import org.jboss.wsf.common.addressing.MAP;
 import org.jboss.wsf.common.addressing.MAPBuilder;
 import org.jboss.wsf.common.addressing.MAPBuilderFactory;
 import org.jboss.wsf.common.addressing.MAPEndpoint;
 import org.jboss.wsf.common.handler.GenericSOAPHandler;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * A server side handler for the ws-addressing
@@ -65,10 +66,10 @@ public class ServerHandler extends GenericSOAPHandler
          if (obj instanceof Element)
          {
             Element el = (Element)obj;
-            QName qname = DOMUtils.getElementQName(el);
+            QName qname = getElementQName(el);
             if (qname.equals(IDQN))
             {
-               clientid = DOMUtils.getTextContent(el);
+               clientid = getTextContent(el);
             }
          }
          else
@@ -100,5 +101,96 @@ public class ServerHandler extends GenericSOAPHandler
       msgContext.setScope(builder.newConstants().getServerAddressingPropertiesOutbound(), Scope.APPLICATION);
 
       return true;
+   }
+   
+   // ---------------- DOM Util methods -------------------
+   
+   /** Get the qname of the given node.
+    */
+   protected static QName getElementQName(Element el)
+   {
+      String qualifiedName = el.getNodeName();
+      return resolveQName(el, qualifiedName);
+   }
+
+   /** Transform the given qualified name into a QName
+    */
+   protected static QName resolveQName(Element el, String qualifiedName)
+   {
+      QName qname;
+      String prefix = "";
+      String namespaceURI = "";
+      String localPart = qualifiedName;
+
+      int colIndex = qualifiedName.indexOf(":");
+      if (colIndex > 0)
+      {
+         prefix = qualifiedName.substring(0, colIndex);
+         localPart = qualifiedName.substring(colIndex + 1);
+
+         if ("xmlns".equals(prefix))
+         {
+            namespaceURI = "URI:XML_PREDEFINED_NAMESPACE";
+         }
+         else
+         {
+            Element nsElement = el;
+            while (namespaceURI.equals("") && nsElement != null)
+            {
+               namespaceURI = nsElement.getAttribute("xmlns:" + prefix);
+               if (namespaceURI.equals(""))
+                  nsElement = getParentElement(nsElement);
+            }
+         }
+         
+         if (namespaceURI.equals("") && el.getNamespaceURI() != null)
+         {
+            namespaceURI = el.getNamespaceURI();
+         }
+
+         if (namespaceURI.equals(""))
+            throw new IllegalArgumentException("Cannot find namespace uri for: " + qualifiedName);
+      }
+      else
+      {
+         Element nsElement = el;
+         while (namespaceURI.equals("") && nsElement != null)
+         {
+            namespaceURI = nsElement.getAttribute("xmlns");
+            if (namespaceURI.equals(""))
+               nsElement = getParentElement(nsElement);
+         }
+      }
+
+      qname = new QName(namespaceURI, localPart, prefix);
+      return qname;
+   }
+   
+   /** Gets parent element or null if there is none
+    */
+   protected static Element getParentElement(Node node)
+   {
+      Node parent = node.getParentNode();
+      return (parent instanceof Element ? (Element)parent : null);
+   }
+   
+   /** Get the concatenated text content, or null.
+    */
+   protected static String getTextContent(Node node)
+   {
+      boolean hasTextContent = false;
+      StringBuilder buffer = new StringBuilder();
+      NodeList nlist = node.getChildNodes();
+      int len = nlist.getLength();
+      for (int i = 0; i < len; i++)
+      {
+         Node child = nlist.item(i);
+         if (child.getNodeType() == Node.TEXT_NODE)
+         {
+            buffer.append(child.getNodeValue());
+            hasTextContent = true;
+         }
+      }
+      return (hasTextContent ? buffer.toString() : null);
    }
 }

@@ -35,7 +35,7 @@ import javax.xml.namespace.QName;
 
 import junit.framework.Assert;
 
-import org.jboss.wsf.common.DOMUtils;
+import org.jboss.wsf.util.DOMUtils;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestHelper;
 import org.w3c.dom.Element;

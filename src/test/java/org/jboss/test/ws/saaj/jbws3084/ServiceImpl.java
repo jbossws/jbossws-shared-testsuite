@@ -23,7 +23,9 @@ package org.jboss.test.ws.saaj.jbws3084;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -34,8 +36,6 @@ import javax.annotation.Resource;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
-
-import org.jboss.wsf.common.IOUtils;
 
 @WebService(portName = "SaajServicePort", serviceName = "SaajService", wsdlLocation = "WEB-INF/wsdl/SaajService.wsdl", targetNamespace = "http://www.jboss.org/jbossws/saaj", endpointInterface = "org.jboss.test.ws.saaj.jbws3084.ServiceIface")
 public class ServiceImpl implements ServiceIface
@@ -93,7 +93,7 @@ public class ServiceImpl implements ServiceIface
          {
             InputStream is = entry.getValue().getInputStream();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            IOUtils.copyStream(baos, is);
+            copyStream(baos, is);
             String name = Integer.toString(index++);
             DataHandler handler = new DataHandler(new InputStreamDataSource(
                   new ByteArrayInputStream(baos.toByteArray()), "text/plain", name));
@@ -106,5 +106,26 @@ public class ServiceImpl implements ServiceIface
       }
 
       return "Hello World!";
+   }
+   
+   public static void copyStream(OutputStream outs, InputStream ins) throws IOException
+   {
+      try
+      {
+         byte[] bytes = new byte[1024];
+         int r = ins.read(bytes);
+         while (r > 0)
+         {
+            outs.write(bytes, 0, r);
+            r = ins.read(bytes);
+         }
+      }
+      catch (IOException e)
+      {
+         throw e;
+      }
+      finally{
+         ins.close();
+      }
    }
 }

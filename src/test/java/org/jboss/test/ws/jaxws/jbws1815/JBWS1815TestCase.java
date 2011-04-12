@@ -25,6 +25,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.soap.Detail;
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPConnection;
@@ -36,7 +40,7 @@ import javax.xml.soap.SOAPMessage;
 
 import junit.framework.Test;
 
-import org.jboss.wsf.common.DOMUtils;
+import org.jboss.wsf.util.DOMUtils;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 import org.w3c.dom.Element;
@@ -69,7 +73,7 @@ public class JBWS1815TestCase extends JBossWSTest
    public void testWSDLAccess() throws Exception
    {
       URL wsdlURL = new URL(TARGET_ENDPOINT_ADDRESS + "?wsdl");
-      Element wsdl = DOMUtils.parse(wsdlURL.openStream());
+      Element wsdl = DOMUtils.parse(wsdlURL.openStream(), getDocumentBuilder());
       assertNotNull(wsdl);
    }
 
@@ -97,6 +101,25 @@ public class JBWS1815TestCase extends JBossWSTest
       MessageFactory msgFactory = MessageFactory.newInstance();
       SOAPMessage reqMsg = msgFactory.createMessage(null, new ByteArrayInputStream(msgString.getBytes()));
       return reqMsg;
+   }
+   
+   private DocumentBuilder getDocumentBuilder()
+   {
+      DocumentBuilderFactory factory = null;
+      try
+      {
+         factory = DocumentBuilderFactory.newInstance();
+         factory.setValidating(false);
+         factory.setNamespaceAware(true);
+         factory.setExpandEntityReferences(false);
+         factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+         DocumentBuilder builder = factory.newDocumentBuilder();
+         return builder;
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Unable to create document builder", e);
+      }
    }
 
 }

@@ -24,6 +24,9 @@ package org.jboss.test.ws.jaxws.samples.provider;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -34,7 +37,7 @@ import javax.xml.ws.handler.MessageContext;
 
 import org.jboss.logging.Logger;
 import org.jboss.wsf.common.handler.GenericLogicalHandler;
-import org.jboss.wsf.common.DOMUtils;
+import org.jboss.wsf.util.DOMUtils;
 import org.w3c.dom.Element;
 
 /**
@@ -72,7 +75,7 @@ public class LogicalSourceHandler extends GenericLogicalHandler
          tf.newTransformer().transform(source, new StreamResult(baos));
 
          // Parse the payload and extract the value
-         Element root = DOMUtils.parse(new ByteArrayInputStream(baos.toByteArray()));
+         Element root = DOMUtils.parse(new ByteArrayInputStream(baos.toByteArray()), getDocumentBuilder());
 
          String oldValue = DOMUtils.getTextContent(root);
          String newValue = oldValue + ":" + direction + ":LogicalSourceHandler";
@@ -94,6 +97,25 @@ public class LogicalSourceHandler extends GenericLogicalHandler
       catch (Exception ex)
       {
          throw new WebServiceException(ex);
+      }
+   }
+   
+   private DocumentBuilder getDocumentBuilder()
+   {
+      DocumentBuilderFactory factory = null;
+      try
+      {
+         factory = DocumentBuilderFactory.newInstance();
+         factory.setValidating(false);
+         factory.setNamespaceAware(true);
+         factory.setExpandEntityReferences(false);
+         factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+         DocumentBuilder builder = factory.newDocumentBuilder();
+         return builder;
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Unable to create document builder", e);
       }
    }
 }
