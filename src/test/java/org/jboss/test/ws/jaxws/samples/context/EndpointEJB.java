@@ -33,12 +33,15 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
+import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.handler.MessageContext;
 
-import org.jboss.wsf.common.DOMUtils;
+import org.jboss.wsf.util.DOMUtils;
 import org.jboss.wsf.common.DOMWriter;
 import org.jboss.wsf.spi.annotation.AuthMethod;
 import org.jboss.wsf.spi.annotation.TransportGuarantee;
@@ -107,11 +110,11 @@ public class EndpointEJB
          Element root = null;
          if (wsdl instanceof InputSource)
          {
-            root = DOMUtils.parse((InputSource)wsdl);
+            root = DOMUtils.parse((InputSource)wsdl, getDocumentBuilder());
          }
          else if (wsdl instanceof URI)
          {
-            root = DOMUtils.parse(((URI)wsdl).toURL().openStream());
+            root = DOMUtils.parse(((URI)wsdl).toURL().openStream(), getDocumentBuilder());
          }
          ByteArrayOutputStream out = new ByteArrayOutputStream();
          new DOMWriter(out).setPrettyprint(true).print(root);
@@ -139,5 +142,24 @@ public class EndpointEJB
    public boolean testIsUserInRole(String role)
    {
       return wsCtx.isUserInRole(role);
+   }
+   
+   private DocumentBuilder getDocumentBuilder()
+   {
+      DocumentBuilderFactory factory = null;
+      try
+      {
+         factory = DocumentBuilderFactory.newInstance();
+         factory.setValidating(false);
+         factory.setNamespaceAware(true);
+         factory.setExpandEntityReferences(false);
+         factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+         DocumentBuilder builder = factory.newDocumentBuilder();
+         return builder;
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Unable to create document builder", e);
+      }
    }
 }

@@ -25,12 +25,15 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Map;
 
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.ws.BindingProvider;
 
 import org.jboss.logging.Logger;
-import org.jboss.wsf.common.DOMUtils;
+import org.jboss.wsf.util.DOMUtils;
 import org.jboss.wsf.common.addressing.MAP;
 import org.jboss.wsf.common.addressing.MAPBuilder;
 import org.jboss.wsf.common.addressing.MAPBuilderFactory;
@@ -109,7 +112,7 @@ public class AddressingPort implements StatefulEndpoint
       }
       try
       {
-         replyTo.addReferenceParameter(DOMUtils.parse(getClientIdElement(clientID)));
+         replyTo.addReferenceParameter(DOMUtils.parse(getClientIdElement(clientID), getDocumentBuilder()));
       }
       catch (IOException e)
       {
@@ -161,5 +164,24 @@ public class AddressingPort implements StatefulEndpoint
       buffer.append(" xmlns:" + IDQN.getPrefix() + "='" + IDQN.getNamespaceURI() + "'");
       buffer.append(">" + clientid + "</" + qualname + ">");
       return buffer.toString();
+   }
+   
+   private static DocumentBuilder getDocumentBuilder()
+   {
+      DocumentBuilderFactory factory = null;
+      try
+      {
+         factory = DocumentBuilderFactory.newInstance();
+         factory.setValidating(false);
+         factory.setNamespaceAware(true);
+         factory.setExpandEntityReferences(false);
+         factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+         DocumentBuilder builder = factory.newDocumentBuilder();
+         return builder;
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Unable to create document builder", e);
+      }
    }
 }

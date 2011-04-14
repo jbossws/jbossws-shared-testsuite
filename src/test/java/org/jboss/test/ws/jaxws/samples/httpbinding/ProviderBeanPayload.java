@@ -21,10 +21,13 @@
  */
 package org.jboss.test.ws.jaxws.samples.httpbinding;
 
-import org.jboss.wsf.common.DOMUtils;
+import org.jboss.wsf.util.DOMUtils;
 import org.w3c.dom.Element;
 
 import javax.jws.HandlerChain;
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -81,13 +84,32 @@ public class ProviderBeanPayload implements Provider<Source>
 
    private void verifyRequest(String xml) throws IOException
    {
-      Element was = DOMUtils.parse(xml);
+      Element was = DOMUtils.parse(xml, getDocumentBuilder());
 
       if(!"somePayload".equals(was.getLocalName())
         || !"http://org.jboss.ws/httpbinding".equals(was.getNamespaceURI())
         || !"Hello:InboundLogicalHandler".equals( DOMUtils.getTextContent(was)))
       {
          throw new WebServiceException("Unexpected payload: " + xml);
+      }
+   }
+   
+   private DocumentBuilder getDocumentBuilder()
+   {
+      DocumentBuilderFactory factory = null;
+      try
+      {
+         factory = DocumentBuilderFactory.newInstance();
+         factory.setValidating(false);
+         factory.setNamespaceAware(true);
+         factory.setExpandEntityReferences(false);
+         factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+         DocumentBuilder builder = factory.newDocumentBuilder();
+         return builder;
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Unable to create document builder", e);
       }
    }
 

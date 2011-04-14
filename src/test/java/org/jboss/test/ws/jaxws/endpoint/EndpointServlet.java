@@ -30,7 +30,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.EndpointReference;
 import javax.xml.ws.Service;
@@ -38,7 +41,7 @@ import javax.xml.ws.soap.SOAPBinding;
 import javax.xml.ws.wsaddressing.W3CEndpointReference;
 
 import org.jboss.logging.Logger;
-import org.jboss.wsf.common.DOMUtils;
+import org.jboss.wsf.util.DOMUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -51,7 +54,6 @@ import org.w3c.dom.NodeList;
 @SuppressWarnings("serial")
 public class EndpointServlet extends HttpServlet
 {
-   
    private Endpoint endpoint1;
    private Endpoint endpoint2;
    private static final String TEST_ELEMENT = "<fabrikam:CustomerKey xmlns:fabrikam='http://example.com/fabrikam'>123456789</fabrikam:CustomerKey>";
@@ -92,8 +94,9 @@ public class EndpointServlet extends HttpServlet
       String retStr = port.echo(param);
       
       //Test epr
-      assertEndpointReference(endpoint1.getEndpointReference(DOMUtils.parse(TEST_ELEMENT)), TEST_ELEMENT);
-      assertEndpointReference(endpoint1.getEndpointReference(W3CEndpointReference.class, (Element[])null), null);
+      DocumentBuilder builder = getDocumentBuilder();
+      assertEndpointReference(endpoint1.getEndpointReference(DOMUtils.parse(TEST_ELEMENT, builder)), TEST_ELEMENT, builder);
+      assertEndpointReference(endpoint1.getEndpointReference(W3CEndpointReference.class, (Element[])null), null, builder);
 
       // Return the result
       PrintWriter pw = new PrintWriter(res.getWriter());
@@ -101,11 +104,11 @@ public class EndpointServlet extends HttpServlet
       pw.close();
    }
    
-   private void assertEndpointReference(EndpointReference epr, String refPar) throws IOException
+   private void assertEndpointReference(EndpointReference epr, String refPar, DocumentBuilder builder) throws IOException
    {
       Logger.getLogger(this.getClass()).info("epr: "+epr);
       assert(W3CEndpointReference.class.getName().equals(epr.getClass().getName()));
-      Element endpointReference = DOMUtils.parse(epr.toString());
+      Element endpointReference = DOMUtils.parse(epr.toString(), builder);
       assert("EndpointReference".equals(endpointReference.getNodeName()));
       assert("http://www.w3.org/2005/08/addressing".equals(endpointReference.getAttribute("xmlns")));
       NodeList addresses = endpointReference.getElementsByTagName("Address");
@@ -114,6 +117,25 @@ public class EndpointServlet extends HttpServlet
       if (refPar != null)
       {
          assert(epr.toString().contains(refPar));
+      }
+   }
+   
+   private DocumentBuilder getDocumentBuilder()
+   {
+      DocumentBuilderFactory factory = null;
+      try
+      {
+         factory = DocumentBuilderFactory.newInstance();
+         factory.setValidating(false);
+         factory.setNamespaceAware(true);
+         factory.setExpandEntityReferences(false);
+         factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+         DocumentBuilder builder = factory.newDocumentBuilder();
+         return builder;
+      }
+      catch (Exception e)
+      {
+         throw new RuntimeException("Unable to create document builder", e);
       }
    }
 }
