@@ -53,6 +53,8 @@ public final class WSRunClientTestCase extends JBossWSTest
     */
    public void test() throws Exception
    {
+      if (!isTargetJBoss6()) return; // wsrunclient not available since AS7x
+
       StringBuilder sb = new StringBuilder();
       Map<String, String> env = new HashMap<String, String>();
       env.put("WSRUNCLIENT_CLASSPATH", additionalClasspath);
@@ -141,7 +143,7 @@ public final class WSRunClientTestCase extends JBossWSTest
     */
    private List<String> getContent(String resource) throws Exception
    {
-      File f = this.getResourceFile(resource);
+      File f = getResourceFile(resource);
       assertTrue(f.exists());
       List<String> retVal = new LinkedList<String>();
       BufferedReader br = null;
