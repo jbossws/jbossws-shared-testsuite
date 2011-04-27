@@ -1,0 +1,14 @@
+org.jboss.test.ws.jaxws.samples.webparam.WebParamTestCase
+org.jboss.test.ws.jaxws.samples.webmethod.WebMethodTestCase
+org.jboss.test.ws.jaxws.samples.webresult.WebResultTestCase
+org.jboss.test.ws.jaxws.samples.asynchronous.AsynchronousProxyTestCase
+org.jboss.test.ws.jaxws.samples.context.WebServiceContextEJBTestCase
+org.jboss.test.ws.jaxws.samples.context.WebServiceContextJSETestCase
+org.jboss.test.ws.jaxws.samples.eardeployment.EarTestCase
+org.jboss.test.ws.jaxws.samples.exception.ExceptionEJB3TestCase
+org.jboss.test.ws.jaxws.samples.exception.ExceptionTestCase
+org.jboss.test.ws.jaxws.samples.provider.ProviderMessageTestCase
+org.jboss.test.ws.jaxws.samples.swaref.SWARefTestCase
+org.jboss.test.ws.jaxws.samples.webservice.WebServiceJSETestCase
+org.jboss.test.ws.jaxws.samples.webservice.WebServiceEJB3TestCase
+org.jboss.test.ws.jaxws.samples.advanced.retail.RetailSampleTestCase

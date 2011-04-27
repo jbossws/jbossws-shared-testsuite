@@ -1,0 +1,8 @@
+java.naming.provider.url
+jboss.home
+jbossws.integration.target
+log4j.output.dir
+test.classes.directory
+test.resources.directory
+test.archive.directory
+jboss.bind.address
