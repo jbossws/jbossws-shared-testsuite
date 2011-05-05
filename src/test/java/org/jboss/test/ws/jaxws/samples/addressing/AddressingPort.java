@@ -34,11 +34,11 @@ import javax.xml.ws.BindingProvider;
 
 import org.jboss.logging.Logger;
 import org.jboss.wsf.util.DOMUtils;
-import org.jboss.wsf.common.addressing.MAP;
-import org.jboss.wsf.common.addressing.MAPBuilder;
-import org.jboss.wsf.common.addressing.MAPBuilderFactory;
-import org.jboss.wsf.common.addressing.MAPConstants;
-import org.jboss.wsf.common.addressing.MAPEndpoint;
+import org.jboss.ws.api.addressing.MAP;
+import org.jboss.ws.api.addressing.MAPBuilder;
+import org.jboss.ws.api.addressing.MAPBuilderFactory;
+import org.jboss.ws.api.addressing.MAPConstants;
+import org.jboss.ws.api.addressing.MAPEndpoint;
 import org.jboss.wsf.common.utils.UUIDGenerator;
 import org.w3c.dom.Element;
 

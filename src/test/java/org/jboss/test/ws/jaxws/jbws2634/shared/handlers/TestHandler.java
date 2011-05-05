@@ -33,7 +33,7 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 
 import org.jboss.logging.Logger;
 import org.jboss.test.ws.jaxws.jbws2634.shared.BeanIface;
-import org.jboss.wsf.common.handler.GenericSOAPHandler;
+import org.jboss.ws.api.handler.GenericSOAPHandler;
 
 /**
  * This handler is initialized via injections.

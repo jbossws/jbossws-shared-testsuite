@@ -27,7 +27,7 @@ import javax.xml.ws.WebServiceException;
 import javax.xml.ws.handler.LogicalMessageContext;
 import javax.xml.ws.handler.MessageContext;
 
-import org.jboss.wsf.common.handler.GenericLogicalHandler;
+import org.jboss.ws.api.handler.GenericLogicalHandler;
 
 public class LogicalJAXBHandler extends GenericLogicalHandler
 {

@@ -24,7 +24,7 @@ package org.jboss.test.ws.jaxws.samples.advanced.retail.handler;
 import javax.xml.ws.handler.MessageContext;
 
 import org.jboss.logging.Logger;
-import org.jboss.wsf.common.handler.GenericSOAPHandler;
+import org.jboss.ws.api.handler.GenericSOAPHandler;
 
 public class SOAPMessageTrace extends GenericSOAPHandler
 {

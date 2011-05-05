@@ -36,7 +36,7 @@ import javax.xml.ws.handler.LogicalMessageContext;
 import javax.xml.ws.handler.MessageContext;
 
 import org.jboss.logging.Logger;
-import org.jboss.wsf.common.handler.GenericLogicalHandler;
+import org.jboss.ws.api.handler.GenericLogicalHandler;
 import org.jboss.wsf.util.DOMUtils;
 import org.w3c.dom.Element;
 
