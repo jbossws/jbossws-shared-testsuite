@@ -24,7 +24,7 @@ package org.jboss.test.ws.jaxws.jbws2976;
 import javax.xml.ws.handler.LogicalMessageContext;
 import javax.xml.ws.handler.MessageContext;
 
-import org.jboss.wsf.common.handler.GenericSOAPHandler;
+import org.jboss.ws.api.handler.GenericSOAPHandler;
 
 /**
  * @author <a href="ema@redhat.com">Jim Ma</a>
