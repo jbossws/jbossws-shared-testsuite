@@ -26,7 +26,7 @@ import javax.jws.WebService;
 import javax.xml.ws.Response;
 
 import org.jboss.logging.Logger;
-import org.jboss.wsf.spi.annotation.WebContext;
+import org.jboss.ws.api.annotation.WebContext;
 
 @Stateless
 @WebService(endpointInterface = "org.jboss.test.ws.jaxws.samples.advanced.retail.cc.CCVerification")

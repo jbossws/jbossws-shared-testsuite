@@ -34,7 +34,7 @@ import org.jboss.test.ws.jaxws.samples.advanced.retail.profile.DiscountRequest;
 import org.jboss.test.ws.jaxws.samples.advanced.retail.profile.DiscountResponse;
 import org.jboss.test.ws.jaxws.samples.advanced.retail.profile.ProfileMgmt;
 import org.jboss.test.ws.jaxws.samples.advanced.retail.profile.ProfileMgmtService;
-import org.jboss.wsf.spi.annotation.WebContext;
+import org.jboss.ws.api.annotation.WebContext;
 
 /**
  * An example order management component

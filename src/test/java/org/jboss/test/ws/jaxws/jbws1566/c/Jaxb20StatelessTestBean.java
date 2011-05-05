@@ -29,7 +29,7 @@ import javax.jws.WebService;
 import org.jboss.test.ws.jaxws.jbws1566.a.TestEnumeration;
 import org.jboss.test.ws.jaxws.jbws1566.b.BClass;
 import org.jboss.test.ws.jaxws.jbws1566.b.BException;
-import org.jboss.wsf.spi.annotation.WebContext;
+import org.jboss.ws.api.annotation.WebContext;
 
 @Stateless
 @WebService(endpointInterface = "org.jboss.test.ws.jaxws.jbws1566.c.Jaxb20TestWSInterface", targetNamespace = "http://org.jboss.ws/samples/c", serviceName = "WebServiceTestService", portName = "WebServiceTestPort")

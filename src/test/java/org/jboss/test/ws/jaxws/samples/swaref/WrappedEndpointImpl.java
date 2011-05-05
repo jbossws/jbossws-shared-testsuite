@@ -21,7 +21,7 @@
  */
 package org.jboss.test.ws.jaxws.samples.swaref;
 
-import org.jboss.wsf.spi.annotation.WebContext;
+import org.jboss.ws.api.annotation.WebContext;
 
 import javax.activation.DataHandler;
 import javax.jws.WebMethod;

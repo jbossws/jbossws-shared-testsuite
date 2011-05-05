@@ -43,9 +43,9 @@ import javax.xml.ws.handler.MessageContext;
 
 import org.jboss.wsf.util.DOMUtils;
 import org.jboss.wsf.common.DOMWriter;
-import org.jboss.wsf.spi.annotation.AuthMethod;
-import org.jboss.wsf.spi.annotation.TransportGuarantee;
-import org.jboss.wsf.spi.annotation.WebContext;
+import org.jboss.ws.api.annotation.AuthMethod;
+import org.jboss.ws.api.annotation.TransportGuarantee;
+import org.jboss.ws.api.annotation.WebContext;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 

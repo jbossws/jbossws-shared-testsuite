@@ -28,7 +28,7 @@ import javax.management.MBeanServerFactory;
 import javax.management.ObjectName;
 
 import org.jboss.logging.Logger;
-import org.jboss.wsf.spi.annotation.WebContext;
+import org.jboss.ws.api.annotation.WebContext;
 
 /**
  * 

@@ -30,7 +30,7 @@ import javax.jws.soap.SOAPBinding.ParameterStyle;
 
 import javax.ejb.Stateless;
 
-import org.jboss.wsf.spi.annotation.WebContext;
+import org.jboss.ws.api.annotation.WebContext;
 
 /**
  * Service implementation.

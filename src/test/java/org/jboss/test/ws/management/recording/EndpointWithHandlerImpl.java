@@ -26,7 +26,7 @@ import javax.jws.HandlerChain;
 import javax.jws.WebService;
 
 import org.jboss.logging.Logger;
-import org.jboss.wsf.spi.annotation.WebContext;
+import org.jboss.ws.api.annotation.WebContext;
 
 /**
  * @author alessio.soldano@jboss.org
