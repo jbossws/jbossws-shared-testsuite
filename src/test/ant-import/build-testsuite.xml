@@ -94,7 +94,7 @@
     <property name="jboss.server.deployers" value="${jboss.server}/deployers"/>
     
     <!-- Java Endorsed -->
-    <condition property="endorsed.dirs" value="${jboss.home}/lib/endorsed">
+    <condition property="endorsed.dirs" value="${jboss.home}/lib/endorsed${path.separator}${jboss.home}/modules/javax/xml/ws/api/main/">
       <isset property="jboss.home"/>
     </condition>
     
@@ -436,6 +436,21 @@
       </fileset>
       <fileset dir="${jboss.home}/modules/org/jboss/threads/main/">
         <include name="jboss-threads-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/picketbox/main/">
+        <include name="picketbox-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/javax/ejb/api/main/">
+        <include name="jboss-ejb-api_3.1_spec-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/apache/xerces/main/">
+        <include name="xercesImpl-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/common-core/main/">
+        <include name="jboss-common-core-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/javassist/main/">
+        <include name="javassist-*.jar"/>
       </fileset>
     </path>
   </target>
