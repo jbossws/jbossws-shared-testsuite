@@ -30,7 +30,7 @@ import javax.jws.soap.SOAPBinding;
 import org.jboss.ejb3.annotation.RemoteHomeBinding;
 import org.jboss.ejb3.annotation.RemoteBinding;
 
-import org.jboss.wsf.spi.annotation.WebContext;
+import org.jboss.ws.api.annotation.WebContext;
 
 @WebService(name = "EJB3Bean", serviceName = "EJB3BeanService", targetNamespace = "http://org.jboss.ws/jbws944")
 @WebContext(contextRoot = "/jaxws-jbws944", urlPattern = "/FooBean01")

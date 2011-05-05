@@ -28,7 +28,7 @@ import javax.jws.WebService;
 import javax.xml.ws.WebServiceException;
 
 import org.jboss.logging.Logger;
-import org.jboss.wsf.spi.annotation.WebContext;
+import org.jboss.ws.api.annotation.WebContext;
 
 @Stateless
 @WebService

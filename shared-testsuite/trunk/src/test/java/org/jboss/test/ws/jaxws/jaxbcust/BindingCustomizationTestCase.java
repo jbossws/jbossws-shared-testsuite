@@ -23,10 +23,10 @@ package org.jboss.test.ws.jaxws.jaxbcust;
 
 import junit.framework.TestCase;
 
+import org.jboss.ws.api.binding.BindingCustomization;
+import org.jboss.ws.api.binding.JAXBBindingCustomization;
 import org.jboss.wsf.spi.SPIProvider;
 import org.jboss.wsf.spi.SPIProviderResolver;
-import org.jboss.wsf.spi.binding.BindingCustomization;
-import org.jboss.wsf.spi.binding.JAXBBindingCustomization;
 import org.jboss.wsf.spi.deployment.DeploymentModelFactory;
 import org.jboss.wsf.spi.deployment.Endpoint;
 import org.jboss.wsf.spi.deployment.Endpoint.EndpointState;

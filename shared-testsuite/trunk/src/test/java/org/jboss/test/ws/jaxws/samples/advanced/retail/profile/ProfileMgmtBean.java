@@ -24,7 +24,7 @@ package org.jboss.test.ws.jaxws.samples.advanced.retail.profile;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 
-import org.jboss.wsf.spi.annotation.WebContext;
+import org.jboss.ws.api.annotation.WebContext;
 
 @Stateless
 @WebService(endpointInterface = "org.jboss.test.ws.jaxws.samples.advanced.retail.profile.ProfileMgmt", serviceName = "ProfileMgmtService")

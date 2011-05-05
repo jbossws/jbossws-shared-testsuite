@@ -28,9 +28,9 @@ import javax.jws.soap.SOAPBinding.Style;
 import javax.xml.ws.WebServiceException;
 
 import javax.ejb.Stateless;
-import org.jboss.wsf.spi.annotation.AuthMethod;
-import org.jboss.wsf.spi.annotation.TransportGuarantee;
-import org.jboss.wsf.spi.annotation.WebContext;
+import org.jboss.ws.api.annotation.AuthMethod;
+import org.jboss.ws.api.annotation.TransportGuarantee;
+import org.jboss.ws.api.annotation.WebContext;
 
 /**
  * Endpoint EJB implementation.
