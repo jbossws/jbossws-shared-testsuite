@@ -40,7 +40,7 @@ import javax.xml.soap.SOAPMessage;
 
 import junit.framework.Test;
 
-import org.jboss.wsf.util.DOMUtils;
+import org.jboss.ws.api.util.DOMUtils;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 import org.w3c.dom.Element;

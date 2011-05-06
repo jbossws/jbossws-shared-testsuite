@@ -41,7 +41,7 @@ import javax.xml.ws.soap.SOAPBinding;
 import javax.xml.ws.wsaddressing.W3CEndpointReference;
 
 import org.jboss.logging.Logger;
-import org.jboss.wsf.util.DOMUtils;
+import org.jboss.ws.api.util.DOMUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 

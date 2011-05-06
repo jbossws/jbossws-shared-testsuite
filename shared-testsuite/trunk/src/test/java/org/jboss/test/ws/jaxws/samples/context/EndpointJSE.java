@@ -39,7 +39,7 @@ import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.handler.MessageContext;
 
-import org.jboss.wsf.util.DOMUtils;
+import org.jboss.ws.api.util.DOMUtils;
 import org.jboss.wsf.common.DOMWriter;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
