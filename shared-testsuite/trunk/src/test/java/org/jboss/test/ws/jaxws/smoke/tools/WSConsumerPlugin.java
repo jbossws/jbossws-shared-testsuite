@@ -21,7 +21,7 @@
  */
 package org.jboss.test.ws.jaxws.smoke.tools;
 
-import org.jboss.wsf.spi.tools.WSContractConsumer;
+import org.jboss.ws.api.tools.WSContractConsumer;
 import org.jboss.wsf.test.JBossWSTest;
 
 import javax.xml.bind.annotation.XmlSeeAlso;
