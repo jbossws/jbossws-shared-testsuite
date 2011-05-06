@@ -23,7 +23,7 @@ package org.jboss.test.ws.management.recording;
 
 import java.io.Serializable;
 
-import org.jboss.wsf.framework.management.recording.MemoryBufferRecorder;
+import org.jboss.ws.common.monitoring.MemoryBufferRecorder;
 
 public class MyManagedProcessor extends MemoryBufferRecorder implements MyManagedProcessorMBean, Serializable {
    

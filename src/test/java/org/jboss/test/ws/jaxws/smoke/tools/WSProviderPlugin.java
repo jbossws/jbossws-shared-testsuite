@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.jboss.wsf.common.DOMUtils;
+import org.jboss.ws.common.DOMUtils;
 import org.jboss.ws.api.tools.WSContractProvider;
 import org.jboss.wsf.test.JBossWSTest;
 import org.w3c.dom.Element;

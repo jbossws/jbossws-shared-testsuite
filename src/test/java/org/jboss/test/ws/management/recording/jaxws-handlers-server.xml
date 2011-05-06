@@ -7,7 +7,7 @@
    <handler-chain>
       <handler>
          <handler-name>Recording Handler</handler-name>
-         <handler-class>org.jboss.wsf.framework.invocation.RecordingServerHandler</handler-class>
+         <handler-class>org.jboss.ws.common.invocation.RecordingServerHandler</handler-class>
       </handler>
    </handler-chain>
 </handler-chains>

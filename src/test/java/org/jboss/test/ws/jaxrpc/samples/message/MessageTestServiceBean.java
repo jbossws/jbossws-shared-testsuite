@@ -36,7 +36,7 @@ import javax.xml.transform.dom.DOMSource;
 
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.util.DOMUtils;
-import org.jboss.wsf.common.DOMWriter;
+import org.jboss.ws.common.DOMWriter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

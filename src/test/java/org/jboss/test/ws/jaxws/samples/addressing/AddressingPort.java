@@ -39,7 +39,7 @@ import org.jboss.ws.api.addressing.MAPBuilder;
 import org.jboss.ws.api.addressing.MAPBuilderFactory;
 import org.jboss.ws.api.addressing.MAPConstants;
 import org.jboss.ws.api.addressing.MAPEndpoint;
-import org.jboss.wsf.common.utils.UUIDGenerator;
+import org.jboss.ws.common.utils.UUIDGenerator;
 import org.w3c.dom.Element;
 
 /**

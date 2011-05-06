@@ -26,7 +26,7 @@ import javax.xml.transform.dom.DOMResult;
 import javax.xml.ws.wsaddressing.W3CEndpointReference;
 import javax.xml.ws.wsaddressing.W3CEndpointReferenceBuilder;
 
-import org.jboss.wsf.common.DOMUtils;
+import org.jboss.ws.common.DOMUtils;
 import org.jboss.wsf.test.JBossWSTest;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
