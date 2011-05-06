@@ -33,7 +33,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.ws.BindingProvider;
 
 import org.jboss.logging.Logger;
-import org.jboss.wsf.util.DOMUtils;
+import org.jboss.ws.api.util.DOMUtils;
 import org.jboss.ws.api.addressing.MAP;
 import org.jboss.ws.api.addressing.MAPBuilder;
 import org.jboss.ws.api.addressing.MAPBuilderFactory;

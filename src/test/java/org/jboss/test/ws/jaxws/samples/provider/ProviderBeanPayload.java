@@ -22,7 +22,7 @@
 package org.jboss.test.ws.jaxws.samples.provider;
 
 import org.w3c.dom.Element;
-import org.jboss.wsf.util.DOMUtils;
+import org.jboss.ws.api.util.DOMUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

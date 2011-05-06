@@ -38,7 +38,7 @@ import javax.xml.ws.http.HTTPBinding;
 
 import org.jboss.logging.Logger;
 import org.jboss.test.helper.DOMWriter;
-import org.jboss.wsf.util.DOMUtils;
+import org.jboss.ws.api.util.DOMUtils;
 
 @WebServiceProvider(wsdlLocation = "WEB-INF/wsdl/provider.wsdl", portName = "ProviderPort", serviceName = "ProviderService", targetNamespace = "http://ws.com/")
 @ServiceMode(value = Service.Mode.PAYLOAD)
