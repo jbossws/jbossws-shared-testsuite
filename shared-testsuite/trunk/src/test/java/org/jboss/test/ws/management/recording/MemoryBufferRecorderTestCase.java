@@ -36,8 +36,8 @@ import org.jboss.wsf.framework.management.recording.AndFilter;
 import org.jboss.wsf.framework.management.recording.HostFilter;
 import org.jboss.wsf.framework.management.recording.NotFilter;
 import org.jboss.wsf.framework.management.recording.OperationFilter;
-import org.jboss.wsf.spi.management.recording.Record;
-import org.jboss.wsf.spi.management.recording.RecordFilter;
+import org.jboss.ws.api.monitoring.Record;
+import org.jboss.ws.api.monitoring.RecordFilter;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestHelper;
 
