@@ -28,7 +28,7 @@ import javax.management.ObjectName;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
-import org.jboss.wsf.spi.management.recording.RecordProcessor;
+import org.jboss.ws.api.monitoring.RecordProcessor;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestHelper;
 
