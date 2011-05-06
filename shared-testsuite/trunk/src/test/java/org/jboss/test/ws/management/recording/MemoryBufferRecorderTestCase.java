@@ -32,10 +32,10 @@ import javax.management.ObjectName;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
-import org.jboss.wsf.framework.management.recording.AndFilter;
-import org.jboss.wsf.framework.management.recording.HostFilter;
-import org.jboss.wsf.framework.management.recording.NotFilter;
-import org.jboss.wsf.framework.management.recording.OperationFilter;
+import org.jboss.ws.common.monitoring.AndFilter;
+import org.jboss.ws.common.monitoring.HostFilter;
+import org.jboss.ws.common.monitoring.NotFilter;
+import org.jboss.ws.common.monitoring.OperationFilter;
 import org.jboss.ws.api.monitoring.Record;
 import org.jboss.ws.api.monitoring.RecordFilter;
 import org.jboss.wsf.test.JBossWSTest;

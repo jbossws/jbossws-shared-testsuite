@@ -57,7 +57,7 @@ import javax.xml.registry.infomodel.TelephoneNumber;
 import javax.xml.registry.infomodel.User;
 
 import org.jboss.wsf.test.JBossWSTest;
-import org.jboss.wsf.common.ObjectNameFactory;
+import org.jboss.ws.common.ObjectNameFactory;
 
 /**
  * Acts as the base class for Jaxr Test Cases

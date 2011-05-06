@@ -21,7 +21,7 @@
  */
 package org.jboss.test.ws.management.recording;
 
-import org.jboss.wsf.framework.management.recording.MemoryBufferRecorderMBean;
+import org.jboss.ws.common.monitoring.MemoryBufferRecorderMBean;
 
 public interface MyManagedProcessorMBean extends MemoryBufferRecorderMBean
 {

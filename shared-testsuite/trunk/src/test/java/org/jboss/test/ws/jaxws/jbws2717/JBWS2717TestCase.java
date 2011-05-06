@@ -27,7 +27,7 @@ import java.net.URL;
 
 import junit.framework.Test;
 
-import org.jboss.wsf.common.IOUtils;
+import org.jboss.ws.common.IOUtils;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
