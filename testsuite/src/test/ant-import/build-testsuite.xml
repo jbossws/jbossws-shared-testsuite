@@ -391,6 +391,7 @@
     -->
     <path id="integration.target.client.classpath">
       <pathelement location="${thirdparty.dir}/jboss-as-webservices-tests-integration.jar"/> <!-- included from thirdparty local dir as it's not installed on AS -->
+      <pathelement location="${thirdparty.dir}/jbossws-shared-testsuite.jar"/> <!-- included from thirdparty local dir as it's not installed on AS -->
       <pathelement location="${jboss.home}/jboss-modules.jar"/>
       <fileset dir="${jboss.home}/modules/org/jboss/logging/main/">
         <include name="jboss-logging-*.jar"/>
@@ -615,6 +616,7 @@
       <sysproperty key="test.archive.directory" value="${tests.output.dir}/test-libs"/>
       <sysproperty key="test.classes.directory" value="${tests.output.dir}/test-classes"/>
       <sysproperty key="test.resources.directory" value="${tests.output.dir}/test-resources"/>
+      <sysproperty key="org.jboss.wsf.spi.deployer.Deployer" value="org.jboss.wsf.test.DeployerJBoss6"/>
       <sysproperty key="binary.distribution" value="true"/>
       <classpath>
         <path refid="tests.client.classpath"/>
@@ -676,6 +678,7 @@
       <sysproperty key="test.archive.directory" value="${tests.output.dir}/test-libs"/>
       <sysproperty key="test.classes.directory" value="${tests.output.dir}/test-classes"/>
       <sysproperty key="test.resources.directory" value="${tests.output.dir}/test-resources"/>
+      <sysproperty key="org.jboss.wsf.spi.deployer.Deployer" value="org.jboss.wsf.test.DeployerJBoss6"/>
       <sysproperty key="binary.distribution" value="true"/>
       <classpath>
         <path refid="tests.client.classpath"/>
