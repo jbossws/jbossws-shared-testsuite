@@ -49,8 +49,12 @@
     </dependency>
   </dependencies>
 
+  <!-- Plugins -->
   <build>
     <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <executions>
@@ -61,7 +65,7 @@
             </goals>
             <configuration>
               <descriptors>
-                <descriptor>testsuite/src/test/scripts/assembly-testsuite.xml</descriptor>
+                <descriptor>src/test/scripts/assembly-testsuite.xml</descriptor>
               </descriptors>
             </configuration>
           </execution>

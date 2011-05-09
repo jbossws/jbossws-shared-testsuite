@@ -6,7 +6,7 @@
   <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
     <fileSet>
-      <directory>src/test</directory>
+      <directory>testsuite/src/test</directory>
       <outputDirectory>/</outputDirectory>
     </fileSet>
   </fileSets>
