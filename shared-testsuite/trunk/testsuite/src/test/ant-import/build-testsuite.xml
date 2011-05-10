@@ -453,6 +453,9 @@
       <fileset dir="${jboss.home}/modules/org/javassist/main/">
         <include name="javassist-*.jar"/>
       </fileset>
+      <fileset dir="${jboss.home}/modules/javax/security/jacc/api/main/">
+        <include name="jboss-jacc-api*.jar"/>
+      </fileset>
     </path>
   </target>
 	  
