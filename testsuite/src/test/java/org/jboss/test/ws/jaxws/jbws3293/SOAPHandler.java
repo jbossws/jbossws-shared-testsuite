@@ -31,7 +31,6 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
 
 import org.jboss.logging.Logger;
 import org.jboss.test.helper.DOMWriter;
-import org.jboss.ws.WSException;
 import org.jboss.ws.api.handler.GenericSOAPHandler;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -82,7 +81,7 @@ public class SOAPHandler extends GenericSOAPHandler<LogicalMessageContext>
       }
       catch (SOAPException e)
       {
-         throw new WSException("Error in Handler", e);
+         throw new RuntimeException("Error in Handler", e);
       }
 
       log.info("Finished");
