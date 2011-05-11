@@ -159,6 +159,11 @@ public class JBossWSTestSetup extends TestSetup
          Thread.currentThread().setContextClassLoader(originalClassLoader);
       }
    }
+   
+   protected ClassLoader getOriginalClassLoader()
+   {
+      return originalClassLoader;
+   }
 
    public MBeanServerConnection getServer() throws NamingException
    {
