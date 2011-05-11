@@ -280,13 +280,6 @@ public class WSProviderPlugin extends JBossWSTest implements WSProviderPluginDel
     */
    public void testMessageStream() throws Exception
    {
-
-      if(isIntegrationMetro())
-      {
-         System.out.println("FIXME: [JBWS-1777] WSProvide output is not correctly redirected");
-         return;
-      }
-
       ByteArrayOutputStream bout = new ByteArrayOutputStream();
       PrintStream pout = new PrintStream(bout);
 

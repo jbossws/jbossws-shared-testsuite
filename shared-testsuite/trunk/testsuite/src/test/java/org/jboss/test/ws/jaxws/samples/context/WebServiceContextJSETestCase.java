@@ -70,12 +70,6 @@ public class WebServiceContextJSETestCase extends JBossWSTest
 
    public void testMessageContextProperties() throws Exception
    {
-      if (isIntegrationMetro())
-      {
-         System.out.println("FIXME: [JBWS-2204] Implement Metro standard message context properties");
-         return;
-      }
-      
       String retStr = port.testMessageContextProperties();
       assertEquals("pass", retStr);
    }

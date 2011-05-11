@@ -64,7 +64,7 @@ public class EndpointTestCase extends JBossWSTest
 
    public void testServletAccess() throws Exception
    {
-      boolean clCheck = !(isTargetJBoss5() || isTargetJBoss6());
+      boolean clCheck = !isTargetJBoss6();
       URL url = new URL("http://" + getServerHost() + ":8080/jaxws-jbws3223-servlet?param=hello-world&clCheck=" + clCheck);
       BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
       assertEquals("hello-world", br.readLine());

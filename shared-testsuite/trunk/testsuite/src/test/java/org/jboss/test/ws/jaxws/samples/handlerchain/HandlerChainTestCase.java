@@ -88,11 +88,6 @@ public class HandlerChainTestCase extends JBossWSTest
 
    private void assertCookies() throws Exception
    {
-      if (isIntegrationMetro())
-      {
-         System.out.println("FIXME: [JBWS-1671] Metro client handler cannot set mime header");
-         return;
-      }
       if (isIntegrationCXF())
       {
          System.out.println("FIXME: [CXF-1507] CXF client handler cannot set mime header");

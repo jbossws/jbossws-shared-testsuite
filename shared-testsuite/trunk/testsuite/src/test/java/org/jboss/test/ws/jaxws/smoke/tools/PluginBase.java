@@ -43,7 +43,6 @@ public abstract class PluginBase extends JBossWSTest
    protected String origLog4jConf;
    protected String oldCPProp;
    protected boolean integrationNative = false;
-   protected boolean integrationMetro = false;
    protected boolean integrationCXF = false;
    
    private static final String LOG4J_CONF = "log4j.configuration";
@@ -72,14 +71,13 @@ public abstract class PluginBase extends JBossWSTest
       if (list.contains(StackConfigurable.class.getName()))
       {
          clazz.getMethod("setIsNative", boolean.class).invoke(delegate, integrationNative);
-         clazz.getMethod("setIsMetro", boolean.class).invoke(delegate, integrationMetro);
          clazz.getMethod("setIsCXF", boolean.class).invoke(delegate, integrationCXF);
       }
    }
 
    protected void setupClasspath() throws Exception
    {
-      if (!(integrationCXF || integrationMetro || integrationNative))
+      if (!(integrationCXF || integrationNative))
       {
          //the integration stack is not set yet, doing it before mangling with the classpath
          readIntegrationStack();
@@ -155,7 +153,6 @@ public abstract class PluginBase extends JBossWSTest
    protected void readIntegrationStack()
    {
       this.integrationNative = isIntegrationNative();
-      this.integrationMetro = isIntegrationMetro();
       this.integrationCXF = isIntegrationCXF();
    }
 }

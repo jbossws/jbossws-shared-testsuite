@@ -51,10 +51,6 @@ public class JBWS2701TestCase extends JBossWSTest
    public void testWSDL() throws Exception
    {
       URL url = new URL(endpointAddress + "?wsdl");
-      if (isIntegrationMetro())
-      {
-         url = new URL(endpointAddress + "?xsd=1");
-      }
       BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
       String line = br.readLine();
       StringBuilder sb = new StringBuilder();

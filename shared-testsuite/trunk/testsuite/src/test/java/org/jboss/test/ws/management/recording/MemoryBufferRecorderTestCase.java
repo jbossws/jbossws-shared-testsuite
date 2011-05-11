@@ -86,12 +86,6 @@ public class MemoryBufferRecorderTestCase extends JBossWSTest
    @SuppressWarnings("unchecked")
    public void testGetRecordsByOperation() throws Exception
    {
-      if (isIntegrationMetro())
-      {
-         //The WSDL_OPERATION ctx property is required for the operation filter to work
-         System.out.println("FIXME: [JBWS-2204] Implement Metro standard message context properties");
-         return;
-      }
       Endpoint port = getPort();
       MBeanServerConnection server = getServer();
       ObjectName oname = new ObjectName(endpointObjectName + ",recordProcessor=MemoryBufferRecorder");
@@ -155,12 +149,6 @@ public class MemoryBufferRecorderTestCase extends JBossWSTest
    @SuppressWarnings("unchecked")
    public void testGetMatchingRecords() throws Exception
    {
-      if (isIntegrationMetro())
-      {
-         //The WSDL_OPERATION ctx property is required for the operation filter to work
-         System.out.println("FIXME: [JBWS-2204] Implement Metro standard message context properties");
-         return;
-      }
       Endpoint port = getPort();
       MBeanServerConnection server = getServer();
       ObjectName oname = new ObjectName(endpointObjectName + ",recordProcessor=MemoryBufferRecorder");
@@ -187,12 +175,6 @@ public class MemoryBufferRecorderTestCase extends JBossWSTest
    @SuppressWarnings("unchecked")
    public void testAddRemoveFilter() throws Exception
    {
-      if (isIntegrationMetro())
-      {
-         //The WSDL_OPERATION ctx property is required for the operation filter to work
-         System.out.println("FIXME: [JBWS-2204] Implement Metro standard message context properties");
-         return;
-      }
       Endpoint port = getPort();
       MBeanServerConnection server = getServer();
       ObjectName oname = new ObjectName(endpointObjectName + ",recordProcessor=MemoryBufferRecorder");
