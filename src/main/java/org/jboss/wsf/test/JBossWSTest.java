@@ -201,34 +201,9 @@ public abstract class JBossWSTest extends TestCase
       return JBossWSTestHelper.getServer();
    }
 
-   public static boolean isTargetJBoss5()
-   {
-      return JBossWSTestHelper.isTargetJBoss5();
-   }
-
-   public static boolean isTargetJBoss51()
-   {
-      return JBossWSTestHelper.isTargetJBoss51();
-   }
-
-   public static boolean isTargetJBoss50()
-   {
-      return JBossWSTestHelper.isTargetJBoss50();
-   }
-
    public static boolean isTargetJBoss6()
    {
       return JBossWSTestHelper.isTargetJBoss6();
-   }
-
-   public static boolean isTargetJBoss61()
-   {
-      return JBossWSTestHelper.isTargetJBoss61();
-   }
-
-   public static boolean isTargetJBoss60()
-   {
-      return JBossWSTestHelper.isTargetJBoss60();
    }
 
    public static boolean isIntegrationNative()
@@ -236,25 +211,16 @@ public abstract class JBossWSTest extends TestCase
       return JBossWSTestHelper.isIntegrationNative();
    }
 
-   public static boolean isIntegrationMetro()
-   {
-      return JBossWSTestHelper.isIntegrationMetro();
-   }
-
    public static boolean isIntegrationCXF()
    {
       return JBossWSTestHelper.isIntegrationCXF();
    }
 
-   /** Deploy the given archive
-    */
    public static void deploy(String archive) throws Exception
    {
       JBossWSTestHelper.deploy(archive);
    }
 
-   /** Undeploy the given archive
-    */
    public static void undeploy(String archive) throws Exception
    {
       JBossWSTestHelper.undeploy(archive);
@@ -298,7 +264,7 @@ public abstract class JBossWSTest extends TestCase
 
    /** Get the client's env context for a given name.
     */
-   @SuppressWarnings("unchecked")
+   @SuppressWarnings({ "unchecked", "rawtypes" })
    protected static InitialContext getInitialContext(String clientName) throws NamingException
    {
       InitialContext iniCtx = new InitialContext();

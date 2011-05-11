@@ -74,10 +74,6 @@ public class JBWS1666TestCase extends JBossWSTest
       {
          stackName = "cxf";
       }
-      else if (isIntegrationMetro())
-      {
-         stackName = "metro";
-      }
       else if (isIntegrationNative())
       {
          stackName = "native";

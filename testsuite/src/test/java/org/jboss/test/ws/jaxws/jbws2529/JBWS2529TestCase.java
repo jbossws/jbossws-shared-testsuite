@@ -86,7 +86,7 @@ public class JBWS2529TestCase extends JBossWSTest
       String command = JBOSS_HOME + FS + "bin" + FS + "wsprovide" + EXT + " -k -w -o " + absOutput + " --classpath " + CLASSES_DIR + " " + ENDPOINT_CLASS;
       executeCommand(command, "wsprovide");
       
-      File wsdl = new File(destDir, isIntegrationMetro() || isIntegrationCXF() ? "JBWS2529EndpointService_schema1.xsd" : "JBWS2529EndpointService.wsdl");
+      File wsdl = new File(destDir, isIntegrationCXF() ? "JBWS2529EndpointService_schema1.xsd" : "JBWS2529EndpointService.wsdl");
       Element root = DOMUtils.parse(new FileInputStream(wsdl));
       QName schemaQName = new QName(XML_SCHEMA_NS,"schema");
       Element schema = null;

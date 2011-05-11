@@ -62,7 +62,6 @@ public class JBossWSTestHelper
    private static final String SYSPROP_JBOSS_BIND_ADDRESS = "jboss.bind.address";
    private static final String SYSPROP_TEST_ARCHIVE_DIRECTORY = "test.archive.directory";
    private static final String SYSPROP_TEST_RESOURCES_DIRECTORY = "test.resources.directory";
-   private static final boolean DEPLOY_PROCESS_ENABLED = !Boolean.getBoolean("test.disable.deployment");
    private static final Deployer DEPLOYER;
 
    private static MBeanServerConnection server;
@@ -83,74 +82,28 @@ public class JBossWSTestHelper
     */
    public static void deploy(String archive) throws Exception
    {
-      if ( DEPLOY_PROCESS_ENABLED )
-      {
-         URL archiveURL = getArchiveFile(archive).toURI().toURL();
-         DEPLOYER.deploy(archiveURL);
-      }
+      URL archiveURL = getArchiveFile(archive).toURI().toURL();
+      DEPLOYER.deploy(archiveURL);
    }
 
    /** Undeploy the given archive
     */
    public static void undeploy(String archive) throws Exception
    {
-      if ( DEPLOY_PROCESS_ENABLED )
-      {
-         URL archiveURL = getArchiveFile(archive).toURI().toURL();
-         DEPLOYER.undeploy(archiveURL);
-      }
+      URL archiveURL = getArchiveFile(archive).toURI().toURL();
+      DEPLOYER.undeploy(archiveURL);
    }
 
-   /** True, if -Djbossws.integration.target=jboss5x */
-   public static boolean isTargetJBoss5()
-   {
-      return  isTargetJBoss51() || isTargetJBoss50();
-   }
-
-   /** True, if -Djbossws.integration.target=jboss50x */
-   public static boolean isTargetJBoss50()
-   {
-      String target = getIntegrationTarget();
-      return target.startsWith("jboss50");
-   }
-
-   /** True, if -Djbossws.integration.target=jboss51x */
-   public static boolean isTargetJBoss51()
-   {
-      String target = getIntegrationTarget();
-      return target.startsWith("jboss51");
-   }
-
-   /** True, if -Djbossws.integration.target=jboss6x */
    public static boolean isTargetJBoss6()
    {
-      return isTargetJBoss61() || isTargetJBoss60();
-   }
-
-   /** True, if -Djbossws.integration.target=jboss60x */
-   public static boolean isTargetJBoss60()
-   {
-      String target = getIntegrationTarget();
-      return target.startsWith("jboss60");
-   }
-
-   /** True, if -Djbossws.integration.target=jboss61x */
-   public static boolean isTargetJBoss61()
-   {
-      String target = getIntegrationTarget();
-      return target.startsWith("jboss61");
+       String target = getIntegrationTarget();
+       return target.startsWith("jboss6");
    }
 
    public static boolean isIntegrationNative()
    {
       String vendor = getImplementationVendor();
       return vendor.toLowerCase().indexOf("jboss") != -1;
-   }
-
-   public static boolean isIntegrationMetro()
-   {
-      String vendor = getImplementationVendor();
-      return vendor.toLowerCase().indexOf("sun") != -1;
    }
 
    public static boolean isIntegrationCXF()
