@@ -27,7 +27,6 @@ import javax.annotation.Resource;
 import javax.jws.HandlerChain;
 import javax.jws.WebService;
 import javax.xml.ws.BindingType;
-import javax.xml.ws.WebServiceContext;
 
 import org.jboss.logging.Logger;
 
@@ -40,10 +39,6 @@ import org.jboss.logging.Logger;
 public class SOAPEndpointBean implements SOAPEndpoint
 {
    private static Logger log = Logger.getLogger(SOAPEndpointBean.class);
-
-   @Resource
-   public WebServiceContext context;
-
 
    public String namespace()
    {
