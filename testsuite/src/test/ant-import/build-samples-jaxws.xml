@@ -103,6 +103,14 @@
       	<include name="org/jboss/test/ws/jaxws/samples/exception/server/jaxws-handlers-server.xml"/>
       </fileset>
     </jar>
+    <war warfile="${tests.output.dir}/test-libs/jaxws-samples-exception-client.war" needxmlfile='false'>
+      <classes dir="${tests.output.dir}/test-classes">
+        <include name="org/jboss/test/ws/jaxws/samples/exception/client/**"/>
+      	<include name="org/jboss/test/ws/jaxws/samples/exception/ExceptionHelper.class"/>
+      	<include name="org/jboss/test/helper/ClientHelper.class"/>
+      	<include name="org/jboss/test/helper/TestServlet.class"/>
+      </classes>
+    </war>
 
     <!-- jaxws-samples-handlerchain -->
     <war warfile="${tests.output.dir}/test-libs/jaxws-samples-handlerchain.war" webxml="${tests.output.dir}/test-resources/jaxws/samples/handlerchain/WEB-INF/web.xml">

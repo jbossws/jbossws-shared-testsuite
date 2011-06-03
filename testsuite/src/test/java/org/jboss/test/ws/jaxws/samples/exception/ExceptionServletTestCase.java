@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2006, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2011, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -21,61 +21,43 @@
  */
 package org.jboss.test.ws.jaxws.samples.exception;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+
 import junit.framework.Test;
 
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
-/**
- * Test JAX-WS exception handling
- *
- * @author <a href="jason.greene@jboss.com">Jason T. Greene</a>
- */
-public class ExceptionTestCase extends JBossWSTest
+public class ExceptionServletTestCase extends JBossWSTest
 {
    public static Test suite()
    {
-      return new JBossWSTestSetup(ExceptionTestCase.class, "jaxws-samples-exception.war");
+      return new JBossWSTestSetup(ExceptionServletTestCase.class, "jaxws-samples-exception.war, jaxws-samples-exception-client.war");
    }
-
+   
    public void testRuntimeException() throws Exception
    {
-      try
-      {
-         getHelper().testRuntimeException();
-      }
-      catch (Exception e)
-      {
-         fail(e.getMessage());
-      }
+      assertEquals("1", runTestInContainer("testRuntimeException"));
    }
 
    public void testSoapFaultException() throws Exception
    {
-      try
-      {
-         getHelper().testSoapFaultException();
-      }
-      catch (Exception e)
-      {
-         fail(e.getMessage());
-      }
+      assertEquals("1", runTestInContainer("testSoapFaultException"));
    }
 
    public void testApplicationException() throws Exception
    {
-      try
-      {
-         getHelper().testApplicationException();
-      }
-      catch (Exception e)
-      {
-         fail(e.getMessage());
-      }
+      assertEquals("1", runTestInContainer("testApplicationException"));
    }
    
-   protected ExceptionHelper getHelper()
+   private String runTestInContainer(String test) throws Exception
    {
-      return new ExceptionHelper("http://" + getServerHost() + ":8080/jaxws-samples-exception/ExceptionEndpointService");
+      URL url = new URL("http://" + getServerHost()
+            + ":8080/jaxws-samples-exception-client?path=/jaxws-samples-exception/ExceptionEndpointService&method=" + test
+            + "&helper=" + ExceptionHelper.class.getName());
+      BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+      return br.readLine();
    }
 }
