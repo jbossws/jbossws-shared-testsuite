@@ -29,6 +29,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Hashtable;
+import java.util.Map;
 
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
@@ -314,5 +315,15 @@ public class JBossWSTestHelper
          testResourcesDir = System.getProperty(SYSPROP_TEST_RESOURCES_DIRECTORY);
 
       return testResourcesDir;
+   }
+   
+   public static void addSecurityDomain(String name, Map<String,String> authenticationOptions) throws Exception
+   {
+      DEPLOYER.addSecurityDomain(name, authenticationOptions);
+   }
+   
+   public static void removeSecurityDomain(String name) throws Exception
+   {
+      DEPLOYER.removeSecurityDomain(name);
    }
 }

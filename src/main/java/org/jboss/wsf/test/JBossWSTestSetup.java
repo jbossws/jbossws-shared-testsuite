@@ -26,7 +26,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.management.MBeanServerConnection;
@@ -49,9 +51,9 @@ public class JBossWSTestSetup extends TestSetup
    // provide logging
    private static Logger log = Logger.getLogger(JBossWSTestSetup.class);
 
-   private JBossWSTestHelper delegate = new JBossWSTestHelper();
    private String[] archives = new String[0];
    private ClassLoader originalClassLoader;
+   private Map<String, Map<String, String>> securityDomains = new HashMap<String, Map<String,String>>();
 
    public JBossWSTestSetup(Class<?> testClass, String archiveList)
    {
@@ -72,22 +74,22 @@ public class JBossWSTestSetup extends TestSetup
 
    public File getArchiveFile(String archive)
    {
-      return delegate.getArchiveFile(archive);
+      return JBossWSTestHelper.getArchiveFile(archive);
    }
 
    public URL getArchiveURL(String archive) throws MalformedURLException
    {
-      return delegate.getArchiveFile(archive).toURI().toURL();
+      return JBossWSTestHelper.getArchiveFile(archive).toURI().toURL();
    }
 
    public File getResourceFile(String resource)
    {
-      return delegate.getResourceFile(resource);
+      return JBossWSTestHelper.getResourceFile(resource);
    }
 
    public URL getResourceURL(String resource) throws MalformedURLException
    {
-      return delegate.getResourceFile(resource).toURI().toURL();
+      return JBossWSTestHelper.getResourceFile(resource).toURI().toURL();
    }
 
    private void getArchiveArray(String archiveList)
@@ -105,8 +107,16 @@ public class JBossWSTestSetup extends TestSetup
    protected void setUp() throws Exception
    {
       // verify integration target
-      String integrationTarget = delegate.getIntegrationTarget();
+      String integrationTarget = JBossWSTestHelper.getIntegrationTarget();
       log.debug("Integration target: " + integrationTarget);
+      
+      if (!securityDomains.isEmpty())
+      {
+         for (String key : securityDomains.keySet())
+         {
+            JBossWSTestHelper.addSecurityDomain(key, securityDomains.get(key));
+         }
+      }
 
       List<URL> clientJars = new ArrayList<URL>();
       for (int i = 0; i < archives.length; i++)
@@ -114,12 +124,12 @@ public class JBossWSTestSetup extends TestSetup
          String archive = archives[i];
          try
          {
-            delegate.deploy(archive);
+            JBossWSTestHelper.deploy(archive);
          }
          catch (Exception ex)
          {
             ex.printStackTrace();
-            delegate.undeploy(archive);
+            JBossWSTestHelper.undeploy(archive);
          }
 
          if (archive.endsWith("-client.jar"))
@@ -151,12 +161,20 @@ public class JBossWSTestSetup extends TestSetup
          for (int i = 0; i < archives.length; i++)
          {
             String archive = archives[archives.length - i - 1];
-            delegate.undeploy(archive);
+            JBossWSTestHelper.undeploy(archive);
          }
       }
       finally
       {
          Thread.currentThread().setContextClassLoader(originalClassLoader);
+         
+         if (!securityDomains.isEmpty())
+         {
+            for (String key : securityDomains.keySet())
+            {
+               JBossWSTestHelper.removeSecurityDomain(key);
+            }
+         }
       }
    }
    
@@ -168,5 +186,10 @@ public class JBossWSTestSetup extends TestSetup
    public MBeanServerConnection getServer() throws NamingException
    {
       return JBossWSTestHelper.getServer();
+   }
+   
+   public void addSecurityDomainRequirement(String securityDomainName, Map<String, String> authenticationOptions)
+   {
+      securityDomains.put(securityDomainName, authenticationOptions);
    }
 }
