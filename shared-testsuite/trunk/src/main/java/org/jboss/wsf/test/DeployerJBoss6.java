@@ -19,6 +19,7 @@
 package org.jboss.wsf.test;
 
 import java.net.URL;
+import java.util.Map;
 
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
@@ -57,6 +58,18 @@ public final class DeployerJBoss6 implements Deployer
       server.invoke(new ObjectName(MAIN_DEPLOYER), methodName, new Object[]
       {url}, new String[]
       {"java.net.URL"});
+   }
+
+   @Override
+   public void addSecurityDomain(String name, Map<String, String> authenticationOptions) throws Exception
+   {
+      throw new UnsupportedOperationException();
+   }
+
+   @Override
+   public void removeSecurityDomain(String name) throws Exception
+   {
+      throw new UnsupportedOperationException();
    }
 
 }
