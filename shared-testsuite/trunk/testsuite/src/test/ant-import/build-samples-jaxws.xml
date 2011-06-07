@@ -44,6 +44,9 @@
       <webinf dir="${tests.output.dir}/test-resources/jaxws/samples/context/WEB-INF">
         <include name="jboss-web.xml"/>
       </webinf>
+      <manifest>
+        <attribute name="Dependencies" value="org.jboss.ws.common"/>
+      </manifest>
     </war>
     <jar jarfile="${tests.output.dir}/test-libs/jaxws-samples-context.jar">
       <fileset dir="${tests.output.dir}/test-classes">
@@ -52,6 +55,9 @@
       <metainf dir="${tests.output.dir}/test-resources/jaxws/samples/context/META-INF">
         <include name="jboss.xml"/>
       </metainf>
+      <manifest>
+        <attribute name="Dependencies" value="org.jboss.ws.common"/>
+      </manifest>
     </jar>
 
     <!-- jaxws-samples-eardeployment -->
@@ -64,6 +70,9 @@
         <include name="jboss-web.xml"/>
         <include name="wsdl/**"/>
       </webinf>
+      <manifest>
+        <attribute name="Dependencies" value="org.jboss.logging,org.jboss.ws.common"/>
+      </manifest>
     </war>
     <jar jarfile="${tests.output.dir}/test-libs/jaxws-samples-eardeployment-ejb3.jar">
       <fileset dir="${tests.output.dir}/test-classes">
@@ -72,6 +81,9 @@
       <metainf dir="${tests.output.dir}/test-resources/jaxws/samples/eardeployment/WEB-INF">
         <include name="wsdl/**"/>
       </metainf>
+      <manifest>
+        <attribute name="Dependencies" value="org.jboss.logging"/>
+      </manifest>
     </jar>
     <jar jarfile="${tests.output.dir}/test-libs/jaxws-samples-eardeployment.ear">
       <fileset dir="${tests.output.dir}/test-libs">
@@ -233,6 +245,9 @@
       <metainf dir="${tests.output.dir}/test-resources/jaxws/samples/advanced/retail/META-INF">
         <include name="wsdl/*"/>
       </metainf>
+      <manifest>
+        <attribute name="Dependencies" value="org.jboss.logging"/>
+      </manifest>
     </jar>
   	
      <!-- jaxws-samples-securityDomain -->
@@ -475,6 +490,9 @@
       	<exclude name="org/jboss/test/ws/management/recording/EndpointWithHandlerImpl.class"/>
         <exclude name="org/jboss/test/ws/management/recording/*TestCase.class"/>
       </fileset>
+      <manifest>
+        <attribute name="Dependencies" value="org.jboss.logging"/>
+      </manifest>
     </jar>
     <jar destfile="${tests.output.dir}/test-libs/management-recording.jar">
       <fileset dir="${tests.output.dir}/test-classes">
@@ -483,6 +501,9 @@
       	<exclude name="org/jboss/test/ws/management/recording/EndpointImpl.class"/>
         <exclude name="org/jboss/test/ws/management/recording/*TestCase.class"/>
       </fileset>
+      <manifest>
+        <attribute name="Dependencies" value="org.jboss.logging"/>
+      </manifest>
     </jar>
     
     <!-- saaj-jbws3084 -->
