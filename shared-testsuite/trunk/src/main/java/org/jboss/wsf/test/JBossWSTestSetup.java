@@ -50,21 +50,36 @@ public class JBossWSTestSetup extends TestSetup
 {
    // provide logging
    private static Logger log = Logger.getLogger(JBossWSTestSetup.class);
+   
+   private static final String JBOSSWS_SEC_DOMAIN = "JBossWS";
 
    private String[] archives = new String[0];
    private ClassLoader originalClassLoader;
    private Map<String, Map<String, String>> securityDomains = new HashMap<String, Map<String,String>>();
+   private boolean defaultSecurityDomainRequirement = false;
 
    public JBossWSTestSetup(Class<?> testClass, String archiveList)
    {
       super(new TestSuite(testClass));
       getArchiveArray(archiveList);
    }
+   
+   public JBossWSTestSetup(Class<?> testClass, String archiveList, boolean requiresDefaultSecurityDomain)
+   {
+      this(testClass, archiveList);
+      setDefaultSecurityDomainRequirement(requiresDefaultSecurityDomain);
+   }
 
    public JBossWSTestSetup(Test test, String archiveList)
    {
       super(test);
       getArchiveArray(archiveList);
+   }
+   
+   public JBossWSTestSetup(Test test, String archiveList, boolean requiresDefaultSecurityDomain)
+   {
+      this(test, archiveList);
+      setDefaultSecurityDomainRequirement(requiresDefaultSecurityDomain);
    }
 
    public JBossWSTestSetup(Test test)
@@ -116,6 +131,20 @@ public class JBossWSTestSetup extends TestSetup
          {
             JBossWSTestHelper.addSecurityDomain(key, securityDomains.get(key));
          }
+      }
+      if (defaultSecurityDomainRequirement)
+      {
+         String usersPropFile = System.getProperty("org.jboss.ws.testsuite.securityDomain.users.propfile");
+         String rolesPropFile = System.getProperty("org.jboss.ws.testsuite.securityDomain.roles.propfile");
+         Map<String, String> authenticationOptions = new HashMap<String, String>();
+         if (usersPropFile != null) {
+             authenticationOptions.put("usersProperties", usersPropFile);
+         }
+         if (rolesPropFile != null) {
+             authenticationOptions.put("rolesProperties", rolesPropFile);
+         }
+         authenticationOptions.put("unauthenticatedIdentity", "anonymous");
+         JBossWSTestHelper.addSecurityDomain(JBOSSWS_SEC_DOMAIN, authenticationOptions);
       }
 
       List<URL> clientJars = new ArrayList<URL>();
@@ -175,6 +204,10 @@ public class JBossWSTestSetup extends TestSetup
                JBossWSTestHelper.removeSecurityDomain(key);
             }
          }
+         if (defaultSecurityDomainRequirement)
+         {
+            JBossWSTestHelper.removeSecurityDomain(JBOSSWS_SEC_DOMAIN);
+         }
       }
    }
    
@@ -191,5 +224,10 @@ public class JBossWSTestSetup extends TestSetup
    public void addSecurityDomainRequirement(String securityDomainName, Map<String, String> authenticationOptions)
    {
       securityDomains.put(securityDomainName, authenticationOptions);
+   }
+   
+   public void setDefaultSecurityDomainRequirement(boolean defaultSecurityDomainRequirement)
+   {
+      this.defaultSecurityDomainRequirement = defaultSecurityDomainRequirement;
    }
 }
