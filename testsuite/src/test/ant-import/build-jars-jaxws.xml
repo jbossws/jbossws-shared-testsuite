@@ -553,6 +553,9 @@
 				<include name="org/jboss/test/ws/jaxws/jbws2074/handler/JavaResourcesHandler.class" />
 				<include name="org/jboss/test/ws/jaxws/jbws2074/usecase1/service/jaxws-service-handlers.xml" />
 			</classes>
+                        <manifest>
+                                <attribute name="Dependencies" value="org.jboss.logging"/>
+                        </manifest>
 		</war>
 		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws2074-usecase2.jar">
 			<fileset dir="${tests.output.dir}/test-classes">
@@ -562,12 +565,18 @@
 			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws2074/usecase2/META-INF">
 				<include name="ejb-jar.xml" />
 			</metainf>
+                        <manifest>
+                                <attribute name="Dependencies" value="org.jboss.logging"/>
+                        </manifest>
 		</jar>
 		<war warfile="${tests.output.dir}/test-libs/jaxws-jbws2074-usecase3.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws2074/usecase3/WEB-INF/web.xml">
 			<classes dir="${tests.output.dir}/test-classes">
 				<include name="org/jboss/test/ws/jaxws/jbws2074/usecase3/service/POJOIface.class" />
 				<include name="org/jboss/test/ws/jaxws/jbws2074/usecase3/service/POJOImpl.class" />
 			</classes>
+                        <manifest>
+                                <attribute name="Dependencies" value="org.jboss.logging"/>
+                        </manifest>
 		</war>
 		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws2074-usecase4.jar">
 			<fileset dir="${tests.output.dir}/test-classes">
@@ -580,6 +589,9 @@
 			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws2074/usecase4/META-INF">
 				<include name="ejb-jar.xml" />
 			</metainf>
+                        <manifest>
+                                <attribute name="Dependencies" value="org.jboss.logging"/>
+                        </manifest>
 		</jar>
 		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws2074-usecase1.sar">
 			<fileset dir="${tests.output.dir}/test-libs">
@@ -824,6 +836,9 @@
 				<include name="org/jboss/test/ws/jaxws/jbws2634/shared/handlers/TestHandler.class" />
 				<include name="org/jboss/test/ws/jaxws/jbws2634/webservice/jaxws-handler.xml" />
 			</classes>
+                        <manifest>
+                                <attribute name="Dependencies" value="org.jboss.logging"/>
+                        </manifest>
 		</war>
 		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws2634-ejb3.jar">
 			<fileset dir="${tests.output.dir}/test-classes">
@@ -836,6 +851,9 @@
 			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws2634/META-INF">
 				<include name="ejb-jar.xml" />
 			</metainf>
+                        <manifest>
+                                <attribute name="Dependencies" value="org.jboss.logging"/>
+                        </manifest>
 		</jar>
 		<ear appxml="${tests.output.dir}/test-resources/jaxws/jbws2634/META-INF/application.xml" earfile="${tests.output.dir}/test-libs/jaxws-jbws2634.ear">
 			<fileset file="${tests.output.dir}/test-libs/jaxws-jbws2634.jar" />
