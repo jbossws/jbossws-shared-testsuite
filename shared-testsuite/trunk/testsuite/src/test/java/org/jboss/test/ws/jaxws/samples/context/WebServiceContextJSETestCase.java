@@ -44,7 +44,7 @@ public class WebServiceContextJSETestCase extends JBossWSTest
    
    public static Test suite()
    {
-      return new JBossWSTestSetup(WebServiceContextJSETestCase.class, "jaxws-samples-context.war");
+      return new JBossWSTestSetup(WebServiceContextJSETestCase.class, "jaxws-samples-context.war", !isTargetJBoss6());
    }
 
    public void setUp() throws Exception
