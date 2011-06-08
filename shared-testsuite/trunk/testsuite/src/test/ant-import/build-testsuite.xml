@@ -327,6 +327,7 @@
           <include name="jndi.properties"/>
           <include name="tst.policy"/>
           <include name="log4j.xml"/>
+          <include name="jbossws-*.properties"/>
         </fileset>
         <filterset>
           <filter token="jboss.bind.address" value="${node0}"/>
@@ -447,6 +448,8 @@
       <sysproperty key="jbossws.integration.target" value="${jbossws.integration.target}"/>
       <sysproperty key="jmx.authentication.username" value="${jmx.authentication.username}"/>
       <sysproperty key="jmx.authentication.password" value="${jmx.authentication.password}"/>
+      <sysproperty key="org.jboss.ws.testsuite.securityDomain.users.propfile" value="${tests.output.dir}/test-classes/jbossws-users.properties"/>
+      <sysproperty key="org.jboss.ws.testsuite.securityDomain.roles.propfile" value="${tests.output.dir}/test-classes/jbossws-roles.properties"/>
       <sysproperty key="org.jboss.ws.wsse.keyStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.keystore"/>
       <sysproperty key="org.jboss.ws.wsse.trustStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.truststore"/>
       <sysproperty key="org.jboss.ws.wsse.keyStorePassword" value="jbossws"/>
@@ -509,6 +512,8 @@
       -->
       <!-- HTTPS hostname wrong:  should be <localhost> -->
       <sysproperty key="org.jboss.security.ignoreHttpsHost" value="true"/>
+      <sysproperty key="org.jboss.ws.testsuite.securityDomain.users.propfile" value="${tests.output.dir}/test-classes/jbossws-users.properties"/>
+      <sysproperty key="org.jboss.ws.testsuite.securityDomain.roles.propfile" value="${tests.output.dir}/test-classes/jbossws-roles.properties"/>
       <sysproperty key="org.jboss.ws.wsse.keyStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.keystore"/>
       <sysproperty key="org.jboss.ws.wsse.trustStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.truststore"/>
       <sysproperty key="org.jboss.ws.wsse.keyStorePassword" value="jbossws"/>
