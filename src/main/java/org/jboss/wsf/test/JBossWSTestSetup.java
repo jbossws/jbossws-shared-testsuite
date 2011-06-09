@@ -151,20 +151,22 @@ public class JBossWSTestSetup extends TestSetup
       for (int i = 0; i < archives.length; i++)
       {
          String archive = archives[i];
-         try
-         {
-            JBossWSTestHelper.deploy(archive);
-         }
-         catch (Exception ex)
-         {
-            ex.printStackTrace();
-            JBossWSTestHelper.undeploy(archive);
-         }
-
          if (archive.endsWith("-client.jar"))
          {
             URL archiveURL = getArchiveURL(archive);
             clientJars.add(archiveURL);
+         }
+         else
+         {
+            try
+            {
+               JBossWSTestHelper.deploy(archive);
+            }
+            catch (Exception ex)
+            {
+               ex.printStackTrace();
+               JBossWSTestHelper.undeploy(archive);
+            }
          }
       }
 
