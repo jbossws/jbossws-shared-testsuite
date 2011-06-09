@@ -51,7 +51,7 @@ public class BindingCustomizationTestCase extends TestCase {
 
    public void testCustomizationWriteAccess() throws Exception
    {
-      Endpoint endpoint = deploymentModelFactory.newEndpoint(null);
+      Endpoint endpoint = deploymentModelFactory.newHttpEndpoint(null);
       BindingCustomization jaxbCustomization = new JAXBBindingCustomization();
       jaxbCustomization.put("com.sun.xml.bind.defaultNamespaceRemap", "http://org.jboss.bindingCustomization");
       endpoint.addAttachment(BindingCustomization.class, jaxbCustomization);
@@ -72,7 +72,7 @@ public class BindingCustomizationTestCase extends TestCase {
 
    public void testCustomizationReadAccess() throws Exception
    {
-      Endpoint endpoint = deploymentModelFactory.newEndpoint(null);
+      Endpoint endpoint = deploymentModelFactory.newHttpEndpoint(null);
       BindingCustomization jaxbCustomization = new JAXBBindingCustomization();
       jaxbCustomization.put("com.sun.xml.bind.defaultNamespaceRemap", "http://org.jboss.bindingCustomization");
       endpoint.addAttachment(BindingCustomization.class, jaxbCustomization);
@@ -86,7 +86,7 @@ public class BindingCustomizationTestCase extends TestCase {
       try
       {
          endpoint.addAttachment(BindingCustomization.class, jaxbCustomization);
-         fail("Started Endpoints should only axpose read acccess to their binding customizations");
+         fail("Started Endpoints should only expose read acccess to their binding customizations");
       }
       catch (Exception e)
       {
