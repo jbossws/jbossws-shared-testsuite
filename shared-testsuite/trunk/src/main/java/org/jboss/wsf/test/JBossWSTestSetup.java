@@ -155,18 +155,14 @@ public class JBossWSTestSetup extends TestSetup
          {
             URL archiveURL = getArchiveURL(archive);
             clientJars.add(archiveURL);
+            if (archive.contains("jaxrpc") || archive.endsWith("serviceref-client.jar"))
+            {
+               performDeploy(archive);
+            }
          }
          else
          {
-            try
-            {
-               JBossWSTestHelper.deploy(archive);
-            }
-            catch (Exception ex)
-            {
-               ex.printStackTrace();
-               JBossWSTestHelper.undeploy(archive);
-            }
+            performDeploy(archive);
          }
       }
 
@@ -182,6 +178,19 @@ public class JBossWSTestSetup extends TestSetup
          }
          URLClassLoader cl = new URLClassLoader(urls, parent);
          Thread.currentThread().setContextClassLoader(cl);
+      }
+   }
+   
+   private static void performDeploy(String archive) throws Exception
+   {
+      try
+      {
+         JBossWSTestHelper.deploy(archive);
+      }
+      catch (Exception ex)
+      {
+         ex.printStackTrace();
+         JBossWSTestHelper.undeploy(archive);
       }
    }
 
