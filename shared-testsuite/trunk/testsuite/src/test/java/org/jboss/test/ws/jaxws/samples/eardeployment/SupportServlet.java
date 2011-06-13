@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.jboss.wsf.spi.SPIProvider;
 import org.jboss.wsf.spi.SPIProviderResolver;
+import org.jboss.wsf.spi.classloading.ClassLoaderProvider;
 import org.jboss.wsf.spi.management.ServerConfig;
 import org.jboss.wsf.spi.management.ServerConfigFactory;
 
@@ -58,8 +59,9 @@ public class SupportServlet extends HttpServlet
    {
       if (dataDir == null)
       {
+         ClassLoader loader = ClassLoaderProvider.getDefaultProvider().getServerIntegrationClassLoader();
          SPIProvider spiProvider = SPIProviderResolver.getInstance().getProvider();
-         ServerConfig serverConfig = spiProvider.getSPI(ServerConfigFactory.class).getServerConfig();
+         ServerConfig serverConfig = spiProvider.getSPI(ServerConfigFactory.class, loader).getServerConfig();
          dataDir = serverConfig.getServerDataDir();
       }
       return dataDir;
