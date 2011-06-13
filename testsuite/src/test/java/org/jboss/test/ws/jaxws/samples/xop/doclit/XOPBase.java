@@ -153,7 +153,15 @@ public abstract class XOPBase extends JBossWSTest
       assertNotNull(response);
       assertNotNull(response.getDataHandler().getContent());
 
-      File tmpDir = new File(System.getProperty("jboss.home") + FS + "server" + FS + System.getProperty("jboss.server.instance") + FS + "tmp" + FS + "jbossws");
+      File tmpDir = null;
+      if (isTargetJBoss6())
+      {
+         tmpDir = new File(System.getProperty("jboss.home") + FS + "server" + FS + System.getProperty("jboss.server.instance") + FS + "tmp" + FS + "jbossws");
+      }
+      else
+      {
+         tmpDir = new File(System.getProperty("jboss.home") + FS + "standalone" + FS + "tmp" + FS + "jbossws");
+      }
       assertTrue("Temp dir doesn't exist: " + tmpDir, tmpDir.exists());
 
       //[JBWS-2834]: windows file delete issue
