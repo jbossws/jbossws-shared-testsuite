@@ -27,8 +27,6 @@ import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
-import org.jboss.ejb3.annotation.RemoteHomeBinding;
-import org.jboss.ejb3.annotation.RemoteBinding;
 
 import org.jboss.ws.api.annotation.WebContext;
 
@@ -37,8 +35,6 @@ import org.jboss.ws.api.annotation.WebContext;
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 @Remote({EJB3RemoteBusinessInterface.class})
 @RemoteHome(EJB3RemoteHome.class)
-@RemoteBinding(jndiBinding="FooBean01/remote")
-@RemoteHomeBinding(jndiBinding="FooBean01/remote")
 @Stateless(name = "FooBean01")
 public class EJB3Bean01 implements EJB3RemoteBusinessInterface
 {
