@@ -69,7 +69,7 @@ public class JBWS944TestCase extends JBossWSTest
    public void testNarrowedRemoteAccess() throws Exception
    {
       InitialContext iniCtx = getInitialContext();
-      Object obj = iniCtx.lookup("/FooBean01/remote");
+      Object obj = iniCtx.lookup("/FooBean01/home");
       EJB3RemoteHome ejb3Home = (EJB3RemoteHome)PortableRemoteObject.narrow(obj, EJB3RemoteHome.class);
       EJB3RemoteInterface ejb3Remote = ejb3Home.create();
 
