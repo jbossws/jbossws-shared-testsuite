@@ -40,7 +40,7 @@ public class JBWS2307TestCase extends JBossWSTest
 {
    public static Test suite()
    {
-      return new JBossWSTestSetup(JBWS2307TestCase.class, "jaxws-jbws2307-client.war, jaxws-jbws2307-service.war");
+      return new JBossWSTestSetup(JBWS2307TestCase.class, "jaxws-jbws2307-client.war, jaxws-jbws2307-service.war", !isTargetJBoss6());
    }
    
    public void testClient() throws Exception
