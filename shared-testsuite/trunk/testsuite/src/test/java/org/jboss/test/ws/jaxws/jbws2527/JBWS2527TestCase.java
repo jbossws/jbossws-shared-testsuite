@@ -26,7 +26,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import junit.framework.Test;
+
 import org.jboss.wsf.test.JBossWSTest;
+import org.jboss.wsf.test.JBossWSTestSetup;
 
 /**
  * JBWS-2527 testcase: BeanFactory not initialized or already closed
@@ -35,6 +38,10 @@ import org.jboss.wsf.test.JBossWSTest;
  */
 public class JBWS2527TestCase extends JBossWSTest
 {
+   public static Test suite()
+   {
+      return new JBossWSTestSetup(JBWS2527TestCase.class, "", !isTargetJBoss6());
+   }
 
    public void test() throws Exception
    {
