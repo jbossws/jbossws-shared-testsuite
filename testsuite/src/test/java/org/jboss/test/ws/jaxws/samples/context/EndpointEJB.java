@@ -41,6 +41,7 @@ import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.handler.MessageContext;
 
+import org.jboss.ejb3.annotation.SecurityDomain;
 import org.jboss.ws.common.DOMWriter;
 import org.jboss.ws.api.util.DOMUtils;
 import org.jboss.ws.api.annotation.AuthMethod;
@@ -67,8 +68,7 @@ import org.xml.sax.InputSource;
 )
 
 // [JBWS-1339] @Security domain vs. <security-domain> 
-//@SecurityDomain("JBossWS")
-
+@SecurityDomain("JBossWS")
 @RolesAllowed("friend")
 public class EndpointEJB
 {

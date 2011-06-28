@@ -21,7 +21,6 @@
  */
 package org.jboss.test.ws.jaxws.samples.context;
 
-import java.io.File;
 import java.net.URL;
 
 import javax.xml.namespace.QName;
@@ -45,7 +44,7 @@ public class WebServiceContextEJBTestCase extends JBossWSTest
 
    public static Test suite()
    {
-      return new JBossWSTestSetup(WebServiceContextEJBTestCase.class, "jaxws-samples-context.jar");
+      return new JBossWSTestSetup(WebServiceContextEJBTestCase.class, "jaxws-samples-context.jar", !isTargetJBoss6());
    }
 
    public void setUp() throws Exception
