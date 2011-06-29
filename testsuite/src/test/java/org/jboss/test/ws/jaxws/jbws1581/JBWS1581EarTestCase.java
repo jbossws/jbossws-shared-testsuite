@@ -43,7 +43,10 @@ public class JBWS1581EarTestCase extends JBossWSTest
 {
    public static Test suite()
    {
-      return new JBossWSTestSetup(JBWS1581EarTestCase.class, "jaxws-jbws1581.ear, jaxws-jbws1581-ejb3.jar");
+      String archives = isTargetJBoss6()
+          ? "as6/jaxws-jbws1581.ear, jaxws-jbws1581-ejb3.jar"
+          : "jaxws-jbws1581.ear, jaxws-jbws1581-ejb3.jar";
+      return new JBossWSTestSetup(JBWS1581EarTestCase.class, archives);
    }
 
    public void testWSDLAccess() throws Exception
