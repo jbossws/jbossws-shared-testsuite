@@ -501,10 +501,13 @@
 				<include name="jboss-web.xml" />
 			</webinf>
 		</war>
-		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws1854.ear">
+		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws1854.sar">
 			<fileset dir="${tests.output.dir}/test-libs">
 				<include name="jaxws-jbws1854.war" />
 			</fileset>
+			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws1854/META-INF">
+				<include name="jboss-service.xml" />
+			</metainf>
 		</jar>
 
 		<!-- jaxws-jbws1872 -->
