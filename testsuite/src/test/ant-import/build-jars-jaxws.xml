@@ -607,35 +607,35 @@
                                 <attribute name="Dependencies" value="org.jboss.logging"/>
                         </manifest>
 		</jar>
-		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws2074-usecase1.sar">
+		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws2074-usecase1.ear">
 			<fileset dir="${tests.output.dir}/test-libs">
 				<include name="jaxws-jbws2074-usecase1.war" />
 			</fileset>
-			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws2074/usecase1-sar/META-INF">
+			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws2074/usecase1-ear/META-INF">
 				<include name="application.xml" />
 			</metainf>
 		</jar>
-		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws2074-usecase2.sar">
+		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws2074-usecase2.ear">
 			<fileset dir="${tests.output.dir}/test-libs">
 				<include name="jaxws-jbws2074-usecase2.jar" />
 			</fileset>
-			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws2074/usecase2-sar/META-INF">
+			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws2074/usecase2-ear/META-INF">
 				<include name="application.xml" />
 			</metainf>
 		</jar>
-		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws2074-usecase3.sar">
+		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws2074-usecase3.ear">
 			<fileset dir="${tests.output.dir}/test-libs">
 				<include name="jaxws-jbws2074-usecase3.war" />
 			</fileset>
-			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws2074/usecase3-sar/META-INF">
+			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws2074/usecase3-ear/META-INF">
 				<include name="application.xml" />
 			</metainf>
 		</jar>
-		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws2074-usecase4.sar">
+		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws2074-usecase4.ear">
 			<fileset dir="${tests.output.dir}/test-libs">
 				<include name="jaxws-jbws2074-usecase4.jar" />
 			</fileset>
-			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws2074/usecase4-sar/META-INF">
+			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws2074/usecase4-ear/META-INF">
 				<include name="application.xml" />
 			</metainf>
 		</jar>

@@ -63,7 +63,7 @@ public final class JBWS2074TestCase extends JBossWSTest
       assertEquals(expStr.toString(), retStr);
    }
 
-   public void testUsecase4WithoutSar() throws Exception
+   public void testUsecase4WithoutEar() throws Exception
    {
       try
       {
@@ -76,16 +76,16 @@ public final class JBWS2074TestCase extends JBossWSTest
       }
    }
 
-   public void testUsecase4WithSar() throws Exception
+   public void testUsecase4WithEar() throws Exception
    {
       try
       {
-         deploy("jaxws-jbws2074-usecase4.sar");
+         deploy("jaxws-jbws2074-usecase4.ear");
          executeTest();
       }
       finally
       {
-         undeploy("jaxws-jbws2074-usecase4.sar");
+         undeploy("jaxws-jbws2074-usecase4.ear");
       }
    }
 
