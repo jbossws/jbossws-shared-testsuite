@@ -44,7 +44,7 @@ public class JBWS1854TestCase extends JBossWSTest
 {
    public static Test suite()
    {
-      return new JBossWSTestSetup(JBWS1854TestCase.class, "jaxws-jbws1854.sar");
+      return new JBossWSTestSetup(JBWS1854TestCase.class, "jaxws-jbws1854.ear");
    }
 
    public void testPortAccess() throws Exception
