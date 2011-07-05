@@ -211,6 +211,9 @@
       <fileset dir="${jboss.home}/modules/javax/ejb/api/main/">
         <include name="jboss-ejb-api_3.1_spec-*.jar"/>
       </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/ejb3/main/">
+        <include name="jboss-ejb3-ext-api-*.jar"/>
+      </fileset>
       <fileset dir="${jboss.home}/modules/javax/servlet/api/main/">
         <include name="jboss-servlet-api_3.0_spec-*.jar"/>
       </fileset>
@@ -292,6 +295,18 @@
       </fileset>
       <fileset dir="${jboss.home}/modules/javax/security/jacc/api/main/">
         <include name="jboss-jacc-api*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/remoting3/main/">
+        <include name="jboss-remoting-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/sasl/main/">
+        <include name="jboss-sasl-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/xnio/main/">
+        <include name="xnio-api-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/xnio/nio/main/">
+        <include name="xnio-nio-*.jar"/>
       </fileset>
     </path>
   </target>
