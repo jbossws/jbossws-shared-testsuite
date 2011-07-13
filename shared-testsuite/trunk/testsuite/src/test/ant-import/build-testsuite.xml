@@ -24,6 +24,9 @@
     <condition property="jboss.home" value="${jboss700.home}">
       <equals arg1="${jbossws.integration.target}" arg2="jboss700"/>
     </condition>
+    <condition property="jboss.home" value="${jboss710.home}">
+      <equals arg1="${jbossws.integration.target}" arg2="jboss710"/>
+    </condition>
     
     <!-- Verify required properties that must be set before this file is imported -->
     <fail message="Tests output dir not set." unless="tests.output.dir"/>
