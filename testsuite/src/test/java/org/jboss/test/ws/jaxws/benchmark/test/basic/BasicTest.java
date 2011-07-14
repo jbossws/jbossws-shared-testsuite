@@ -37,7 +37,7 @@ import org.jboss.test.ws.jaxws.benchmark.Runner;
  */
 public class BasicTest implements BenchmarkTest
 {
-   private String endpointURL = "http://" + Runner.getServerAddress() + "/jaxws-benchmark-basic/EndpointImpl";
+   private String endpointURL = "http://" + Runner.getServerAddress() + "/jaxws-benchmark-basic/EndpointService/EndpointImpl";
    private String targetNS = "http://basic.test.benchmark.jaxws.ws.test.jboss.org/";
 
    public Object prepare() throws Exception
