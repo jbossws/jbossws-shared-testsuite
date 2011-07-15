@@ -65,7 +65,7 @@ public class EndpointPublishServlet extends HttpServlet
          //deploy endpoint
          ClassLoader loader = ClassLoaderProvider.getDefaultProvider().getWebServiceSubsystemClassLoader();
          EndpointPublisherFactory factory = ServiceLoader.load(EndpointPublisherFactory.class, loader).iterator().next();
-         publisher = factory.newEndpointPublisher("localhost");
+         publisher = factory.newEndpointPublisher("default-host");
          ep = publisher.publish("org.jboss.test.ws.publish.EndpointImpl", Thread.currentThread().getContextClassLoader(), "ep-publish-test", "/pattern");
          
          System.out.println("State: " + ep.getState());
