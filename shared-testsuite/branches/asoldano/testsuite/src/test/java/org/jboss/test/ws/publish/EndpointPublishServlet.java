@@ -26,9 +26,11 @@ import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.ServiceLoader;
 
 import javax.servlet.ServletException;
@@ -41,6 +43,7 @@ import javax.xml.ws.Service;
 
 import org.jboss.wsf.spi.classloading.ClassLoaderProvider;
 import org.jboss.wsf.spi.deployment.Endpoint;
+import org.jboss.wsf.spi.publish.Context;
 import org.jboss.wsf.spi.publish.EndpointPublisher;
 import org.jboss.wsf.spi.publish.EndpointPublisherFactory;
 
@@ -58,30 +61,29 @@ public class EndpointPublishServlet extends HttpServlet
    @Override
    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
    {
-      Endpoint ep = null;
+      Context ctx = null;
       EndpointPublisher publisher = null;
       try
       {
-         //deploy endpoint
+         //deploy endpoints
          ClassLoader loader = ClassLoaderProvider.getDefaultProvider().getWebServiceSubsystemClassLoader();
          EndpointPublisherFactory factory = ServiceLoader.load(EndpointPublisherFactory.class, loader).iterator().next();
          publisher = factory.newEndpointPublisher("default-host");
-         ep = publisher.publish("org.jboss.test.ws.publish.EndpointImpl", Thread.currentThread().getContextClassLoader(), "ep-publish-test", "/pattern");
          
-         System.out.println("State: " + ep.getState());
-         System.out.println("Address: " + ep.getAddress());
-         System.out.println("TargetBeanClass: " + ep.getTargetBeanClass());
+         Map<String,String> map = new HashMap<String, String>();
+         map.put("/pattern", "org.jboss.test.ws.publish.EndpointImpl");
+         map.put("/pattern2", "org.jboss.test.ws.publish.EndpointImpl2");
+         
+         ctx = publisher.publish("ep-publish-test", Thread.currentThread().getContextClassLoader(), map);
+         for (Endpoint ep : ctx.getEndpoints()) {
+            System.out.println("State: " + ep.getState());
+            System.out.println("Address: " + ep.getAddress());
+            System.out.println("TargetBeanClass: " + ep.getTargetBeanClass());
+         }
          
          //call endpoint
-         URL wsdlURL = new URL("http://localhost:8080/ep-publish-test/pattern?wsdl");
-         QName serviceName = new QName("http://publish.ws.test.jboss.org/", "EndpointService");
-         Service service = Service.create(wsdlURL, serviceName);
-         org.jboss.test.ws.publish.Endpoint port = service.getPort(org.jboss.test.ws.publish.Endpoint.class);
-         String result = port.echo("Foo");
-         if (!"Foo".equals(result))
-         {
-            throw new Exception("Expected 'Foo' but got '" + result + "'");
-         }
+         invoke(new URL("http://localhost:8080/ep-publish-test/pattern?wsdl"));
+         invoke(new URL("http://localhost:8080/ep-publish-test/pattern2?wsdl"));
          
          res.getWriter().print("1");
       }
@@ -92,12 +94,12 @@ public class EndpointPublishServlet extends HttpServlet
       }
       finally
       {
-         if (ep != null && publisher != null)
+         if (ctx != null && publisher != null)
          {
             try
             {
-               //undeploy endpoint
-               publisher.destroy(ep);
+               //undeploy endpoints
+               publisher.destroy(ctx);
             }
             catch (Exception e)
             {
@@ -105,6 +107,17 @@ public class EndpointPublishServlet extends HttpServlet
                res.getWriter().print(e.getMessage());
             }
          }
+      }
+   }
+   
+   private static void invoke(URL wsdlURL) throws Exception {
+      QName serviceName = new QName("http://publish.ws.test.jboss.org/", "EndpointService");
+      Service service = Service.create(wsdlURL, serviceName);
+      org.jboss.test.ws.publish.Endpoint port = service.getPort(org.jboss.test.ws.publish.Endpoint.class);
+      String result = port.echo("Foo");
+      if (!"Foo".equals(result))
+      {
+         throw new Exception("Expected 'Foo' but got '" + result + "'");
       }
    }
 }
