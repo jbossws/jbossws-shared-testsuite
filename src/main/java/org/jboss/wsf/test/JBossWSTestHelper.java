@@ -224,7 +224,7 @@ public class JBossWSTestHelper
          if (integrationTarget == null)
             throw new IllegalStateException("Cannot obtain system property: " + SYSPROP_JBOSSWS_INTEGRATION_TARGET);
 
-         LOGGER.fatal("TODO: remove this ugly hack");
+         LOGGER.warn("TODO: [JBWS-3211] include AS 7.x into integrationTarget mismatch check");
          if (!integrationTarget.startsWith("jboss7"))
          {
             // Read the JBoss SpecificationVersion
