@@ -482,6 +482,14 @@
         <exclude name="org/jboss/test/ws/jaxws/samples/xop/doclit/*TestCase.class"/>
       </classes>
     </war>
+
+    <!-- endpoint-publish.war -->  	
+    <war warfile="${tests.output.dir}/test-libs/endpoint-publish.war" needxmlfile='false'>
+      <classes dir="${tests.output.dir}/test-classes">
+        <include name="org/jboss/test/ws/publish/**"/>
+        <exclude name="org/jboss/test/ws/publish/*TestCase.class"/>
+      </classes>
+    </war>
   	
     <!-- management-recording.jar -->
     <jar destfile="${tests.output.dir}/test-libs/management-recording-native.jar">
