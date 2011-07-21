@@ -22,6 +22,7 @@
 package org.jboss.test.ws.management.recording;
 
 import java.net.URL;
+import java.rmi.RMISecurityManager;
 
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
@@ -47,16 +48,27 @@ public class CustomRecordProcessorTestCase extends JBossWSTest
 
    protected void setUp() throws Exception
    {
-      //Native does not require us to set the recording handler on the deployed endpoint
-      boolean isNative = isIntegrationNative();
-      new JBossWSTestHelper().deploy(isNative ? "management-recording-native.jar" : "management-recording.jar");
-      endpointObjectName = isNative ? "jboss.ws:context=management-recording,endpoint=EndpointImpl" : "jboss.ws:context=management-recording,endpoint=EndpointWithHandlerImpl";
+      if (!isTargetJBoss6()) {
+         endpointObjectName = "jboss.ws:context=management-recording,endpoint=EndpointWithConfigImpl";
+         JBossWSTestHelper.deploy("management-recording-as7.jar");
+      } else if (isIntegrationNative()) {
+         endpointObjectName = "jboss.ws:context=management-recording,endpoint=EndpointImpl";
+         JBossWSTestHelper.deploy("management-recording-native.jar");
+      } else {
+         endpointObjectName = "jboss.ws:context=management-recording,endpoint=EndpointWithHandlerImpl";
+         JBossWSTestHelper.deploy("management-recording.jar");
+      }
    }
    
    protected void tearDown() throws Exception
    {
-      boolean isNative = isIntegrationNative();
-      new JBossWSTestHelper().undeploy(isNative ? "management-recording-native.jar" : "management-recording.jar");
+      if (!isTargetJBoss6()) {
+         JBossWSTestHelper.undeploy("management-recording-as7.jar");
+      } else if (isIntegrationNative()) {
+         JBossWSTestHelper.undeploy("management-recording-native.jar");
+      } else {
+         JBossWSTestHelper.undeploy("management-recording.jar");
+      }
    }
 
    public void testAddCustomProcessor() throws Exception
