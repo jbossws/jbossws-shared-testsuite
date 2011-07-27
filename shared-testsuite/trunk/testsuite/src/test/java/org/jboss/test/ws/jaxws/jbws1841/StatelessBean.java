@@ -42,23 +42,23 @@ public class StatelessBean implements StatelessRemote
    @WebServiceRef(value = EndpointService.class, mappedName="jbossws-client/service/TestService", wsdlLocation="META-INF/wsdl/TestService.wsdl")
    EndpointInterface endpoint1;
 
-   EndpointInterface endpoint2;
+   EndpointInterface _endpoint2;
 
    @WebServiceRef(value = EndpointService.class, mappedName="jbossws-client/service/TestService", wsdlLocation="META-INF/wsdl/TestService.wsdl")
    public void setEndpoint2(EndpointInterface endpoint2)
    {
-      this.endpoint2 = endpoint2;
+      this._endpoint2 = endpoint2;
    }
 
    // via XML
    EndpointInterface endpoint3;
 
    // via XML
-   EndpointInterface endpoint4;
+   EndpointInterface _endpoint4;
 
    public void setEndpoint4(EndpointInterface endpoint4)
    {
-      this.endpoint4 = endpoint4;
+      this._endpoint4 = endpoint4;
    }
 
 
@@ -72,10 +72,10 @@ public class StatelessBean implements StatelessRemote
 
    public String echo2(String string) throws Exception
    {
-      if(null==endpoint2)
+      if(null==_endpoint2)
          throw new IllegalArgumentException("Serviceref for property 'endpoint2' not injected");
 
-      return endpoint2.echo(string);
+      return _endpoint2.echo(string);
    }
 
    public String echo3(String string) throws Exception
@@ -88,10 +88,10 @@ public class StatelessBean implements StatelessRemote
 
    public String echo4(String string) throws Exception
    {
-      if(null==endpoint4)
+      if(null==_endpoint4)
          throw new IllegalArgumentException("Serviceref for property 'endpoint4' not injected");
 
-      return endpoint4.echo(string);
+      return _endpoint4.echo(string);
    }
 
 }

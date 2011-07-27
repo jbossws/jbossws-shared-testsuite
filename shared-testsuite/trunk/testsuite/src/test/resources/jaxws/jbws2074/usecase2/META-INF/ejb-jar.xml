@@ -20,7 +20,7 @@
         </injection-target>
         <injection-target>
           <injection-target-class>org.jboss.test.ws.jaxws.jbws2074.usecase2.service.EJB3Impl</injection-target-class>
-          <injection-target-name>setBoolean1</injection-target-name>
+          <injection-target-name>boolean1</injection-target-name>
         </injection-target>
       </env-entry>
 
@@ -34,7 +34,7 @@
         </injection-target>
         <injection-target>
           <injection-target-class>org.jboss.test.ws.jaxws.jbws2074.usecase2.service.EJB3Impl</injection-target-class>
-          <injection-target-name>setByte1</injection-target-name>
+          <injection-target-name>byte1</injection-target-name>
         </injection-target>
       </env-entry>
 
@@ -48,7 +48,7 @@
         </injection-target>
         <injection-target>
           <injection-target-class>org.jboss.test.ws.jaxws.jbws2074.usecase2.service.EJB3Impl</injection-target-class>
-          <injection-target-name>setCharacter1</injection-target-name>
+          <injection-target-name>character1</injection-target-name>
         </injection-target>
       </env-entry>
 
@@ -62,7 +62,7 @@
         </injection-target>
         <injection-target>
           <injection-target-class>org.jboss.test.ws.jaxws.jbws2074.usecase2.service.EJB3Impl</injection-target-class>
-          <injection-target-name>setShort1</injection-target-name>
+          <injection-target-name>short1</injection-target-name>
         </injection-target>
       </env-entry>
 
