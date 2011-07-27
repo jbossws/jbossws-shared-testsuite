@@ -52,12 +52,12 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
    // XML driven injection
    private Boolean boolean0;
 
-   private Boolean boolean1;
+   private Boolean _boolean1;
 
    // XML driven injection
    private void setBoolean1(Boolean b)
    {
-      this.boolean1 = b;
+      this._boolean1 = b;
    }
 
    /**
@@ -67,12 +67,12 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
    // XML driven injection
    private Byte byte0;
 
-   private Byte byte1;
+   private Byte _byte1;
 
    // XML driven injection
    private void setByte1(Byte b)
    {
-      this.byte1 = b;
+      this._byte1 = b;
    }
 
    /**
@@ -82,12 +82,12 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
    // XML driven injection
    private Character character0;
 
-   private Character character1;
+   private Character _character1;
 
    // XML driven injection
    private void setCharacter1(Character c)
    {
-      this.character1 = c;
+      this._character1 = c;
    }
 
    /**
@@ -97,12 +97,12 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
    // XML driven injection
    private Short short0;
 
-   private Short short1;
+   private Short _short1;
 
    // XML driven injection
    private void setShort1(Short i)
    {
-      this.short1 = i;
+      this._short1 = i;
    }
 
    /**
@@ -112,12 +112,12 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
    // XML driven injection
    private Integer integer0;
 
-   private Integer integer1;
+   private Integer _integer1;
 
    // XML driven injection
    private void setInteger1(Integer i)
    {
-      this.integer1 = i;
+      this._integer1 = i;
    }
 
    /**
@@ -127,12 +127,12 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
    // XML driven injection
    private Long long0;
 
-   private Long long1;
+   private Long _long1;
 
    // XML driven injection
    private void setLong1(Long l)
    {
-      this.long1 = l;
+      this._long1 = l;
    }
 
    /**
@@ -142,12 +142,12 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
    // XML driven injection
    private Float float0;
 
-   private Float float1;
+   private Float _float1;
 
    // XML driven injection
    private void setFloat1(Float f)
    {
-      this.float1 = f;
+      this._float1 = f;
    }
 
    /**
@@ -157,12 +157,12 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
    // XML driven injection
    private Double double0;
 
-   private Double double1;
+   private Double _double1;
 
    // XML driven injection
    private void setDouble1(Double d)
    {
-      this.double1 = d;
+      this._double1 = d;
    }
 
    /**
@@ -172,12 +172,12 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
    // XML driven injection
    private String string0;
 
-   private String string1;
+   private String _string1;
 
    // XML driven injection
    private void setString1(String s)
    {
-      this.string1 = s;
+      this._string1 = s;
    }
 
    /**
@@ -196,7 +196,7 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
          log.error("Descriptor driven initialization for boolean0 failed");
          correctInitialization = false;
       }
-      if (this.boolean1 == null || this.boolean1 != true)
+      if (this._boolean1 == null || this._boolean1 != true)
       {
          log.error("Descriptor driven initialization for boolean1 failed");
          correctInitialization = false;
@@ -208,7 +208,7 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
          log.error("Descriptor driven initialization for byte0 failed");
          correctInitialization = false;
       }
-      if (this.byte1 == null || this.byte1 != (byte)1)
+      if (this._byte1 == null || this._byte1 != (byte)1)
       {
          log.error("Descriptor driven initialization for byte1 failed");
          correctInitialization = false;
@@ -220,7 +220,7 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
          log.error("Descriptor driven initialization for character0 failed");
          correctInitialization = false;
       }
-      if (this.character1 == null || this.character1 != 'c')
+      if (this._character1 == null || this._character1 != 'c')
       {
          log.error("Descriptor driven initialization for character1 failed");
          correctInitialization = false;
@@ -232,7 +232,7 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
          log.error("Descriptor driven initialization for short0 failed");
          correctInitialization = false;
       }
-      if (this.short1 == null || this.short1 != (short)5)
+      if (this._short1 == null || this._short1 != (short)5)
       {
          log.error("Descriptor driven initialization for short1 failed");
          correctInitialization = false;
@@ -244,7 +244,7 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
          log.error("Descriptor driven initialization for integer0 failed");
          correctInitialization = false;
       }
-      if (this.integer1 == null || this.integer1 != 7)
+      if (this._integer1 == null || this._integer1 != 7)
       {
          log.error("Descriptor driven initialization for integer1 failed");
          correctInitialization = false;
@@ -256,7 +256,7 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
          log.error("Descriptor driven initialization for long0 failed");
          correctInitialization = false;
       }
-      if (this.long1 == null || this.long1 != 11L)
+      if (this._long1 == null || this._long1 != 11L)
       {
          log.error("Descriptor driven initialization for long1 failed");
          correctInitialization = false;
@@ -268,7 +268,7 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
          log.error("Descriptor driven initialization for float0 failed");
          correctInitialization = false;
       }
-      if (this.float1 == null || this.float1 != 13.0f)
+      if (this._float1 == null || this._float1 != 13.0f)
       {
          log.error("Descriptor driven initialization for float1 failed");
          correctInitialization = false;
@@ -280,7 +280,7 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
          log.error("Descriptor driven initialization for double0 failed");
          correctInitialization = false;
       }
-      if (this.double1 == null || this.double1 != 17.0)
+      if (this._double1 == null || this._double1 != 17.0)
       {
          log.error("Descriptor driven initialization for double1 failed");
          correctInitialization = false;
@@ -292,7 +292,7 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
          log.error("Descriptor driven initialization for string0 failed");
          correctInitialization = false;
       }
-      if ("s".equals(this.string1) == false)
+      if ("s".equals(this._string1) == false)
       {
          log.error("Descriptor driven initialization for string1 failed");
          correctInitialization = false;
