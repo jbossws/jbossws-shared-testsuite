@@ -117,9 +117,9 @@ public abstract class PluginBase extends JBossWSTest
       // as changing the current classloader results in a log4j configuration coming from thirdparty lib being used. 
       jarFirstClasspath.addAll(jarURLs);
       jarFirstClasspath.addAll(classDirUrls);
+      this.origClassLoader = Thread.currentThread().getContextClassLoader();
       URLClassLoader jarFirstClassLoader = new URLClassLoader(jarFirstClasspath.toArray( new URL[] {}), this.origClassLoader);
 
-      this.origClassLoader = Thread.currentThread().getContextClassLoader();
       URL log4jXmlUrl = this.origClassLoader.getResource("log4j.xml");
       this.origLog4jConf = System.getProperty(LOG4J_CONF);
 
