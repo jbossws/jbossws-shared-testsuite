@@ -312,6 +312,7 @@
       <fileset dir="${jboss.home}/modules/org/jboss/xnio/nio/main/">
         <include name="xnio-nio-*.jar"/>
       </fileset>
+      <pathelement location="${tools.jar}"/>
     </path>
   </target>
 	  
