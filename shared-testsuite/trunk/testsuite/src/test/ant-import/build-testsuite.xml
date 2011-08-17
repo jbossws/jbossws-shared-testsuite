@@ -18,8 +18,8 @@
     <condition property="jboss.home" value="${jboss600.home}">
       <equals arg1="${jbossws.integration.target}" arg2="jboss600"/>
     </condition>
-    <condition property="jboss.home" value="${jboss601.home}">
-      <equals arg1="${jbossws.integration.target}" arg2="jboss601"/>
+    <condition property="jboss.home" value="${jboss610.home}">
+      <equals arg1="${jbossws.integration.target}" arg2="jboss610"/>
     </condition>
     <condition property="jboss.home" value="${jboss700.home}">
       <equals arg1="${jbossws.integration.target}" arg2="jboss700"/>
