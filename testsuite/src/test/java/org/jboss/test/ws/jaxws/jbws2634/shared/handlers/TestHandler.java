@@ -51,6 +51,11 @@ public final class TestHandler extends GenericSOAPHandler
    @EJB
    private BeanIface bean1;
 
+   public TestHandler()
+   {
+      System.out.println(TestHandler.class + " constructor");
+   }
+
    /**
     * Indicates whether handler is in correct state.
     */
