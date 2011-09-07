@@ -852,15 +852,16 @@
 		<!-- jaxws-jbws2634 -->
 		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws2634.jar">
 			<fileset dir="${tests.output.dir}/test-classes">
-				<include name="org/jboss/test/ws/jaxws/jbws2634/shared/**/*.class" />
-				<include name="org/jboss/test/ws/jaxws/jbws2634/webservice/EndpointIface.class" />
-				<include name="org/jboss/test/ws/jaxws/jbws2634/webservice/AbstractEndpointImpl.class" />
+				<include name="org/jboss/test/ws/jaxws/jbws2634/shared/*.class" />
 			</fileset>
 		</jar>
 		<war warfile="${tests.output.dir}/test-libs/jaxws-jbws2634-pojo.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws2634/WEB-INF/web.xml">
 			<classes dir="${tests.output.dir}/test-classes">
+				<include name="org/jboss/test/ws/jaxws/jbws2634/webservice/EndpointIface.class" />
+				<include name="org/jboss/test/ws/jaxws/jbws2634/webservice/AbstractEndpointImpl.class" />
 				<include name="org/jboss/test/ws/jaxws/jbws2634/webservice/POJOBean.class" />
 				<include name="org/jboss/test/ws/jaxws/jbws2634/webservice/jaxws-handler.xml" />
+				<include name="org/jboss/test/ws/jaxws/jbws2634/shared/handlers/*.class" />
 			</classes>
                         <manifest>
                                 <attribute name="Dependencies" value="org.jboss.logging"/>
@@ -868,8 +869,11 @@
 		</war>
 		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws2634-ejb3.jar">
 			<fileset dir="${tests.output.dir}/test-classes">
+				<include name="org/jboss/test/ws/jaxws/jbws2634/webservice/EndpointIface.class" />
+				<include name="org/jboss/test/ws/jaxws/jbws2634/webservice/AbstractEndpointImpl.class" />
 				<include name="org/jboss/test/ws/jaxws/jbws2634/webservice/EJB3Bean.class" />
 				<include name="org/jboss/test/ws/jaxws/jbws2634/webservice/jaxws-handler.xml" />
+				<include name="org/jboss/test/ws/jaxws/jbws2634/shared/handlers/*.class" />
 			</fileset>
 			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws2634/META-INF">
 				<include name="ejb-jar.xml" />
