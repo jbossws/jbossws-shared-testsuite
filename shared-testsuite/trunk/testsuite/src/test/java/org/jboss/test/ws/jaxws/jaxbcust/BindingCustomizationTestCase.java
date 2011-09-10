@@ -29,7 +29,7 @@ import org.jboss.wsf.spi.SPIProvider;
 import org.jboss.wsf.spi.SPIProviderResolver;
 import org.jboss.wsf.spi.deployment.DeploymentModelFactory;
 import org.jboss.wsf.spi.deployment.Endpoint;
-import org.jboss.wsf.spi.deployment.Endpoint.EndpointState;
+import org.jboss.wsf.spi.deployment.EndpointState;
 
 /**
  * @author Heiko.Braun@jboss.com
