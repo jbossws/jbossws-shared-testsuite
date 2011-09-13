@@ -49,11 +49,6 @@ import org.jboss.ws.api.annotation.WebContext;
 public class EJB3Bean extends AbstractEndpointImpl
 {
 
-   public EJB3Bean()
-   {
-      System.out.println(EJB3Bean.class + " constructor");
-   }
-
    public String echo(String msg)
    {
       return super.echo(msg) + ":EJB3Bean";

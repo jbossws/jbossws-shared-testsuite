@@ -40,11 +40,6 @@ import javax.jws.WebService;
 public class POJOBean extends AbstractEndpointImpl
 {
 
-   public POJOBean()
-   {
-      System.out.println(POJOBean.class + " constructor");
-   }
-
    public String echo(String msg)
    {
       return super.echo(msg) + ":POJOBean";
