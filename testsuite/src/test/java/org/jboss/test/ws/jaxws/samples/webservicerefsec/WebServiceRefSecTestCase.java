@@ -42,7 +42,7 @@ public class WebServiceRefSecTestCase extends JBossWSTest
 
    public static Test suite()
    {
-      return new JBossWSTestSetup(WebServiceRefSecTestCase.class, "jaxws-samples-webservicerefsec.jar");
+      return new JBossWSTestSetup(WebServiceRefSecTestCase.class, "jaxws-samples-webservicerefsec.jar", !isTargetJBoss6());
    }
 
    public void testServletClient() throws Exception
