@@ -28,7 +28,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.BindingProvider;
+import javax.xml.ws.RespectBinding;
 import javax.xml.ws.WebServiceRef;
+import javax.xml.ws.soap.Addressing;
+import javax.xml.ws.soap.MTOM;
 import javax.xml.ws.soap.SOAPBinding;
 
 import org.jboss.logging.Logger;
@@ -38,6 +41,10 @@ import org.jboss.logging.Logger;
  * 
  * @author alessio.soldano@jboss.com
  */
+@MTOM
+@RespectBinding
+@Addressing
+@WebServiceRef(name="service/jbws2307service/asdf", type=HelloService.class)
 public class ClientServlet extends HttpServlet
 {
    private Logger log = Logger.getLogger(ClientServlet.class);
