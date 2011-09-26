@@ -205,6 +205,9 @@
       <fileset dir="${jboss.home}/modules/javax/activation/api/main/">
         <include name="activation-*.jar"/>
       </fileset>
+      <fileset dir="${jboss.home}/modules/javax/mail/api/main/">
+        <include name="mail-*.jar"/>
+      </fileset>
       <fileset dir="${jboss.home}/modules/org/jboss/common-core/main/">
         <include name="jboss-common-core-*.jar"/>
       </fileset>
