@@ -38,7 +38,7 @@ import javax.jws.WebService;
    targetNamespace = "http://www.jboss.org/test/ws/jaxws/jbws2268",
    endpointInterface="org.jboss.test.ws.jaxws.jbws2268.EndpointInterface"
 )
-public final class EndpointImpl
+public class EndpointImpl
 {
 
    private StringBuilder builder = new StringBuilder();
