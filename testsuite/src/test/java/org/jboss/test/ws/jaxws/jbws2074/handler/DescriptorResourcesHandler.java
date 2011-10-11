@@ -40,7 +40,7 @@ import org.jboss.ws.api.handler.GenericSOAPHandler;
  *
  * @author ropalka@redhat.com
  */
-public final class DescriptorResourcesHandler extends GenericSOAPHandler
+public class DescriptorResourcesHandler extends GenericSOAPHandler
 {
    // provide logging
    private static final Logger log = Logger.getLogger(DescriptorResourcesHandler.class);
@@ -172,12 +172,12 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
    // XML driven injection
    private String string0;
 
-   private String _string1;
+   private String string1;
 
    // XML driven injection
    private void setString1(String s)
    {
-      this._string1 = s;
+      this.string1 = s;
    }
 
    /**
@@ -292,7 +292,7 @@ public final class DescriptorResourcesHandler extends GenericSOAPHandler
          log.error("Descriptor driven initialization for string0 failed");
          correctInitialization = false;
       }
-      if ("s".equals(this._string1) == false)
+      if ("s".equals(this.string1) == false)
       {
          log.error("Descriptor driven initialization for string1 failed");
          correctInitialization = false;

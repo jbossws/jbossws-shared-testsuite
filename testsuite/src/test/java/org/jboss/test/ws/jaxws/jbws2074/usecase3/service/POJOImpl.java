@@ -164,12 +164,12 @@ public class POJOImpl implements POJOIface
     * java.lang.String
     */
 
-   @Resource
-   private String string;
+   @Resource(name = "string")
+   private String string0;
 
    private String _string1;
 
-   @Resource
+   @Resource(name = "string")
    private void setString(String s)
    {
       this._string1 = s;
@@ -282,7 +282,7 @@ public class POJOImpl implements POJOIface
       }
 
       // java.lang.String
-      if ("s".equals(this.string) == false)
+      if ("s".equals(this.string0) == false)
       {
          log.error("@Resource initialization for string0 failed");
          correctInitialization = false;

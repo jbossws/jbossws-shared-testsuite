@@ -40,12 +40,12 @@ import org.jboss.ws.api.handler.GenericSOAPHandler;
  *
  * @author <a href="mailto:richard.opalka@jboss.org">Richard Opalka</a>
  */
-public final class TestHandler extends GenericSOAPHandler
+public class TestHandler extends GenericSOAPHandler
 {
    // provide logging
    private static final Logger log = Logger.getLogger(TestHandler.class);
 
-   @Resource
+   @Resource(name="boolean1")
    private Boolean boolean1;
 
    @EJB
