@@ -41,7 +41,7 @@ import org.jboss.ws.api.handler.GenericSOAPHandler;
  *
  * @author ropalka@redhat.com
  */
-public final class JavaResourcesHandler extends GenericSOAPHandler
+public class JavaResourcesHandler extends GenericSOAPHandler
 {
    // provide logging
    private static final Logger log = Logger.getLogger(JavaResourcesHandler.class);
@@ -170,12 +170,12 @@ public final class JavaResourcesHandler extends GenericSOAPHandler
     * java.lang.String
     */
 
-   @Resource
+   @Resource(name = "string")
    private String string;
 
    private String _string1;
 
-   @Resource
+   @Resource(name = "string")
    private void setString(String s)
    {
       this._string1 = s;
