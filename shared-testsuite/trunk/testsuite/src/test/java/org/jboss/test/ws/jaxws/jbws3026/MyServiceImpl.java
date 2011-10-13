@@ -32,8 +32,9 @@ import javax.naming.NamingException;
 @WebService(serviceName = "MyService", portName = "MyServicePort")
 public class MyServiceImpl implements MyService
 {
-    @EJB(mappedName="MyBean/remote")
-    MyBeanRemote bean;
+
+   @EJB(lookup="java:global/jaxws-jbws3026-ejb/MyBean!org.jboss.test.ws.jaxws.jbws3026.MyBeanRemote")
+   MyBeanRemote bean;
 
     /**
      * Invoking method of injected bean 
@@ -49,10 +50,7 @@ public class MyServiceImpl implements MyService
    public void thisOneWorks()
    {
       MyBeanRemote bean = lookupBean();
-      if (bean != null)
-      {
-         bean.myMethod();
-      }
+      bean.myMethod();
    }
 
    /**
@@ -66,13 +64,14 @@ public class MyServiceImpl implements MyService
       try
       {
          InitialContext ctx = new InitialContext();
-         res= (MyBeanRemote) ctx.lookup("MyBean/remote");
+         res= (MyBeanRemote) ctx.lookup("java:global/jaxws-jbws3026-ejb/MyBean!org.jboss.test.ws.jaxws.jbws3026.MyBeanRemote");
       }
       catch (NamingException e)
       {
          System.out.println("Something went wrong");
-         e.printStackTrace();
+         throw new RuntimeException(e);
       }
       return res;
    }
+
 }
