@@ -26,7 +26,7 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
 
-@WebService(serviceName="EnvEntryService", targetNamespace = "http://org.jboss.ws/enventry")
+@WebService(serviceName="EnvEntryService", portName="EnvEntryPort", targetNamespace = "http://org.jboss.ws/enventry")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface EnvEntryEndpoint
 {
