@@ -28,7 +28,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.ejb.Stateless;
 import javax.jws.WebService;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -43,7 +42,6 @@ import org.jboss.test.ws.jaxws.benchmark.test.datatypes.types.ComplexType;
  * @since 09-Mar-2010
  */
 @WebService(serviceName = "EndpointWrappedDocService", portName = "EndpointWrappedDocPort", endpointInterface = "org.jboss.test.ws.jaxws.benchmark.test.datatypes.EndpointWrappedDoc")
-@Stateless
 public class EndpointPOJOWrappedDocImpl implements EndpointDoc
 {
    private static Duration dayDuration;
