@@ -1033,7 +1033,7 @@
 		<war warfile="${tests.output.dir}/test-libs/jbws3140-server.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3140/WEB-INF-Server/web.xml">
 			<classes dir="${tests.output.dir}/test-classes">
 				<include name="org/jboss/test/ws/jaxws/jbws3140/*.class" />
-				<include name="org/jboss/test/ws/jaxws/jbws3140/server*.xml" />
+				<include name="org/jboss/test/ws/jaxws/jbws3140/*.xml" />
 				<exclude name="org/jboss/test/ws/jaxws/jbws3140/*EndpointService.class" />
 				<exclude name="org/jboss/test/ws/jaxws/jbws3140/*TestCase.class" />
 				<exclude name="org/jboss/test/ws/jaxws/jbws3140/*TestClient.class" />
@@ -1045,7 +1045,7 @@
 		<war warfile="${tests.output.dir}/test-libs/jbws3140-responses-server.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3140/WEB-INF-Server/web.xml">
 			<classes dir="${tests.output.dir}/test-classes">
 				<include name="org/jboss/test/ws/jaxws/jbws3140/*.class" />
-				<include name="org/jboss/test/ws/jaxws/jbws3140/server*.xml" />
+				<include name="org/jboss/test/ws/jaxws/jbws3140/*.xml" />
 				<exclude name="org/jboss/test/ws/jaxws/jbws3140/*TestCase.class" />
 				<exclude name="org/jboss/test/ws/jaxws/jbws3140/*TestClient.class" />
 			</classes>
@@ -1059,7 +1059,7 @@
 		<war warfile="${tests.output.dir}/test-libs/jbws3140-client.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3140/WEB-INF-Client/web.xml">
 			<classes dir="${tests.output.dir}/test-classes">
 				<include name="org/jboss/test/ws/jaxws/jbws3140/*.class" />
-				<include name="org/jboss/test/ws/jaxws/jbws3140/client*.xml" />
+				<include name="org/jboss/test/ws/jaxws/jbws3140/*.xml" />
 				<exclude name="org/jboss/test/ws/jaxws/jbws3140/*TestCase.class" />
 			</classes>
 			<classes dir="${tests.output.dir}/test-resources/jaxws/jbws3140">
