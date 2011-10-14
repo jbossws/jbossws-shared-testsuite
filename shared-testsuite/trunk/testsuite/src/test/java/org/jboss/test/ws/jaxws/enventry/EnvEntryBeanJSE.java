@@ -28,7 +28,7 @@ import javax.jws.soap.SOAPBinding;
 
 import org.jboss.logging.Logger;
 
-@WebService(serviceName = "EnvEntryService", targetNamespace = "http://org.jboss.ws/enventry")
+@WebService(serviceName = "EnvEntryService", portName="EnvEntryPort", targetNamespace = "http://org.jboss.ws/enventry")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public class EnvEntryBeanJSE
 {
