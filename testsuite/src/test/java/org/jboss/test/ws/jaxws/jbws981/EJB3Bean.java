@@ -23,40 +23,22 @@ package org.jboss.test.ws.jaxws.jbws981;
 
 import javax.ejb.Stateless;
 import javax.jws.WebService;
-import javax.management.MBeanServer;
-import javax.management.MBeanServerFactory;
-import javax.management.ObjectName;
 
-import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
 
 /**
- * 
+ *
  * @author darran.lofthouse@jboss.com
  * @since Nov 2, 2006
  */
 @Stateless
 @WebService(endpointInterface = "org.jboss.test.ws.jaxws.jbws981.EndpointInterface", targetNamespace = "http://www.jboss.org/test/ws/jaxws/jbws981", serviceName = "EndpointService")
-@WebContext(virtualHosts = { "localhost", "www.jboss.org" })
+@WebContext(virtualHost = "default-host")
 public class EJB3Bean implements EJB3RemoteInterface
 {
 
-   private static final Logger log = Logger.getLogger(EJB3Bean.class);
-
    public String hello(final String message)
    {
-      try
-      {
-         MBeanServer mbeanServer = (MBeanServer)MBeanServerFactory.findMBeanServer(null).get(0);
-         ObjectName on = new ObjectName("jboss.web:J2EEApplication=none,J2EEServer=none,WebModule=//www.jboss.org/jaxws-jbws981,j2eeType=Servlet,name=EJB3Bean");
-         mbeanServer.getMBeanInfo(on);
-      }
-      catch (Exception e)
-      {
-         log.error("Unable to lookup deployment", e);
-         return "Unable to get WebModule MBean for virtual host - virtual-host not handled from @WebContext";
-      }
-
       return message;
    }
 
