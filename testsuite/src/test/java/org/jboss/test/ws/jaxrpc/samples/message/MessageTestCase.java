@@ -30,6 +30,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.rpc.Service;
+import javax.xml.rpc.ServiceFactory;
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPConnection;
@@ -61,6 +62,7 @@ import org.w3c.dom.Element;
 public class MessageTestCase extends JBossWSTest
 {
    private final String TARGET_ENDPOINT = "http://" + getServerHost() + ":8080/jaxrpc-samples-message";
+   private static final String TARGET_NAMESPACE = "http://org.jboss.ws/samples/message";
 
    /** Deploy the test ear */
    public static Test suite() throws Exception
@@ -129,12 +131,11 @@ public class MessageTestCase extends JBossWSTest
 
    private MessageTestService getPort() throws Exception
    {
-      InitialContext iniCtx = getInitialContext();
-      Service service = (Service)iniCtx.lookup("java:comp/env/service/MessageService");
-      MessageTestService port = (MessageTestService)service.getPort(MessageTestService.class);
-      return port;
+      ServiceFactory serviceFactory = ServiceFactory.newInstance();
+      Service service = serviceFactory.createService(new URL(TARGET_ENDPOINT + "?wsdl"), new QName(TARGET_NAMESPACE, "MessageService"));
+      return (MessageTestService)service.getPort(new QName(TARGET_NAMESPACE, "MessageTestServicePort"), MessageTestService.class);
    }
-
+   
    private SOAPElement convertToSOAPElement(Element reqElement) throws TransformerException, SOAPException
    {
       SOAPElement parent = SOAPFactory.newInstance().createElement("dummy");
