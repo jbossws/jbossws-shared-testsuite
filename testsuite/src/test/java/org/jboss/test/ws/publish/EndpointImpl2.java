@@ -25,7 +25,7 @@ import javax.jws.WebService;
 
 import org.jboss.logging.Logger;
 
-@WebService(serviceName="EndpointService", portName="EndpointPort", endpointInterface = "org.jboss.test.ws.publish.Endpoint")
+@WebService(serviceName="EndpointService2", portName="EndpointPort", endpointInterface = "org.jboss.test.ws.publish.Endpoint")
 public class EndpointImpl2
 {
    // Provide logging
