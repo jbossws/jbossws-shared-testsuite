@@ -82,8 +82,8 @@ public class EndpointPublishServlet extends HttpServlet
          }
          
          //call endpoint
-         invoke(new URL("http://localhost:8080/ep-publish-test/pattern?wsdl"));
-         invoke(new URL("http://localhost:8080/ep-publish-test/pattern2?wsdl"));
+         invoke(new URL("http://localhost:8080/ep-publish-test/pattern?wsdl"), new QName("http://publish.ws.test.jboss.org/", "EndpointService"));
+         invoke(new URL("http://localhost:8080/ep-publish-test/pattern2?wsdl"), new QName("http://publish.ws.test.jboss.org/", "EndpointService2"));
          
          res.getWriter().print("1");
       }
@@ -110,8 +110,7 @@ public class EndpointPublishServlet extends HttpServlet
       }
    }
    
-   private static void invoke(URL wsdlURL) throws Exception {
-      QName serviceName = new QName("http://publish.ws.test.jboss.org/", "EndpointService");
+   private static void invoke(URL wsdlURL, QName serviceName) throws Exception {
       Service service = Service.create(wsdlURL, serviceName);
       org.jboss.test.ws.publish.Endpoint port = service.getPort(org.jboss.test.ws.publish.Endpoint.class);
       String result = port.echo("Foo");
