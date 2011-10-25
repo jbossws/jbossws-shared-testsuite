@@ -1106,6 +1106,22 @@
                         </webinf>
                 </war>
 		
+                <!-- jaxws-jbws3276 -->
+                <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3276-usecase1.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3276/WEB-INF/web.xml">
+                        <classes dir="${tests.output.dir}/test-classes">
+                	        <include name="org/jboss/test/ws/jaxws/jbws3276/POJOIface.class"/>
+                	        <include name="org/jboss/test/ws/jaxws/jbws3276/POJOImpl.class"/>
+                	        <include name="org/jboss/test/ws/jaxws/jbws3276/AnonymousPOJO.class"/>
+                        </classes>
+                </war>
+		
+                <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3276-usecase2.war" needxmlfile="false">
+                        <classes dir="${tests.output.dir}/test-classes">
+                	        <include name="org/jboss/test/ws/jaxws/jbws3276/POJOIface.class"/>
+                	        <include name="org/jboss/test/ws/jaxws/jbws3276/AnonymousPOJO.class"/>
+                        </classes>
+                </war>
+		
         <!-- jaxws-jbws3293 -->
         <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3293.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3293/WEB-INF/web.xml">
             <classes dir="${tests.output.dir}/test-classes">
