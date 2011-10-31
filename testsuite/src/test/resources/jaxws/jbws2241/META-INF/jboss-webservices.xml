@@ -1,0 +1,24 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<webservices
+  xmlns="http://www.jboss.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  version="1.0"
+  xsi:schemaLocation="http://www.jboss.com/xml/ns/javaee http://www.jboss.org/j2ee/schema/jboss_webservices_1_0.xsd">
+
+  <context-root>/contextRoot</context-root>
+
+  <webservice-description>
+    <webservice-description-name>TestService</webservice-description-name>
+    <port-component>
+      <port-component-name>TestPortComponent</port-component-name>
+      <port-component-uri>/urlPattern/test</port-component-uri>
+      <auth-method>BASIC</auth-method>
+      <transport-guarantee>NONE</transport-guarantee>
+      <secure-wsdl-access>false</secure-wsdl-access>
+      <service-impl-bean>
+        <ejb-link>EJB3Bean</ejb-link>
+      </service-impl-bean>
+    </port-component>
+  </webservice-description>
+
+</webservices>
