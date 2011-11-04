@@ -310,6 +310,9 @@
         <include name="jboss-sasl-*.jar"/>
       </fileset>
       <!-- START ## jaxrpc tests ## -->
+      <fileset dir="${jboss.home}/modules/org/jboss/netty/main/">
+        <include name="netty-*.jar"/>
+      </fileset>
       <fileset dir="${jboss.home}/modules/org/jboss/xb/main/">
         <include name="jbossxb-*.jar"/>
       </fileset>
