@@ -309,6 +309,20 @@
       <fileset dir="${jboss.home}/modules/org/jboss/sasl/main/">
         <include name="jboss-sasl-*.jar"/>
       </fileset>
+      <!-- START ## jaxrpc tests ## -->
+      <fileset dir="${jboss.home}/modules/org/jboss/xb/main/">
+        <include name="jbossxb-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/ws/native/jbossws-native-core/main/">
+        <include name="jbossws-native-core-4.0.0.Beta3.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/ws/native/jbossws-native-core/main/">
+        <include name="jbossws-native-core.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/ws/native/jbossws-native-core/main/">
+        <include name="jbossws-native-core-${jbossws-native-core.filename}.jar"/>
+      </fileset>
+      <!-- END ## jaxrpc tests ## -->
       <fileset dir="${jboss.home}/modules/org/jboss/xnio/main/">
         <include name="xnio-api-*.jar"/>
       </fileset>
