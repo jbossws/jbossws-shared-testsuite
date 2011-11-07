@@ -63,7 +63,7 @@ public class JBossWSTestHelper
    private static final String SYSPROP_JBOSS_BIND_ADDRESS = "jboss.bind.address";
    private static final String SYSPROP_TEST_ARCHIVE_DIRECTORY = "test.archive.directory";
    private static final String SYSPROP_TEST_RESOURCES_DIRECTORY = "test.resources.directory";
-   private static final Deployer DEPLOYER;
+   private static Deployer DEPLOYER;
 
    private static MBeanServerConnection server;
    private static String integrationTarget;
@@ -73,10 +73,15 @@ public class JBossWSTestHelper
    private static String testArchiveDir;
    private static String testResourcesDir;
    
-   static
+   private static synchronized Deployer getDeployer()
    {
-      SPIProvider spiProvider = SPIProviderResolver.getInstance().getProvider();
-      DEPLOYER = spiProvider.getSPI(Deployer.class);
+      //lazy loading of deployer
+      if (DEPLOYER == null)
+      {
+         SPIProvider spiProvider = SPIProviderResolver.getInstance().getProvider();
+         DEPLOYER = spiProvider.getSPI(Deployer.class);
+      }
+      return DEPLOYER;
    }
 
    /** Deploy the given archive
@@ -84,7 +89,7 @@ public class JBossWSTestHelper
    public static void deploy(String archive) throws Exception
    {
       URL archiveURL = getArchiveFile(archive).toURI().toURL();
-      DEPLOYER.deploy(archiveURL);
+      getDeployer().deploy(archiveURL);
    }
 
    /** Undeploy the given archive
@@ -92,7 +97,7 @@ public class JBossWSTestHelper
    public static void undeploy(String archive) throws Exception
    {
       URL archiveURL = getArchiveFile(archive).toURI().toURL();
-      DEPLOYER.undeploy(archiveURL);
+      getDeployer().undeploy(archiveURL);
    }
 
    public static boolean isTargetJBoss6()
@@ -319,11 +324,11 @@ public class JBossWSTestHelper
    
    public static void addSecurityDomain(String name, Map<String,String> authenticationOptions) throws Exception
    {
-      DEPLOYER.addSecurityDomain(name, authenticationOptions);
+      getDeployer().addSecurityDomain(name, authenticationOptions);
    }
    
    public static void removeSecurityDomain(String name) throws Exception
    {
-      DEPLOYER.removeSecurityDomain(name);
+      getDeployer().removeSecurityDomain(name);
    }
 }
