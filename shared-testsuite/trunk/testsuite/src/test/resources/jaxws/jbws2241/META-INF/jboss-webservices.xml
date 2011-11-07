@@ -7,18 +7,14 @@
 
   <context-root>/contextRoot</context-root>
 
-  <webservice-description>
-    <webservice-description-name>TestService</webservice-description-name>
-    <port-component>
-      <port-component-name>TestPortComponent</port-component-name>
-      <port-component-uri>/urlPattern/test</port-component-uri>
-      <auth-method>BASIC</auth-method>
-      <transport-guarantee>NONE</transport-guarantee>
-      <secure-wsdl-access>false</secure-wsdl-access>
-      <service-impl-bean>
-        <ejb-link>EJB3Bean</ejb-link>
-      </service-impl-bean>
-    </port-component>
-  </webservice-description>
+  <port-component>
+    <ejb-name>EJB3Bean</ejb-name>
+    <port-component-name>TestPortComponent</port-component-name>
+    <port-component-uri>/urlPattern/test</port-component-uri>
+    <auth-method>BASIC</auth-method>
+    <transport-guarantee>NONE</transport-guarantee>
+    <secure-wsdl-access>false</secure-wsdl-access>
+  </port-component>
 
 </webservices>
+
