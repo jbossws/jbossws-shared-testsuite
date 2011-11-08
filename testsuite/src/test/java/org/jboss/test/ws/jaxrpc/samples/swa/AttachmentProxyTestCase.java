@@ -31,7 +31,9 @@ import javax.activation.DataHandler;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 import javax.naming.InitialContext;
+import javax.xml.namespace.QName;
 import javax.xml.rpc.Service;
+import javax.xml.rpc.ServiceFactory;
 import javax.xml.transform.stream.StreamSource;
 
 import junit.framework.Test;
@@ -48,6 +50,8 @@ import org.jboss.wsf.test.JBossWSTestSetup;
  */
 public class AttachmentProxyTestCase extends JBossWSTest
 {
+   public final String TARGET_ENDPOINT_ADDRESS = "http://" + getServerHost() + ":8080/jaxrpc-samples-swa";
+   private static final String TARGET_NAMESPACE = "http://org.jboss.ws/samples/swa";
    private static Attachment port;
 
    /** Deploy the test ear */
@@ -62,10 +66,14 @@ public class AttachmentProxyTestCase extends JBossWSTest
 
       if (port == null)
       {
-         InitialContext iniCtx = getInitialContext();
-         Service service = (Service)iniCtx.lookup("java:comp/env/service/AttachmentService");
-         port = (Attachment)service.getPort(Attachment.class);
+         port = getService(Attachment.class, "Attachment", "AttachmentPort");
       }
+   }
+   
+   protected <T> T getService(final Class<T> clazz, final String serviceName, final String portName) throws Exception {
+      ServiceFactory serviceFactory = ServiceFactory.newInstance();
+      Service service = serviceFactory.createService(new URL(TARGET_ENDPOINT_ADDRESS + "?wsdl"), new QName(TARGET_NAMESPACE, serviceName));
+      return (T) service.getPort(new QName(TARGET_NAMESPACE, portName), clazz);
    }
 
    /** Send a multipart message with a text/plain attachment part
