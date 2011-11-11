@@ -45,7 +45,7 @@ public class JBWS2241TestCase extends JBossWSTest
    
    public static Test suite()
    {
-      return new JBossWSTestSetup(JBWS2241TestCase.class, "jaxws-jbws2241.jar");
+      return new JBossWSTestSetup(JBWS2241TestCase.class, "jaxws-jbws2241.jar", !isTargetJBoss6());
    }
 
    public void setUp() throws MalformedURLException

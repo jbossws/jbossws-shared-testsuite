@@ -698,6 +698,7 @@
 			</fileset>
 			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws2241/META-INF">
 				<include name="jboss.xml" />
+				<include name="jboss-ejb3.xml" />
 				<include name="jboss-webservices.xml" />
 			</metainf>
 		</jar>
