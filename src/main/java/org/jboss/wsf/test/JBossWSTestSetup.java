@@ -33,6 +33,7 @@ import java.util.StringTokenizer;
 
 import javax.management.MBeanServerConnection;
 import javax.naming.NamingException;
+import javax.security.sasl.SaslException;
 
 import junit.extensions.TestSetup;
 import junit.framework.Test;
@@ -144,7 +145,15 @@ public class JBossWSTestSetup extends TestSetup
              authenticationOptions.put("rolesProperties", rolesPropFile);
          }
          authenticationOptions.put("unauthenticatedIdentity", "anonymous");
-         JBossWSTestHelper.addSecurityDomain(JBOSSWS_SEC_DOMAIN, authenticationOptions);
+         try {
+            JBossWSTestHelper.addSecurityDomain(JBOSSWS_SEC_DOMAIN, authenticationOptions);
+         } catch (Exception e) {
+            //be lenient here, the default jbossws security domain might be there because of
+            //a previously prematurely interrupted testsuite run, so go ahead with that, it
+            //will removed and re-installed at next test requiring it in any case
+            e.printStackTrace();
+            log.warn("Could not add default security domain!", e);
+         }
       }
 
       List<URL> clientJars = new ArrayList<URL>();
@@ -187,9 +196,21 @@ public class JBossWSTestSetup extends TestSetup
       {
          JBossWSTestHelper.deploy(archive);
       }
-      catch (Exception ex)
+      catch (Throwable ex)
       {
          ex.printStackTrace();
+         Throwable cause = ex.getCause();
+         boolean foundSecurityCause = false;
+         while (!foundSecurityCause && cause != null && cause != ex) {
+            foundSecurityCause = cause instanceof SaslException;
+            ex = cause;
+            cause = cause.getCause();
+         }
+         if (foundSecurityCause) {
+            System.out.println("\n** Please make sure you properly setup authentication credentials to the application server management console **\n\n" +
+            		"In order for running the JBossWS testsuite against a protected application server (username/password different from 'admin' / 'admin'),\n" +
+            		"use '-Djbossws.deployer.authentication.username=username -Djbossws.deployer.authentication.password=password'\n");
+         }
          JBossWSTestHelper.undeploy(archive);
       }
    }
