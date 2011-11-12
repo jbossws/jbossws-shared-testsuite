@@ -63,7 +63,7 @@ abstract class AbstractEndpoint implements Endpoint
       int ctx1Value = this.getValue(this.wsCtx1, key);
       int ctx2Value = this.getValue(this.wsCtx2, key);
       if (ctx1Value != ctx2Value)
-         throw new WebServiceException("Values have to be equivalent, they're comming from the same request");
+         throw new WebServiceException("Values have to be equivalent, they're coming from the same request");
 
       return ++ctx1Value; 
    }
