@@ -607,6 +607,8 @@
       <sysproperty key="jboss.server.instance" value="${jboss.server.instance}"/>
       <sysproperty key="jboss.bind.address" value="${node0}"/>
       <sysproperty key="jbossws.integration.target" value="${jbossws.integration.target}"/>
+      <sysproperty key="jbossws.deployer.authentication.username" value="${jbossws.deployer.authentication.username}"/>
+      <sysproperty key="jbossws.deployer.authentication.password" value="${jbossws.deployer.authentication.password}"/>
       <sysproperty key="jmx.authentication.username" value="${jmx.authentication.username}"/>
       <sysproperty key="jmx.authentication.password" value="${jmx.authentication.password}"/>
       <sysproperty key="org.jboss.ws.testsuite.securityDomain.users.propfile" value="${tests.output.dir}/test-classes/jbossws-users.properties"/>
@@ -660,6 +662,8 @@
       <sysproperty key="jboss.server.instance" value="${jboss.server.instance}"/>
       <sysproperty key="jboss.bind.address" value="${node0}"/>
       <sysproperty key="jbossws.integration.target" value="${jbossws.integration.target}"/>
+      <sysproperty key="jbossws.deployer.authentication.username" value="${jbossws.deployer.authentication.username}"/>
+      <sysproperty key="jbossws.deployer.authentication.password" value="${jbossws.deployer.authentication.password}"/>
       <sysproperty key="jmx.authentication.username" value="${jmx.authentication.username}"/>
       <sysproperty key="jmx.authentication.password" value="${jmx.authentication.password}"/>
       <!--
