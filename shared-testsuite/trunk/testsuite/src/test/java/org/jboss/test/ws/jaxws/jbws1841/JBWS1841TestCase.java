@@ -58,7 +58,7 @@ public class JBWS1841TestCase extends JBossWSTest
          port = Service.create(wsdlURL, serviceName).getPort(EndpointInterface.class);
 
          InitialContext ctx = new InitialContext();
-         remote = (StatelessRemote)ctx.lookup("/StatelessBean/remote");
+         remote = (StatelessRemote)ctx.lookup(getRemoteEjbJndiName());
       }
    }
 
@@ -91,4 +91,17 @@ public class JBWS1841TestCase extends JBossWSTest
       String result = remote.echo4("Relay4");
       assertEquals("Relay4", result);
    }
+
+   private static String getRemoteEjbJndiName()
+   {
+       if (isTargetJBoss6())
+       {
+           return "/" + StatelessBean.class.getSimpleName() + "/remote";
+       }
+       else 
+       {
+           return "ejb:/jaxws-jbws1841//" + StatelessBean.class.getSimpleName() + "!" + StatelessRemote.class.getName();
+       }
+   }
+
 }

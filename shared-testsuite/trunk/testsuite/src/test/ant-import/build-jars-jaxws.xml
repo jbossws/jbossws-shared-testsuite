@@ -483,6 +483,7 @@
 				<include name="wsdl/*" />
 				<include name="ejb-jar.xml" />
 				<include name="jboss.xml" />
+				<include name="jboss-ejb3.xml" />
 				<include name="jboss-webservices.xml" />
 			</metainf>
 		</jar>
