@@ -24,6 +24,12 @@
     <condition property="jboss.home" value="${jboss700.home}">
       <equals arg1="${jbossws.integration.target}" arg2="jboss700"/>
     </condition>
+    <condition property="jboss.home" value="${jboss701.home}">
+      <equals arg1="${jbossws.integration.target}" arg2="jboss701"/>
+    </condition>
+    <condition property="jboss.home" value="${jboss702.home}">
+      <equals arg1="${jbossws.integration.target}" arg2="jboss702"/>
+    </condition>
     <condition property="jboss.home" value="${jboss710.home}">
       <equals arg1="${jbossws.integration.target}" arg2="jboss710"/>
     </condition>
@@ -236,7 +242,7 @@
     The 's.extra.classpath' contains stack specific jars that are needed to run the stack specific tests.
     -->
     <path id="integration.target.client.classpath">
-      <pathelement location="${thirdparty.dir}/jbossws-jboss700-tests-integration.jar"/> <!-- included from thirdparty local dir as it's not installed on AS -->
+      <pathelement location="${thirdparty.dir}/jbossws-${jbossws.integration.target}-tests-integration.jar"/> <!-- included from thirdparty local dir as it's not installed on AS -->
       <pathelement location="${thirdparty.dir}/jbossws-shared-testsuite.jar"/> <!-- included from thirdparty local dir as it's not installed on AS -->
       <pathelement location="${thirdparty.dir}/jnp-client.jar"/> <!-- included from thirdparty local dir as it's not installed on AS -->
       <pathelement location="${jboss.home}/jboss-modules.jar"/>
