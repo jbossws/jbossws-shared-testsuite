@@ -35,12 +35,14 @@ public final class ConsoleAccessTestCase extends JBossWSTest
 {
    public void testAccess() throws Exception
    {
-      String url = "http://" + this.getServerHost() + ":8080/jbossws";
-      HttpURLConnection connection = (HttpURLConnection)new URL(url).openConnection();
-      int responseCode = connection.getResponseCode();
-      if (responseCode != HttpURLConnection.HTTP_OK)
-      {
-         fail("Cannot access JBossWS console, responseCode == " + responseCode);
+      if (isTargetJBoss6()) {
+         String url = "http://" + getServerHost() + ":8080/jbossws";
+         HttpURLConnection connection = (HttpURLConnection)new URL(url).openConnection();
+         int responseCode = connection.getResponseCode();
+         if (responseCode != HttpURLConnection.HTTP_OK)
+         {
+            fail("Cannot access JBossWS console, responseCode == " + responseCode);
+         }
       }
    }
 }
