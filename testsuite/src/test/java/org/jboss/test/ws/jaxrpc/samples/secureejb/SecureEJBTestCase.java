@@ -80,7 +80,7 @@ public class SecureEJBTestCase extends JBossWSTest
    public void testBasicSecuredSLSB() throws Exception
    {
       InitialContext iniCtx = getInitialContext();
-      OrganizationHome home = (OrganizationHome)iniCtx.lookup("ejb/BasicSecuredSLSB");
+      OrganizationHome home = (OrganizationHome)iniCtx.lookup(isTargetJBoss6() ? "ejb/BasicSecuredSLSB" : "ejb:/jaxrpc-samples-secureejb//BasicSecuredSLSB!" + OrganizationHome.class.getName());
 
       OrganizationRemote bean = home.create();
       String info = bean.getContactInfo("mafia");
