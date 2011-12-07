@@ -58,7 +58,7 @@ public class JBWS1581EarTestCase extends JBossWSTest
 
    public void testEJBVehicle() throws Exception
    {
-      EJB3Remote remote = (EJB3Remote)getInitialContext().lookup("/EJB3Bean/remote");
+      EJB3Remote remote = (EJB3Remote)getInitialContext().lookup(isTargetJBoss6() ? "/EJB3Bean/remote" : "ejb:/jaxws-jbws1581-ejb3//EJB3Bean!" + EJB3Remote.class.getName());
       String retStr = remote.runTest("Hello World!");
       assertEquals("Hello World!", retStr);
    }
