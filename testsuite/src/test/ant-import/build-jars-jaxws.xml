@@ -1150,6 +1150,14 @@
             </classes>
         </war>
 		
+        <!-- jaxws-as2961 -->
+        <war warfile="${tests.output.dir}/test-libs/jaxws-as2961.war" webxml="${tests.output.dir}/test-resources/jaxws/as2961/WEB-INF/web.xml">
+            <classes dir="${tests.output.dir}/test-classes">
+                <include name="org/jboss/test/ws/jaxws/as2961/EndpointImpl.class"/>
+                <include name="org/jboss/test/ws/jaxws/as2961/EndpointIface.class"/>
+            </classes>
+        </war>
+
                 <!-- jaxws-jbws3367 -->
                 <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3367-usecase1.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3367/WEB-INF/web.xml">
                         <classes dir="${tests.output.dir}/test-classes">
