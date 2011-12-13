@@ -30,5 +30,5 @@ import javax.ejb.EJBObject;
  */
 public interface EJB3RemoteInterface extends EJBObject
 {
-   String echo(String input);
+   String echo(String input) throws java.rmi.RemoteException;
 }
