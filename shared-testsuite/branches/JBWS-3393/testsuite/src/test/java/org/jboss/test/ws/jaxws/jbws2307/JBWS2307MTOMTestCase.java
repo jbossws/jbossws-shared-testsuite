@@ -40,7 +40,7 @@ public class JBWS2307MTOMTestCase extends JBossWSTest
 {
    public static Test suite()
    {
-      return new JBossWSTestSetup(JBWS2307MTOMTestCase.class, "jaxws-jbws2307-client.war, jaxws-jbws2307-service.war", !isTargetJBoss6());
+      return new JBossWSTestSetup(JBWS2307MTOMTestCase.class, "jaxws-jbws2307-client.war, jaxws-jbws2307-service.war", true);
    }
    
    public void testMTOM() throws Exception

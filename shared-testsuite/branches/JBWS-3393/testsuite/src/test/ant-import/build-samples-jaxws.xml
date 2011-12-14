@@ -507,34 +507,11 @@
       </classes>
     </war>
   	
-    <!-- management-recording.jar -->
-    <jar destfile="${tests.output.dir}/test-libs/management-recording-native.jar">
-      <fileset dir="${tests.output.dir}/test-classes">
-        <include name="org/jboss/test/ws/management/recording/Endpoint.class"/>
-      	<include name="org/jboss/test/ws/management/recording/EndpointImpl.class"/>
-        <include name="org/jboss/test/ws/management/recording/MyManaged*.class"/>
-      	<include name="org/jboss/test/ws/management/recording/ExtManaged*.class"/>
-      </fileset>
-      <manifest>
-        <attribute name="Dependencies" value="org.jboss.logging"/>
-      </manifest>
-    </jar>
+    <!-- management-recording-as7.jar -->
     <jar destfile="${tests.output.dir}/test-libs/management-recording-as7.jar">
       <fileset dir="${tests.output.dir}/test-classes">
         <include name="org/jboss/test/ws/management/recording/Endpoint.class"/>
       	<include name="org/jboss/test/ws/management/recording/EndpointWithConfigImpl.class"/>
-      </fileset>
-      <manifest>
-        <attribute name="Dependencies" value="org.jboss.logging"/>
-      </manifest>
-    </jar>
-    <jar destfile="${tests.output.dir}/test-libs/management-recording.jar">
-      <fileset dir="${tests.output.dir}/test-classes">
-        <include name="org/jboss/test/ws/management/recording/Endpoint.class"/>
-      	<include name="org/jboss/test/ws/management/recording/EndpointWithHandlerImpl.class"/>
-        <include name="org/jboss/test/ws/management/recording/MyManaged*.class"/>
-      	<include name="org/jboss/test/ws/management/recording/ExtManaged*.class"/>
-      	<include name="org/jboss/test/ws/management/recording/*.xml"/>
       </fileset>
       <manifest>
         <attribute name="Dependencies" value="org.jboss.logging"/>

@@ -40,7 +40,7 @@ public class JBWS2527TestCase extends JBossWSTest
 {
    public static Test suite()
    {
-      return new JBossWSTestSetup(JBWS2527TestCase.class, "", !isTargetJBoss6());
+      return new JBossWSTestSetup(JBWS2527TestCase.class, "", true);
    }
 
    public void test() throws Exception

@@ -55,27 +55,13 @@ public class MemoryBufferRecorderTestCase extends JBossWSTest
 
    protected void setUp() throws Exception
    {
-      if (!isTargetJBoss6()) {
-         endpointObjectName = "jboss.ws:context=management-recording,endpoint=EndpointWithConfigImpl";
-         JBossWSTestHelper.deploy("management-recording-as7.jar");
-      } else if (isIntegrationNative()) {
-         endpointObjectName = "jboss.ws:context=management-recording,endpoint=EndpointImpl";
-         JBossWSTestHelper.deploy("management-recording-native.jar");
-      } else {
-         endpointObjectName = "jboss.ws:context=management-recording,endpoint=EndpointWithHandlerImpl";
-         JBossWSTestHelper.deploy("management-recording.jar");
-      }
+      endpointObjectName = "jboss.ws:context=management-recording,endpoint=EndpointWithConfigImpl";
+      JBossWSTestHelper.deploy("management-recording-as7.jar");
    }
    
    protected void tearDown() throws Exception
    {
-      if (!isTargetJBoss6()) {
-         JBossWSTestHelper.undeploy("management-recording-as7.jar");
-      } else if (isIntegrationNative()) {
-         JBossWSTestHelper.undeploy("management-recording-native.jar");
-      } else {
-         JBossWSTestHelper.undeploy("management-recording.jar");
-      }
+      JBossWSTestHelper.undeploy("management-recording-as7.jar");
    }
    
    public void testRecording() throws Exception

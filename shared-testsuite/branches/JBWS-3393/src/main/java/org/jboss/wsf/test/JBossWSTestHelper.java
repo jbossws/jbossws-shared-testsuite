@@ -102,6 +102,24 @@ public class JBossWSTestHelper
        return target.startsWith("jboss6");
    }
 
+   public static boolean isTargetJBoss7()
+   {
+       String target = getIntegrationTarget();
+       return target.startsWith("jboss7");
+   }
+
+   public static boolean isTargetJBoss70()
+   {
+       String target = getIntegrationTarget();
+       return target.startsWith("jboss70");
+   }
+
+   public static boolean isTargetJBoss71()
+   {
+       String target = getIntegrationTarget();
+       return target.startsWith("jboss71");
+   }
+
    public static boolean isIntegrationNative()
    {
       String vendor = getImplementationVendor();
