@@ -149,13 +149,7 @@ public class ProjectGeneratorTestCase extends JBossWSTest
       sb.append("project.name=" + projectName + "\n");
       sb.append("project.jboss.home=" + jbossHome.replace('\\', '/') + "\n");
       sb.append("project.type=jar\n");
-      if (isTargetJBoss6()) {
-         sb.append("project.jboss.conf=default\n");
-      }
-      else
-      {
-         sb.append("project.jboss.conf=standalone\n");
-      }
+      sb.append("project.jboss.conf=standalone\n");
       sb.append("workspace.home=" + binDistroDir.getAbsolutePath().replace('\\', '/') + "\n");
       BufferedWriter out = new BufferedWriter(new FileWriter(file));
       out.write(sb.toString());

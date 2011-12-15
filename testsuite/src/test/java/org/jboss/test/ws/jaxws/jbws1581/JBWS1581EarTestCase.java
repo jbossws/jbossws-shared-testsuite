@@ -43,10 +43,7 @@ public class JBWS1581EarTestCase extends JBossWSTest
 {
    public static Test suite()
    {
-      String archives = isTargetJBoss6()
-          ? "as6/jaxws-jbws1581.ear, jaxws-jbws1581-ejb3.jar"
-          : "jaxws-jbws1581.ear, jaxws-jbws1581-ejb3.jar";
-      return new JBossWSTestSetup(JBWS1581EarTestCase.class, archives);
+      return new JBossWSTestSetup(JBWS1581EarTestCase.class, "jaxws-jbws1581.ear, jaxws-jbws1581-ejb3.jar");
    }
 
    public void testWSDLAccess() throws Exception
@@ -58,7 +55,7 @@ public class JBWS1581EarTestCase extends JBossWSTest
 
    public void testEJBVehicle() throws Exception
    {
-      EJB3Remote remote = (EJB3Remote)getInitialContext().lookup(isTargetJBoss6() ? "/EJB3Bean/remote" : "ejb:/jaxws-jbws1581-ejb3//EJB3Bean!" + EJB3Remote.class.getName());
+      EJB3Remote remote = (EJB3Remote)getInitialContext().lookup("ejb:/jaxws-jbws1581-ejb3//EJB3Bean!" + EJB3Remote.class.getName());
       String retStr = remote.runTest("Hello World!");
       assertEquals("Hello World!", retStr);
    }

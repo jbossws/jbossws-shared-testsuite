@@ -73,7 +73,7 @@ public class ServiceRefEJBTestCase extends JBossWSTest
    public void testEJBClient() throws Exception
    {      
       InitialContext iniCtx = getInitialContext();
-      EJBRemote ejbRemote = (EJBRemote)iniCtx.lookup(isTargetJBoss6() ? "/EJBClient/remote" : "ejb:/jaxws-samples-serviceref-ejb-client//EJBClient!" + EJBRemote.class.getName());
+      EJBRemote ejbRemote = (EJBRemote)iniCtx.lookup("ejb:/jaxws-samples-serviceref-ejb-client//EJBClient!" + EJBRemote.class.getName());
 
       String helloWorld = "Hello World!";
       Object retObj = ejbRemote.echo(helloWorld);

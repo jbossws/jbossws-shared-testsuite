@@ -48,7 +48,7 @@ public class SecurityDomainTestCase extends JBossWSTest
 
    public static Test suite()
    {
-      return new JBossWSTestSetup(SecurityDomainTestCase.class, "jaxws-samples-securityDomain.jar", !isTargetJBoss6());
+      return new JBossWSTestSetup(SecurityDomainTestCase.class, "jaxws-samples-securityDomain.jar", true);
    }
 
    private SecureEndpoint getPort() throws Exception

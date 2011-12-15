@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2006, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2011, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -28,15 +28,11 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.util.Hashtable;
 import java.util.Map;
 
 import javax.management.MBeanServerConnection;
-import javax.management.ObjectName;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.xml.namespace.QName;
 import javax.xml.transform.Source;
 import javax.xml.ws.Service;
@@ -44,7 +40,6 @@ import javax.xml.ws.Service.Mode;
 import javax.xml.ws.soap.SOAPBinding;
 
 import org.jboss.logging.Logger;
-import org.jboss.ws.common.ObjectNameFactory;
 import org.jboss.wsf.spi.SPIProvider;
 import org.jboss.wsf.spi.SPIProviderResolver;
 import org.jboss.wsf.spi.deployer.Deployer;
@@ -54,6 +49,7 @@ import org.jboss.wsf.spi.deployer.Deployer;
  *
  * @author Thomas.Diesler@jboss.org
  * @author ropalka@redhat.com
+ * @author alessio.soldano@jboss.com
  */
 public class JBossWSTestHelper
 {
@@ -104,6 +100,24 @@ public class JBossWSTestHelper
    {
        String target = getIntegrationTarget();
        return target.startsWith("jboss6");
+   }
+
+   public static boolean isTargetJBoss7()
+   {
+       String target = getIntegrationTarget();
+       return target.startsWith("jboss7");
+   }
+
+   public static boolean isTargetJBoss70()
+   {
+       String target = getIntegrationTarget();
+       return target.startsWith("jboss70");
+   }
+
+   public static boolean isTargetJBoss71()
+   {
+       String target = getIntegrationTarget();
+       return target.startsWith("jboss71");
    }
 
    public static boolean isIntegrationNative()
@@ -176,19 +190,19 @@ public class JBossWSTestHelper
       }
    }
 
-   @SuppressWarnings("unchecked")
    public static MBeanServerConnection getServer()
    {
       if (server == null)
       {
-          if (getIntegrationTarget().startsWith("jboss7"))
-          {
-              server = getAS7ServerConnection();
-          }
-          else
-          {
-              server = getAS6ServerConnection();
-          }
+         String integrationTarget = getIntegrationTarget();
+         if (integrationTarget.startsWith("jboss7"))
+         {
+            server = getAS7ServerConnection();
+         }
+         else
+         {
+            throw new IllegalStateException("Unsupported target container: " + integrationTarget);
+         }
       }
       return server;
    }
@@ -205,21 +219,6 @@ public class JBossWSTestHelper
        }
    }
    
-   private static MBeanServerConnection getAS6ServerConnection()
-   {
-       Hashtable jndiEnv = null;
-       try
-       {
-          InitialContext iniCtx = new InitialContext();
-          jndiEnv = iniCtx.getEnvironment();
-          return (MBeanServerConnection)iniCtx.lookup("jmx/invoker/RMIAdaptor");
-       }
-       catch (NamingException ex)
-       {
-          throw new RuntimeException("Cannot obtain MBeanServerConnection using jndi props: " + jndiEnv, ex);
-       }
-   }
-
    public static String getIntegrationTarget()
    {
       if (integrationTarget == null)
@@ -229,36 +228,7 @@ public class JBossWSTestHelper
          if (integrationTarget == null)
             throw new IllegalStateException("Cannot obtain system property: " + SYSPROP_JBOSSWS_INTEGRATION_TARGET);
 
-         LOGGER.warn("TODO: [JBWS-3211] include AS 7.x into integrationTarget mismatch check");
-         if (!integrationTarget.startsWith("jboss7"))
-         {
-            // Read the JBoss SpecificationVersion
-            String jbossVersion = null;
-            try
-            {
-               ObjectName oname = ObjectNameFactory.create("jboss.system:type=Server");
-               jbossVersion = (String)getServer().getAttribute(oname, "VersionNumber");
-               if (jbossVersion == null)
-                  throw new IllegalStateException("Cannot obtain jboss version");
-
-               if (jbossVersion.startsWith("5.1"))
-                  jbossVersion = "jboss51";
-               else if (jbossVersion.startsWith("5.0"))
-                  jbossVersion = "jboss50";
-               else if (jbossVersion.startsWith("6.1"))
-                  jbossVersion = "jboss61";
-               else if (jbossVersion.startsWith("6.0"))
-                  jbossVersion = "jboss60";
-               else throw new IllegalStateException("Unsupported jboss version: " + jbossVersion);
-            }
-            catch (Exception ex)
-            {
-               throw new RuntimeException(ex);
-            }
-
-            if (integrationTarget.startsWith(jbossVersion) == false)
-               throw new IllegalStateException("Integration target mismatch: " + integrationTarget + ".startsWith(" + jbossVersion + ")");
-         }
+         LOGGER.warn("TODO: [JBWS-3211] implement integrationTarget mismatch check for AS 7.x");
       }
 
       return integrationTarget;
