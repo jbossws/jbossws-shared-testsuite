@@ -237,6 +237,10 @@
       <fileset dir="${jboss.home}/modules/org/jboss/sasl/main/">
         <include name="jboss-sasl-*.jar"/>
       </fileset>
+      <fileset dir="${jboss.home}/modules/org/apache/xalan/main/">
+        <include name="serializer-*.jar"/>
+        <include name="xalan-*.jar"/>
+      </fileset>
       <fileset dir="${jboss.home}/modules/org/jboss/xnio/main/">
         <include name="xnio-api-*.jar"/>
       </fileset>
@@ -375,6 +379,10 @@
         <include name="jbossws-native-core-${jbossws-native-core.filename}.jar"/>
       </fileset>
       <!-- END ## jaxrpc tests ## -->
+      <fileset dir="${jboss.home}/modules/org/apache/xalan/main/">
+        <include name="serializer-*.jar"/>
+        <include name="xalan-*.jar"/>
+      </fileset>
       <fileset dir="${jboss.home}/modules/org/jboss/xnio/main/">
         <include name="xnio-api-*.jar"/>
       </fileset>
