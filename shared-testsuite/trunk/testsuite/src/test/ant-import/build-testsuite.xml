@@ -31,12 +31,6 @@
   <target name="tests-prepare" depends="prepare">
     
     <!-- Define jboss.home -->
-    <condition property="jboss.home" value="${jboss600.home}">
-      <equals arg1="${jbossws.integration.target}" arg2="jboss600"/>
-    </condition>
-    <condition property="jboss.home" value="${jboss610.home}">
-      <equals arg1="${jbossws.integration.target}" arg2="jboss610"/>
-    </condition>
     <condition property="jboss.home" value="${jboss700.home}">
       <equals arg1="${jbossws.integration.target}" arg2="jboss700"/>
     </condition>
@@ -102,16 +96,8 @@
     <mkdir dir="${tests.output.dir}"/>
     <delete file="${tests.output.dir}/test.log" failonerror="false"/>
     
-    <property name="jboss.client" value="${jboss.home}/client"/>
     <property name="jboss.lib" value="${jboss.home}/lib"/>
-    <property name="jboss.server" value="${jboss.home}/server/${jboss.server.instance}"/>
   	
-    <condition property="jboss.server.lib" value="${jboss.home}/common/lib" else="${jboss.server}/lib">
-      <available file="${jboss.home}/common/lib"/>
-    </condition>
-    <property name="jboss.server.deploy" value="${jboss.server}/deploy"/>
-    <property name="jboss.server.deployers" value="${jboss.server}/deployers"/>
-    
     <!-- Java Endorsed -->
     <condition property="endorsed.dirs" value="${jboss.home}/lib/endorsed${path.separator}${jboss.home}/modules/javax/xml/ws/api/main/">
       <isset property="jboss.home"/>
@@ -130,7 +116,7 @@
     </tstamp>
   </target>
   
-  <target name="tests-classpath" depends="tests-classpath-jboss710,tests-classpath-jboss700,tests-classpath-jboss60">
+  <target name="tests-classpath" depends="tests-classpath-jboss710,tests-classpath-jboss700">
     <path id="tests.javac.classpath">
       <path refid="ws.stack.classpath"/>
       <path refid="integration.target.javac.classpath"/>
@@ -138,86 +124,6 @@
     <path id="tests.client.classpath">
       <path refid="ws.stack.classpath"/>
       <path refid="integration.target.client.classpath"/>
-    </path>
-  </target>
-  
-  <target name="tests-classpath-jboss60" depends="tests-prepare" if="jbossws.integration.jboss60">
-    
-    <path id="integration.target.javac.classpath">
-      <pathelement location="${jboss.client}/activation.jar"/>
-      <pathelement location="${jboss.client}/jaxws-tools.jar"/>
-      <pathelement location="${jboss.client}/jboss-annotations-api_1.1_spec.jar"/>
-      <pathelement location="${jboss.client}/jboss-annotations-ejb3.jar"/>
-      <pathelement location="${jboss.client}/jboss-appclient.jar"/>
-      <pathelement location="${jboss.client}/jboss-common-core.jar"/>
-      <pathelement location="${jboss.client}/jboss-ejb-api_3.1_spec.jar"/>
-      <pathelement location="${jboss.client}/jboss-ejb3-client.jar"/>
-      <pathelement location="${jboss.client}/jboss-ejb3-ext-api.jar"/>
-      <pathelement location="${jboss.client}/jboss-jaxr-api_1.0_spec.jar"/>
-      <pathelement location="${jboss.client}/jboss-logging.jar"/>
-      <pathelement location="${jboss.client}/jboss-logging-spi.jar"/>
-      <pathelement location="${jboss.client}/jboss-metadata-client.jar"/>
-      <pathelement location="${jboss.client}/jboss-metadata-common.jar"/>
-      <pathelement location="${jboss.client}/jboss-remoting.jar"/>
-      <pathelement location="${jboss.client}/jboss-servlet-api_3.0_spec.jar"/>
-      <pathelement location="${jboss.client}/jbossxb.jar"/>
-      <pathelement location="${jboss.client}/mail.jar"/>
-      <pathelement location="${jboss.client}/stax-api.jar"/>
-      <pathelement location="${jboss.client}/wsdl4j.jar"/>
-      <pathelement location="${jboss.server.lib}/jboss-javaee.jar"/>
-      <pathelement location="${jboss.server.lib}/jbosssx.jar"/>
-      <pathelement location="${jboss.server.lib}/servlet-api.jar"/>
-    </path>
-    
-    <!-- 
-    The 's.client.classpath' contains jars that are available in the target container's client directory.
-    There jars apply to all supported stacks. It MUST NOT contains jars from a local thirdparty dir.
-    
-    The 'ws.stack.classpath' contains jars that come with a specific stack distribution.
-    The 's.extra.classpath' contains stack specific jars that are needed to run the stack specific tests.
-    -->
-    <path id="integration.target.client.classpath">
-      <pathelement location="${jboss.client}/activation.jar"/>
-      <pathelement location="${jboss.client}/javassist.jar"/>
-      <pathelement location="${jboss.client}/jaxb-api.jar"/>
-      <pathelement location="${jboss.client}/jaxb-impl.jar"/>
-      <pathelement location="${jboss.client}/jaxb-xjc.jar"/>
-      <pathelement location="${jboss.client}/jaxws-tools.jar"/>
-      <pathelement location="${jboss.client}/jboss-appclient.jar"/>
-      <pathelement location="${jboss.client}/jboss-ejb3-ext-api.jar"/>
-      <pathelement location="${jboss.client}/jboss-metadata-client.jar"/>
-      <pathelement location="${jboss.client}/jboss-metadata-common.jar"/>
-      <pathelement location="${jboss.client}/jboss-remoting.jar"/>
-      <pathelement location="${jboss.client}/jbossxb.jar"/>
-      <pathelement location="${jboss.client}/jbossall-client.jar"/>
-      <pathelement location="${jboss.client}/jaxws-tools.jar"/>
-      <pathelement location="${jboss.client}/log4j.jar"/>
-      <pathelement location="${jboss.client}/mail.jar"/>
-      <pathelement location="${jboss.client}/stax-api.jar"/>
-      <pathelement location="${jboss.client}/trove.jar"/>
-      <pathelement location="${jboss.client}/jboss-javaee.jar"/>
-      <!-- FIXME jars should be available in the client dir -->
-      <pathelement location="${jboss.lib}/jboss-classloader.jar"/>
-      <pathelement location="${jboss.lib}/jboss-classloading.jar"/>
-      <pathelement location="${jboss.lib}/jboss-classloading-vfs.jar"/>
-      <pathelement location="${jboss.lib}/jboss-dependency.jar"/>
-      <pathelement location="${jboss.lib}/jboss-vfs.jar"/>
-      <pathelement location="${jboss.lib}/jboss-kernel.jar"/>
-      <pathelement location="${jboss.lib}/jboss-reflect.jar"/>
-      <pathelement location="${jboss.lib}/jboss-system.jar"/>
-      <pathelement location="${jboss.server.lib}/jboss.jar"/>
-      <pathelement location="${jboss.server.lib}/jbosssx.jar"/>
-      <pathelement location="${jboss.server.lib}/jbossws-native-core.jar"/> <!-- For jaxrpc tests -->
-      <pathelement location="${jboss.server.lib}/jnpserver.jar"/>
-      <pathelement location="${jboss.server.lib}/jboss-ejb3-core.jar"/>
-      <pathelement location="${jboss.server.lib}/jboss-ejb3-vfs-spi.jar"/>
-      <pathelement location="${jboss.server.lib}/hibernate-core.jar"/>
-      <pathelement location="${jboss.server.lib}/netty.jar"/> <!-- For jaxrpc tests -->
-      <pathelement location="${jboss.server.lib}/servlet-api.jar"/>
-      <pathelement location="${jboss.server.deploy}/juddi-service.sar/juddi.jar"/>
-      <pathelement location="${jboss.server.deploy}/juddi-service.sar/juddi-saaj.jar"/>
-      <pathelement location="${jboss.server.deploy}/juddi-service.sar/scout.jar"/>
-      <pathelement location="${tools.jar}"/>
     </path>
   </target>
   
@@ -626,7 +532,6 @@
       <sysproperty key="java.protocol.handler.pkgs" value="org.jboss.net.protocol|org.jboss.vfs.protocol|org.jboss.virtual.protocol"/>
       <sysproperty key="java.security.policy" value="${tests.output.dir}/test-classes/tst.policy"/>
       <sysproperty key="jboss.home" value="${jboss.home}"/>
-      <sysproperty key="jboss.server.instance" value="${jboss.server.instance}"/>
       <sysproperty key="jboss.bind.address" value="${node0}"/>
       <sysproperty key="jbossws.integration.target" value="${jbossws.integration.target}"/>
       <sysproperty key="jbossws.deployer.authentication.username" value="${jbossws.deployer.authentication.username}"/>
@@ -681,7 +586,6 @@
       <sysproperty key="java.protocol.handler.pkgs" value="org.jboss.net.protocol|org.jboss.vfs.protocol|org.jboss.virtual.protocol"/>
       <sysproperty key="java.security.policy" value="${tests.output.dir}/test-classes/tst.policy"/>
       <sysproperty key="jboss.home" value="${jboss.home}"/>
-      <sysproperty key="jboss.server.instance" value="${jboss.server.instance}"/>
       <sysproperty key="jboss.bind.address" value="${node0}"/>
       <sysproperty key="jbossws.integration.target" value="${jbossws.integration.target}"/>
       <sysproperty key="jbossws.deployer.authentication.username" value="${jbossws.deployer.authentication.username}"/>

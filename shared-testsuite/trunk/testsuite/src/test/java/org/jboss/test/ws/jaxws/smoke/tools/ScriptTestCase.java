@@ -76,11 +76,6 @@ public class ScriptTestCase extends JBossWSTest
       assertTrue(new File(JBOSS_HOME + FS + "bin" + FS + "wsprovide" + ".bat").exists());
       assertTrue(new File(JBOSS_HOME + FS + "bin" + FS + "wsconsume" + ".sh").exists());
       assertTrue(new File(JBOSS_HOME + FS + "bin" + FS + "wsconsume" + ".bat").exists());
-
-      if (!isTargetJBoss6()) return; // wsrunclient not available since AS7x
-
-      assertTrue(new File(JBOSS_HOME + FS + "bin" + FS + "wsrunclient" + ".sh").exists());
-      assertTrue(new File(JBOSS_HOME + FS + "bin" + FS + "wsrunclient" + ".bat").exists());
    }
 
    protected void tearDown() throws Exception

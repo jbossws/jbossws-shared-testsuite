@@ -57,7 +57,7 @@ public class JBWS944TestCase extends JBossWSTest
    public void testRemoteAccess() throws Exception
    {
       InitialContext iniCtx = getInitialContext();
-      EJB3RemoteBusinessInterface ejb3Remote = (EJB3RemoteBusinessInterface)iniCtx.lookup(isTargetJBoss6() ? "/FooBean01/remote" : "ejb:/jaxws-jbws944//FooBean01!" + EJB3RemoteBusinessInterface.class.getName());
+      EJB3RemoteBusinessInterface ejb3Remote = (EJB3RemoteBusinessInterface)iniCtx.lookup("ejb:/jaxws-jbws944//FooBean01!" + EJB3RemoteBusinessInterface.class.getName());
 
       String helloWorld = "Hello world!";
       Object retObj = ejb3Remote.echo(helloWorld);
@@ -69,7 +69,7 @@ public class JBWS944TestCase extends JBossWSTest
    public void testNarrowedRemoteAccess() throws Exception
    {
       InitialContext iniCtx = getInitialContext();
-      Object obj = iniCtx.lookup(isTargetJBoss6() ? "/FooBean01/home" : "ejb:/jaxws-jbws944//FooBean01!" + EJB3RemoteHome.class.getName());
+      Object obj = iniCtx.lookup("ejb:/jaxws-jbws944//FooBean01!" + EJB3RemoteHome.class.getName());
       EJB3RemoteHome ejb3Home = (EJB3RemoteHome)PortableRemoteObject.narrow(obj, EJB3RemoteHome.class);
       EJB3RemoteInterface ejb3Remote = ejb3Home.create();
 
