@@ -1133,6 +1133,17 @@
             </classes>
         </war>
 		
+		<!-- jaxws-jbws3401 -->
+		<war warfile="${tests.output.dir}/test-libs/jaxws-jbws3401.war" needxmlfile="false">
+			<classes dir="${tests.output.dir}/test-classes">
+				<include name="org/jboss/test/ws/jaxws/jbws3401/*.class" />
+				<exclude name="org/jboss/test/ws/jaxws/jbws3401/*TestCase.class" />
+			</classes>
+			<webinf dir="${tests.output.dir}/test-resources/jaxws/jbws3401/WEB-INF">
+				<include name="wsdl/*" />
+			</webinf>
+		</war>
+
         <!-- jaxws-as2961 -->
         <war warfile="${tests.output.dir}/test-libs/jaxws-as2961.war" webxml="${tests.output.dir}/test-resources/jaxws/as2961/WEB-INF/web.xml">
             <classes dir="${tests.output.dir}/test-classes">
