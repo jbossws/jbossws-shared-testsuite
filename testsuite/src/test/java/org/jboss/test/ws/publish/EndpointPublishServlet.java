@@ -73,6 +73,7 @@ public class EndpointPublishServlet extends HttpServlet
          Map<String,String> map = new HashMap<String, String>();
          map.put("/pattern", "org.jboss.test.ws.publish.EndpointImpl");
          map.put("/pattern2", "org.jboss.test.ws.publish.EndpointImpl2");
+         map.put("/pattern3", "org.jboss.test.ws.publish.EndpointImpl3");
          
          ctx = publisher.publish("ep-publish-test", Thread.currentThread().getContextClassLoader(), map);
          for (Endpoint ep : ctx.getEndpoints()) {
@@ -84,6 +85,7 @@ public class EndpointPublishServlet extends HttpServlet
          //call endpoint
          invoke(new URL("http://localhost:8080/ep-publish-test/pattern?wsdl"), new QName("http://publish.ws.test.jboss.org/", "EndpointService"));
          invoke(new URL("http://localhost:8080/ep-publish-test/pattern2?wsdl"), new QName("http://publish.ws.test.jboss.org/", "EndpointService2"));
+         invoke(new URL("http://localhost:8080/ep-publish-test/pattern3?wsdl"), new QName("http://publish.ws.test.jboss.org/", "EndpointService3"));
          
          res.getWriter().print("1");
       }
