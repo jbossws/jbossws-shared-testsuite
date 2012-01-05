@@ -505,10 +505,10 @@
         <include name="org/jboss/test/ws/publish/**/*.class"/>
         <exclude name="org/jboss/test/ws/publish/*TestCase.class"/>
       </classes>
-      <classes dir="${tests.output.dir}/test-classes/org/jboss/test/ws/publish">
+      <classes dir="${tests.output.dir}/test-classes/org/jboss/test/ws/publish" erroronmissingdir="false">
         <include name="WEB-INF/wsdl/**" />
       </classes>
-      <webinf dir="${tests.output.dir}/test-resources/publish/WEB-INF">
+      <webinf dir="${tests.output.dir}/test-resources/publish/WEB-INF" erroronmissingdir="false">
       	<include name="wsdl/**"/>
       </webinf>
     </war>
