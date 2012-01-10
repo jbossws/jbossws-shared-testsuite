@@ -91,7 +91,7 @@ public class JBWS1582TestCase extends JBossWSTest
          throw new IllegalStateException("Unknown SOAP stack in use");
       }
    }
-   
+
    public void testSOAPMessageAttack2() throws Exception
    {
       String response = getResponse("jaxws/jbws1582/attack-message-2.xml");
@@ -110,7 +110,7 @@ public class JBWS1582TestCase extends JBossWSTest
          throw new IllegalStateException("Unknown SOAP stack in use");
       }
    }
-   
+
    private String getResponse(String requestFile) throws Exception
    {
       final String CRNL = "\r\n";
@@ -135,18 +135,22 @@ public class JBWS1582TestCase extends JBossWSTest
       System.out.println("---");
       return response;
    }
-   
+
    public void testAttackedArchiveDeployment() throws Exception
    {
-      if (isIntegrationCXF())
-      {
-         System.out.println("FIXME [JBWS-3262] fix issue in CXF so the following test will start passing"); // TODO: remove once fixed on CXF side
-         return;
-      }
       try
       {
          deploy("jaxws-jbws1582-attacked.war");
-         fail("deployment failure expected");
+         if (isIntegrationCXF())
+         {
+            // Apache CXF ignores DOCTYPE section in WSDLs
+            // so this attack is not doable on it.
+         }
+         else
+         {
+            // JBossWS Native stack throws exception for attacking WSDLs
+            fail("deployment failure expected");
+         }
       }
       catch (Exception e)
       {
@@ -158,7 +162,7 @@ public class JBWS1582TestCase extends JBossWSTest
          undeploy("jaxws-jbws1582-attacked.war");
       }
    }
-      
+
    private static String getContent(InputStream is) throws IOException
    {
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
