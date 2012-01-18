@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<wsdl:definitions name="EndpointService3" targetNamespace="http://publish.ws.test.jboss.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://publish.ws.test.jboss.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="EndpointService3" targetNamespace="http://publish.ws.test.jboss.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://publish.ws.test.jboss.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <wsdl:message name="echoStringResponse">
     <wsdl:part name="return" type="xsd:string">
     </wsdl:part>
@@ -16,7 +15,7 @@
     </wsdl:output>
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="EndpointService3SoapBinding" type="tns:Endpoint">
+  <wsdl:binding name="EndpointService4SoapBinding" type="tns:Endpoint">
     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="echoString">
       <soap:operation soapAction="urn:EchoString" style="rpc"/>
@@ -28,9 +27,9 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="EndpointService3">
-    <wsdl:port binding="tns:EndpointService3SoapBinding" name="EndpointPort3">
-      <soap:address location="http://localhost:8080/ep-publish-test/pattern3"/>
+  <wsdl:service name="EndpointService4">
+    <wsdl:port binding="tns:EndpointService4SoapBinding" name="EndpointPort4">
+      <soap:address location="http://localhost:8080/ep-publish-test/pattern4"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

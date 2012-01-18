@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2011, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2012, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -32,19 +32,16 @@ import org.jboss.logging.Logger;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-@WebServiceProvider(serviceName="EndpointService3",
-      portName="EndpointPort3",
-      targetNamespace = "http://publish.ws.test.jboss.org/",
-      wsdlLocation = "./WEB-INF/wsdl/EndpointImpl3.xml")
+@WebServiceProvider
 @ServiceMode(value = Service.Mode.MESSAGE)
-public class EndpointImpl3 implements Provider<SOAPMessage>
+public class EndpointImpl4 implements Provider<SOAPMessage>
 {
    // Provide logging
-   private static Logger log = Logger.getLogger(EndpointImpl3.class);
+   private static Logger log = Logger.getLogger(EndpointImpl4.class);
 
    public SOAPMessage invoke(SOAPMessage request)
    {
-      log.info("echo (3): " + request);
+      log.info("echo (4): " + request);
       try {
          SOAPBody sb = request.getSOAPBody();
          NodeList nl = sb.getElementsByTagName("arg0");

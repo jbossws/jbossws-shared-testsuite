@@ -43,6 +43,9 @@ import javax.xml.ws.Service;
 
 import org.jboss.wsf.spi.classloading.ClassLoaderProvider;
 import org.jboss.wsf.spi.deployment.Endpoint;
+import org.jboss.wsf.spi.metadata.webservices.PortComponentMetaData;
+import org.jboss.wsf.spi.metadata.webservices.WebserviceDescriptionMetaData;
+import org.jboss.wsf.spi.metadata.webservices.WebservicesMetaData;
 import org.jboss.wsf.spi.publish.Context;
 import org.jboss.wsf.spi.publish.EndpointPublisher;
 import org.jboss.wsf.spi.publish.EndpointPublisherFactory;
@@ -74,8 +77,10 @@ public class EndpointPublishServlet extends HttpServlet
          map.put("/pattern", "org.jboss.test.ws.publish.EndpointImpl");
          map.put("/pattern2", "org.jboss.test.ws.publish.EndpointImpl2");
          map.put("/pattern3", "org.jboss.test.ws.publish.EndpointImpl3");
+         map.put("/pattern4", "org.jboss.test.ws.publish.EndpointImpl4");
          
-         ctx = publisher.publish("ep-publish-test", Thread.currentThread().getContextClassLoader(), map);
+         ctx = publisher.publish("ep-publish-test", Thread.currentThread().getContextClassLoader(), map, createMetaData());
+         
          for (Endpoint ep : ctx.getEndpoints()) {
             System.out.println("State: " + ep.getState());
             System.out.println("Address: " + ep.getAddress());
@@ -86,6 +91,7 @@ public class EndpointPublishServlet extends HttpServlet
          invoke(new URL("http://localhost:8080/ep-publish-test/pattern?wsdl"), new QName("http://publish.ws.test.jboss.org/", "EndpointService"));
          invoke(new URL("http://localhost:8080/ep-publish-test/pattern2?wsdl"), new QName("http://publish.ws.test.jboss.org/", "EndpointService2"));
          invoke(new URL("http://localhost:8080/ep-publish-test/pattern3?wsdl"), new QName("http://publish.ws.test.jboss.org/", "EndpointService3"));
+         invoke(new URL("http://localhost:8080/ep-publish-test/pattern4?wsdl"), new QName("http://publish.ws.test.jboss.org/", "EndpointService4"));
          
          res.getWriter().print("1");
       }
@@ -110,6 +116,20 @@ public class EndpointPublishServlet extends HttpServlet
             }
          }
       }
+   }
+   
+   private WebservicesMetaData createMetaData() {
+      WebservicesMetaData metadata = new WebservicesMetaData();
+      WebserviceDescriptionMetaData webserviceDescription = new WebserviceDescriptionMetaData(metadata);
+      metadata.addWebserviceDescription(webserviceDescription);
+      webserviceDescription.setWsdlFile("WEB-INF/wsdl/EndpointImpl4.xml");
+      PortComponentMetaData portComponent = new PortComponentMetaData(webserviceDescription);
+      portComponent.setPortComponentName("PortComponent4"); //unique ID
+      portComponent.setServiceEndpointInterface("org.jboss.test.ws.publish.EndpointImpl4");
+      portComponent.setWsdlPort(new QName("http://publish.ws.test.jboss.org/", "EndpointPort4"));
+      portComponent.setWsdlService(new QName("http://publish.ws.test.jboss.org/", "EndpointService4"));
+      webserviceDescription.addPortComponent(portComponent);
+      return metadata;
    }
    
    private static void invoke(URL wsdlURL, QName serviceName) throws Exception {
