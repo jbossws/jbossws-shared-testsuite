@@ -43,9 +43,9 @@ public class JBWS3140AddrResponsesTestCase extends JBossWSTest
    {
       HttpURLConnection connection = (HttpURLConnection) new URL(servletClientURL + "?mtom=small").openConnection();
       String result = readConnection(connection).toString();
-      assertTrue("SOAPFaultException is expected", result.indexOf("SOAPFaultException") > -1);
+      assertTrue("SOAPFaultException is expected but received: " + result, result.indexOf("SOAPFaultException") > -1);
       String expectedDetail = "A header representing a Message Addressing Property is not valid";
-      assertTrue("Expected error message " + expectedDetail , result.indexOf(expectedDetail) > -1);
+      assertTrue("Expected message wasn't found in response: " + result, result.indexOf(expectedDetail) > -1);
    }
    
    private ByteArrayOutputStream readConnection(HttpURLConnection connection) 
