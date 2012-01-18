@@ -75,7 +75,7 @@ public class JBWS3140MtomAddrFeatureTestCase extends JBossWSTest
       HttpURLConnection connection = (HttpURLConnection) new URL(servletClientURL + "?mtom=small").openConnection();
       String result = readConnection(connection).toString();
       String expected ="--ClientMTOMEnabled--ServerMTOMEnabled--ServerAddressingEnabled--ClientAddressingEnabled";     
-      assertTrue(result.indexOf(expected) > -1);
+      assertTrue("Expected string wasn't found in response: " + result, result.indexOf(expected) > -1);
    }
    
    private ByteArrayOutputStream readConnection(HttpURLConnection connection) 
