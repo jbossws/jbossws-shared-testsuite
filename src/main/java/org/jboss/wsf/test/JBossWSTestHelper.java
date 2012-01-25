@@ -197,7 +197,7 @@ public class JBossWSTestHelper
          String integrationTarget = getIntegrationTarget();
          if (integrationTarget.startsWith("jboss7"))
          {
-            server = getAS7ServerConnection();
+            server = getAS7ServerConnection(integrationTarget);
          }
          else
          {
@@ -207,10 +207,15 @@ public class JBossWSTestHelper
       return server;
    }
    
-   private static MBeanServerConnection getAS7ServerConnection()
+   private static MBeanServerConnection getAS7ServerConnection(String integrationTarget)
    {
        String host = getServerHost();
-       String urlString = System.getProperty("jmx.service.url", "service:jmx:rmi:///jndi/rmi://" + host + ":" + 1090 + "/jmxrmi");
+       String urlString;
+       if (integrationTarget.startsWith("jboss70")) {
+          urlString = System.getProperty("jmx.service.url", "service:jmx:rmi:///jndi/rmi://" + host + ":" + 1090 + "/jmxrmi");
+       } else {
+          urlString = System.getProperty("jmx.service.url", "service:jmx:remoting-jmx://" + host + ":" + 9999);
+       }
        try {
            JMXServiceURL serviceURL = new JMXServiceURL(urlString);
            return JMXConnectorFactory.connect(serviceURL, null).getMBeanServerConnection();
