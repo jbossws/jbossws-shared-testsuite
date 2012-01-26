@@ -376,7 +376,7 @@
         <include name="jbossxb-*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/org/jboss/ws/native/jbossws-native-core/main/">
-        <include name="jbossws-native-core-4.0.0.Beta3.jar"/>
+        <include name="jbossws-native-core-4.0.0.GA.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/org/jboss/ws/native/jbossws-native-core/main/">
         <include name="jbossws-native-core.jar"/>
