@@ -506,24 +506,6 @@
 			</fileset>
 		</jar>
 
-		<!-- jaxws-jbws1854 -->
-		<war destfile="${tests.output.dir}/test-libs/jaxws-jbws1854.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws1854/WEB-INF/web.xml">
-			<classes dir="${tests.output.dir}/test-classes">
-				<include name="org/jboss/test/ws/jaxws/jbws1854/EndpointImpl.class" />
-			</classes>
-			<webinf dir="${tests.output.dir}/test-resources/jaxws/jbws1854/WEB-INF">
-				<include name="jboss-web.xml" />
-			</webinf>
-		</war>
-		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws1854.sar">
-			<fileset dir="${tests.output.dir}/test-libs">
-				<include name="jaxws-jbws1854.war" />
-			</fileset>
-			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws1854/META-INF">
-				<include name="jboss-service.xml" />
-			</metainf>
-		</jar>
-
 		<!-- jaxws-jbws1872 -->
 		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws1872.jar">
 			<fileset dir="${tests.output.dir}/test-classes">
@@ -839,18 +821,6 @@
 				<include name="*.xml" />
 			</webinf>
 		</war>
-
-		<!-- jaxws-jbws2630 -->
-		<war warfile="${tests.output.dir}/test-libs/jaxws-jbws2630-service.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws2630/WEB-INF/web.xml">
-			<classes dir="${tests.output.dir}/test-classes">
-				<include name="org/jboss/test/ws/jaxws/jbws2630/Endpoint*.class" />
-			</classes>
-		</war>
-		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws2630.jar">
-			<fileset dir="${tests.output.dir}/test-libs">
-				<include name="jaxws-jbws2630-service.war" />
-			</fileset>
-		</jar>
 
 		<!-- jaxws-jbws2634 -->
 		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws2634.jar">
