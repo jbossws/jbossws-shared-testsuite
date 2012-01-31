@@ -66,7 +66,7 @@ public class WebServiceRefEJB3TestCase extends JBossWSTest
       try
       {
          InitialContext iniCtx = getInitialContext();
-         EJB3Remote ejb3Remote = (EJB3Remote)iniCtx.lookup("/EJB3Client/remote");
+         EJB3Remote ejb3Remote = (EJB3Remote)iniCtx.lookup("ejb:/jaxws-samples-webserviceref-ejb3-client//EJB3Client!" + EJB3Remote.class.getName());
 
          String helloWorld = "Hello World!";
          Object retObj = ejb3Remote.echo(helloWorld);
