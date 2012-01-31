@@ -165,7 +165,7 @@ public class JBossWSTestSetup extends TestSetup
          {
             URL archiveURL = getArchiveURL(archive);
             clientJars.add(archiveURL);
-            if (archive.contains("jaxrpc") || archive.endsWith("serviceref-client.jar"))
+            if (archive.contains("jaxrpc") || archive.contains("serviceref"))
             {
                performDeploy(archive);
             }
