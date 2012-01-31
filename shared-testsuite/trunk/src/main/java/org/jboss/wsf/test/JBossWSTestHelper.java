@@ -59,6 +59,7 @@ public class JBossWSTestHelper
    private static final String SYSPROP_JBOSS_BIND_ADDRESS = "jboss.bind.address";
    private static final String SYSPROP_TEST_ARCHIVE_DIRECTORY = "test.archive.directory";
    private static final String SYSPROP_TEST_RESOURCES_DIRECTORY = "test.resources.directory";
+   private static final boolean DEPLOY_PROCESS_ENABLED = !Boolean.getBoolean("disable.test.archive.deployment");
    private static Deployer DEPLOYER;
 
    private static MBeanServerConnection server;
@@ -82,18 +83,24 @@ public class JBossWSTestHelper
 
    /** Deploy the given archive
     */
-   public static void deploy(String archive) throws Exception
+   public static void deploy(final String archive) throws Exception
    {
-      URL archiveURL = getArchiveFile(archive).toURI().toURL();
-      getDeployer().deploy(archiveURL);
+      if (DEPLOY_PROCESS_ENABLED)
+      {
+         URL archiveURL = getArchiveFile(archive).toURI().toURL();
+         getDeployer().deploy(archiveURL);
+      }
    }
 
    /** Undeploy the given archive
     */
-   public static void undeploy(String archive) throws Exception
+   public static void undeploy(final String archive) throws Exception
    {
-      URL archiveURL = getArchiveFile(archive).toURI().toURL();
-      getDeployer().undeploy(archiveURL);
+      if (DEPLOY_PROCESS_ENABLED)
+      {
+         URL archiveURL = getArchiveFile(archive).toURI().toURL();
+         getDeployer().undeploy(archiveURL);
+      }
    }
 
    public static boolean isTargetJBoss6()
