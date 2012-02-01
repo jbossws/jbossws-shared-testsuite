@@ -335,6 +335,9 @@
       <fileset dir="${jboss.home}/modules/javax/servlet/api/main/">
         <include name="jboss-servlet-api_3.0_spec-*.jar"/>
       </fileset>
+      <fileset dir="${jboss.home}/modules/javax/transaction/api/main/">
+        <include name="jboss-transaction-api_1.1_spec-*.jar"/>
+      </fileset>
       <fileset dir="${jboss.home}/modules/org/jboss/threads/main/">
         <include name="jboss-threads-*.jar"/>
       </fileset>
@@ -343,6 +346,9 @@
       </fileset>
       <fileset dir="${jboss.home}/modules/javax/ejb/api/main/">
         <include name="jboss-ejb-api_3.1_spec-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/ejb-client/main/">
+        <include name="jboss-ejb-client-*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/org/apache/xerces/main/">
         <include name="xercesImpl-*.jar"/>
@@ -428,6 +434,7 @@
       <copy todir="${tests.output.dir}/test-classes">
         <fileset dir="@{srcdir}/etc">
           <include name="jndi.properties"/>
+          <include name="jboss-ejb-client.properties"/>
           <include name="tst.policy"/>
           <include name="log4j.xml"/>
           <include name="jbossws-*.properties"/>
