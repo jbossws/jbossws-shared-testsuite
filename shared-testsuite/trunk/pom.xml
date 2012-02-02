@@ -6,7 +6,7 @@
   <artifactId>jbossws-shared-testsuite</artifactId>
   <description>JBossWS Stack Agnostic Testsuite</description>
 
-  <version>4.0.1-SNAPSHOT</version>
+  <version>4.0.2-SNAPSHOT</version>
 
   <!-- Parent -->
   <parent>
@@ -23,7 +23,7 @@
   </scm>
 
   <properties>
-    <jbossws.common.version>2.0.1-SNAPSHOT</jbossws.common.version>
+    <jbossws.common.version>2.0.2-SNAPSHOT</jbossws.common.version>
     <jboss.logging.version>2.0.5.GA</jboss.logging.version>
     <junit.version>3.8.2</junit.version>
   </properties>
