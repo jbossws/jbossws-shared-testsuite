@@ -1122,6 +1122,16 @@
             </classes>
         </war>
 
+        <!-- jaxws-as3581 -->
+        <war warfile="${tests.output.dir}/test-libs/jaxws-as3581.war" webxml="${tests.output.dir}/test-resources/jaxws/as3581/WEB-INF/web.xml">
+            <classes dir="${tests.output.dir}/test-classes">
+                <include name="org/jboss/test/ws/jaxws/as3581/EndpointImpl.class"/>
+                <include name="org/jboss/test/ws/jaxws/as3581/EndpointIface.class"/>
+                <include name="org/jboss/test/ws/jaxws/as3581/EndpointImpl2.class"/>
+                <include name="org/jboss/test/ws/jaxws/as3581/EndpointIface2.class"/>
+            </classes>
+        </war>
+
                 <!-- jaxws-jbws3367 -->
                 <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3367-usecase1.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3367/WEB-INF/web.xml">
                         <classes dir="${tests.output.dir}/test-classes">
