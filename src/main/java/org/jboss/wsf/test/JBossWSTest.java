@@ -23,6 +23,7 @@ package org.jboss.wsf.test;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -33,6 +34,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.management.MBeanServerConnection;
@@ -277,23 +281,54 @@ public abstract class JBossWSTest extends TestCase
       return new File(parent, filename);
    }
 
-   /** Get the client's env context for a given name.
-    */
-   @SuppressWarnings({ "unchecked", "rawtypes" })
-   protected static InitialContext getInitialContext(String clientName) throws NamingException
-   {
-      InitialContext iniCtx = new InitialContext();
-      Hashtable env = iniCtx.getEnvironment();
-      env.put(Context.URL_PKG_PREFIXES, "org.jboss.naming.client");
-      env.put("j2ee.clientName", clientName);
-      return new InitialContext(env);
+   private static Hashtable<String, String> getEnvironment(final String resourceName) throws IOException {
+       final Hashtable<String, String> env = new Hashtable<String, String>();
+       final InputStream is = JBossWSTest.class.getClassLoader().getResourceAsStream(resourceName);
+       if (is != null) {
+           final Properties props = new Properties();
+           props.load(is);
+           Entry<Object, Object> entry;
+           final Iterator<Entry<Object, Object>> entries = props.entrySet().iterator();
+           while (entries.hasNext()) {
+               entry = entries.next();
+               env.put((String)entry.getKey(), (String)entry.getValue());
+           }
+       }
+       return env;
    }
 
-   /** Get the client's env context
+   /** Get the appclient remote env context
     */
-   protected static InitialContext getInitialContext() throws NamingException
+   protected static InitialContext getAppclientInitialContext() throws NamingException, IOException
    {
-      return getInitialContext("jbossws-client");
+//       InitialContext iniCtx = new InitialContext();
+//       Hashtable env = iniCtx.getEnvironment();
+//       env.put(Context.PROVIDER_URL, "remote://" + JBossWSTestHelper.getServerHost() + ":4448");
+//       return new InitialContext(env);
+       final Hashtable<String, String> env = getEnvironment("appclient.jndi.properties");
+       return new InitialContext(env);
+   }
+
+   /** Get the server remote env context
+    */
+   protected static InitialContext getServerInitialContext() throws NamingException, IOException
+   {
+       final Hashtable<String, String> env = getEnvironment("server.jndi.properties");
+       return new InitialContext(env);
+   }
+
+   // TODO: remove
+   @Deprecated
+   protected static InitialContext getInitialContext(String s) throws NamingException, IOException
+   {
+       return getServerInitialContext();
+   }
+
+   // TODO: remove
+   @Deprecated
+   protected static InitialContext getInitialContext() throws NamingException, IOException
+   {
+       return getServerInitialContext();
    }
 
    public static void assertEquals(Element expElement, Element wasElement, boolean ignoreWhitespace)

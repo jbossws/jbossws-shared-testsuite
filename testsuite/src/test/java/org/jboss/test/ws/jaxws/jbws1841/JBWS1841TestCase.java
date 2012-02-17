@@ -57,7 +57,7 @@ public class JBWS1841TestCase extends JBossWSTest
          QName serviceName = new QName("http://www.openuri.org/2004/04/HelloWorld", "EndpointService");
          port = Service.create(wsdlURL, serviceName).getPort(EndpointInterface.class);
 
-         InitialContext ctx = new InitialContext();
+         InitialContext ctx = getInitialContext();
          remote = (StatelessRemote)ctx.lookup(getRemoteEjbJndiName());
       }
    }
