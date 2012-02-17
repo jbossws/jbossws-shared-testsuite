@@ -43,16 +43,16 @@ import org.jboss.wsf.test.JBossWSTestSetup;
 public class ServiceRefEJBTestCase extends JBossWSTest
 {
    public final String TARGET_ENDPOINT_ADDRESS = "http://" + getServerHost() + ":8080/jaxrpc-samples-serviceref";
-   
+
    public static Test suite()
    {
-      return new JBossWSTestSetup(ServiceRefEJBTestCase.class, "jaxrpc-samples-serviceref.war, jaxrpc-samples-serviceref-ejb-client.jar");
+      return new JBossWSTestSetup(ServiceRefEJBTestCase.class, "jaxrpc-samples-serviceref.war, jaxrpc-samples-serviceref-ejbclient.jar");
    }
 
    public void testEJBClient() throws Exception
    {
       InitialContext iniCtx = getInitialContext();
-      EJBRemoteHome ejbHome = (EJBRemoteHome)iniCtx.lookup("ejb:/jaxrpc-samples-serviceref-ejb-client//EJBClient!" + EJBRemoteHome.class.getName());
+      EJBRemoteHome ejbHome = (EJBRemoteHome)iniCtx.lookup("ejb:/jaxrpc-samples-serviceref-ejbclient//EJBClient!" + EJBRemoteHome.class.getName());
       EJBRemote ejbRemote = ejbHome.create();
 
       String helloWorld = "Hello World!";
