@@ -205,11 +205,6 @@ public abstract class JBossWSTest extends TestCase
       return JBossWSTestHelper.getServer();
    }
 
-   public static boolean isTargetJBoss6()
-   {
-      return JBossWSTestHelper.isTargetJBoss6();
-   }
-
    public static boolean isTargetJBoss7()
    {
       return JBossWSTestHelper.isTargetJBoss7();

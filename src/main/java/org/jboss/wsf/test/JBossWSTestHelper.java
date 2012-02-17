@@ -103,12 +103,6 @@ public class JBossWSTestHelper
       }
    }
 
-   public static boolean isTargetJBoss6()
-   {
-       String target = getIntegrationTarget();
-       return target.startsWith("jboss6");
-   }
-
    public static boolean isTargetJBoss7()
    {
        String target = getIntegrationTarget();
