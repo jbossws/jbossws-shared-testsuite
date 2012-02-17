@@ -570,7 +570,6 @@
       <sysproperty key="test.archive.directory" value="${tests.output.dir}/test-libs"/>
       <sysproperty key="test.classes.directory" value="${tests.output.dir}/test-classes"/>
       <sysproperty key="test.resources.directory" value="${tests.output.dir}/test-resources"/>
-      <sysproperty key="org.jboss.wsf.spi.deployer.Deployer" value="org.jboss.wsf.test.DeployerJBoss6"/>
       <sysproperty key="binary.distribution" value="true"/>
       <classpath>
         <path refid="tests.client.classpath"/>
@@ -635,7 +634,6 @@
       <sysproperty key="test.archive.directory" value="${tests.output.dir}/test-libs"/>
       <sysproperty key="test.classes.directory" value="${tests.output.dir}/test-classes"/>
       <sysproperty key="test.resources.directory" value="${tests.output.dir}/test-resources"/>
-      <sysproperty key="org.jboss.wsf.spi.deployer.Deployer" value="org.jboss.wsf.test.DeployerJBoss6"/>
       <sysproperty key="binary.distribution" value="true"/>
       <classpath>
         <path refid="tests.client.classpath"/>
