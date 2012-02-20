@@ -46,7 +46,7 @@ public class ServiceRefEJBTestCase extends JBossWSTest
    
    public static Test suite()
    {
-      final String archives = "jaxws-samples-serviceref.war,jaxws-samples-serviceref-ejb-client.jar";
+      final String archives = "jaxws-samples-serviceref.war,jaxws-samples-serviceref-ejbclient.jar";
       return new JBossWSTestSetup(ServiceRefEJBTestCase.class, archives);
    }
 
@@ -73,7 +73,7 @@ public class ServiceRefEJBTestCase extends JBossWSTest
    public void testEJBClient() throws Exception
    {      
       InitialContext iniCtx = getInitialContext();
-      EJBRemote ejbRemote = (EJBRemote)iniCtx.lookup("ejb:/jaxws-samples-serviceref-ejb-client//EJBClient!" + EJBRemote.class.getName());
+      EJBRemote ejbRemote = (EJBRemote)iniCtx.lookup("ejb:/jaxws-samples-serviceref-ejbclient//EJBClient!" + EJBRemote.class.getName());
 
       String helloWorld = "Hello World!";
       Object retObj = ejbRemote.echo(helloWorld);
