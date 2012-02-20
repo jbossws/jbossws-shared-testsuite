@@ -306,7 +306,7 @@
            <include name="jboss-web.xml"/>
         </webinf>
      </war>
-     <jar destfile="${tests.output.dir}/test-libs/jaxws-samples-serviceref-ejb-client.jar">
+     <jar destfile="${tests.output.dir}/test-libs/jaxws-samples-serviceref-ejbclient.jar">
         <fileset dir="${tests.output.dir}/test-classes">
            <include name="org/jboss/test/ws/jaxws/samples/serviceref/EJBClient.class"/>
            <include name="org/jboss/test/ws/jaxws/samples/serviceref/EJBRemote.class"/>
