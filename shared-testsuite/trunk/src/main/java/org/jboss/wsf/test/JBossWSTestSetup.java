@@ -167,6 +167,11 @@ public class JBossWSTestSetup extends TestSetup
             clientJars.add(archiveURL);
             JBossWSTestHelper.deployAppclient(archive);
          }
+         else if (archive.endsWith("-client.jar"))
+         {
+            URL archiveURL = getArchiveURL(archive);
+            clientJars.add(archiveURL);
+         }
          else
          {
             performDeploy(archive);
