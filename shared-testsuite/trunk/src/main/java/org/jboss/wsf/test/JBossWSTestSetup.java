@@ -161,15 +161,11 @@ public class JBossWSTestSetup extends TestSetup
       for (int i = 0; i < archives.length; i++)
       {
          String archive = archives[i];
-         if (archive.endsWith("-client.jar"))
+         if (archive.endsWith("-appclient.jar"))
          {
-            URL archiveURL = getArchiveURL(archive);
+            URL archiveURL = getArchiveURL(archive.substring(archive.indexOf('#') + 1));
             clientJars.add(archiveURL);
-            if (archive.contains("jaxrpc") || archive.contains("serviceref"))
-            {
-               // TODO: deploy to appclient
-               //performDeploy(archive);
-            }
+            JBossWSTestHelper.deployAppclient(archive);
          }
          else
          {
@@ -224,7 +220,14 @@ public class JBossWSTestSetup extends TestSetup
          for (int i = 0; i < archives.length; i++)
          {
             String archive = archives[archives.length - i - 1];
-            JBossWSTestHelper.undeploy(archive);
+            if (archive.endsWith("-appclient.jar"))
+            {
+                JBossWSTestHelper.undeployAppclient(archive);
+            }
+            else
+            {
+                JBossWSTestHelper.undeploy(archive);
+            }
          }
       }
       finally

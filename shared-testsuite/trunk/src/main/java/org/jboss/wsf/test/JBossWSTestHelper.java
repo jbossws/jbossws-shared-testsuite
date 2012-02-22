@@ -21,6 +21,7 @@
  */
 package org.jboss.wsf.test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.Inet6Address;
@@ -40,6 +41,9 @@ import javax.xml.ws.Service.Mode;
 import javax.xml.ws.soap.SOAPBinding;
 
 import org.jboss.logging.Logger;
+import org.jboss.ws.common.concurrent.CopyJob;
+import org.jboss.ws.common.io.NullOutputStream;
+import org.jboss.ws.common.io.TeeOutputStream;
 import org.jboss.wsf.spi.SPIProvider;
 import org.jboss.wsf.spi.SPIProviderResolver;
 import org.jboss.wsf.spi.deployer.Deployer;
@@ -55,6 +59,10 @@ public class JBossWSTestHelper
 {
    private static final Logger LOGGER = Logger.getLogger(JBossWSTestHelper.class);
    
+   private static final String JBOSS_HOME = System.getProperty("jboss.home");
+   private static final String FS = System.getProperty("file.separator"); // '/' on unix, '\' on windows
+   private static final String PS = System.getProperty("path.separator"); // ':' on unix, ';' on windows
+   private static final String EXT = ":".equals(PS) ? ".sh" : ".bat";
    private static final String SYSPROP_JBOSSWS_INTEGRATION_TARGET = "jbossws.integration.target";
    private static final String SYSPROP_JBOSS_BIND_ADDRESS = "jboss.bind.address";
    private static final String SYSPROP_TEST_ARCHIVE_DIRECTORY = "test.archive.directory";
@@ -69,6 +77,7 @@ public class JBossWSTestHelper
    private static String implVersion;
    private static String testArchiveDir;
    private static String testResourcesDir;
+   private static Process appclientProcess;
    
    private static synchronized Deployer getDeployer()
    {
@@ -81,7 +90,7 @@ public class JBossWSTestHelper
       return DEPLOYER;
    }
 
-   /** Deploy the given archive
+   /** Deploy the given archive to the server
     */
    public static void deploy(final String archive) throws Exception
    {
@@ -92,7 +101,7 @@ public class JBossWSTestHelper
       }
    }
 
-   /** Undeploy the given archive
+   /** Undeploy the given archive from the server
     */
    public static void undeploy(final String archive) throws Exception
    {
@@ -100,6 +109,59 @@ public class JBossWSTestHelper
       {
          URL archiveURL = getArchiveFile(archive).toURI().toURL();
          getDeployer().undeploy(archiveURL);
+      }
+   }
+
+   /** Deploy the given archive to the appclient.
+    * Archive name is always in form archive.ear#appclient.jar
+    */
+   public static void deployAppclient(final String archive) throws Exception
+   {
+      if (DEPLOY_PROCESS_ENABLED)
+      {
+         final int sharpIndex = archive.indexOf('#');
+         final String appclientScript = JBOSS_HOME + FS + "bin" + FS + "appclient" + EXT;
+         final String earName = archive.substring(0, sharpIndex);
+         final String appclientName = archive.substring(sharpIndex + 1);
+         final String appclientFullName = getArchiveFile(earName).getParent() + FS + archive;
+         final String touchFile = JBOSS_HOME + FS + "bin" + FS + appclientName + ".kill";
+         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+         appclientProcess = new ProcessBuilder().command(appclientScript, appclientFullName, touchFile)
+               .start();
+         CopyJob inputStreamJob = new CopyJob(appclientProcess.getInputStream(), new TeeOutputStream(baos, System.out));
+         CopyJob errorStreamJob = new CopyJob(appclientProcess.getErrorStream(), System.err);
+         // unfortunately the following threads are needed because of Windows behavior
+         System.out.println("Appclient output stream:");
+         new Thread(inputStreamJob).start();
+         new Thread(errorStreamJob).start();
+         int countOfAttempts = 0;
+         final int maxCountOfAttempts = 30; // max wait time: 30 seconds
+         while (!baos.toString().contains("Deployed \"" + earName + "\""))
+         {
+            Thread.sleep(1000);
+            if (countOfAttempts++ == maxCountOfAttempts)
+            {
+               throw new RuntimeException("Cannot deploy " + appclientFullName + " to appclient");
+            }
+         }
+         System.out.println("appclient started");
+      }
+   }
+
+   /** Undeploy the given archive from the appclient
+    * Archive name is always in form archive.ear#appclient.jar
+    */
+   public static void undeployAppclient(final String archive) throws Exception
+   {
+      if (DEPLOY_PROCESS_ENABLED)
+      {
+         final int sharpIndex = archive.indexOf('#');
+         final File touchFile = new File(JBOSS_HOME + FS + "bin" + FS + archive.substring(sharpIndex + 1) + ".kill");
+         touchFile.createNewFile();
+         appclientProcess.waitFor();
+         appclientProcess = null;
+         touchFile.delete();
+         System.out.println("appclient stopped");
       }
    }
 
