@@ -21,6 +21,8 @@
  */
 package org.jboss.test.ws.jaxws.samples.webserviceref;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.net.URL;
 
 import javax.xml.namespace.QName;
@@ -28,8 +30,8 @@ import javax.xml.ws.Service;
 
 import junit.framework.Test;
 
-import org.jboss.ejb3.client.ClientLauncher;
 import org.jboss.wsf.test.JBossWSTest;
+import org.jboss.wsf.test.JBossWSTestHelper;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
 /**
@@ -44,7 +46,7 @@ public class WebServiceRefClientTestCase extends JBossWSTest
 
    public static Test suite()
    {
-      return new JBossWSTestSetup(WebServiceRefClientTestCase.class, "jaxws-samples-webserviceref.war, jaxws-samples-webserviceref-client.jar");
+      return new JBossWSTestSetup(WebServiceRefClientTestCase.class, "jaxws-samples-webserviceref.war");
    }
 
    public void testGeneratedService() throws Exception
@@ -74,7 +76,13 @@ public class WebServiceRefClientTestCase extends JBossWSTest
 
    public void testApplicationClient() throws Throwable
    {
-      String helloWorld = "Hello World!";
-      new ClientLauncher().launch(EndpointClientOne.class.getName(), "jbossws-client", new String[] { helloWorld });
+      final String appclientArg = "Hello World!";
+      final OutputStream appclientOS = new ByteArrayOutputStream();
+      final Process appclientProcess = JBossWSTestHelper.deployAppclient("jaxws-samples-webserviceref-appclient.ear#jaxws-samples-webserviceref-appclient.jar", appclientOS, appclientArg);
+      appclientProcess.waitFor();
+      final String appclientLog = appclientOS.toString();
+      assertTrue(!appclientLog.contains("Invalid echo return"));
+      assertTrue(appclientLog.contains("TEST START"));
+      assertTrue(appclientLog.contains("TEST END"));
    }
 }

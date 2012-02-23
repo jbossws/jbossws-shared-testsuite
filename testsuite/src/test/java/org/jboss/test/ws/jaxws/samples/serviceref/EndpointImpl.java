@@ -34,7 +34,7 @@ import org.jboss.logging.Logger;
  * @since 12-Mar-2007
  */
 
-@WebService (name = "Endpoint")
+@WebService (name = "Endpoint", serviceName = "EndpointService")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public class EndpointImpl 
 {
