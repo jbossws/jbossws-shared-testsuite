@@ -22,6 +22,7 @@
 package org.jboss.wsf.test;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -56,6 +57,8 @@ public class JBossWSTestSetup extends TestSetup
    private static final String JBOSSWS_SEC_DOMAIN = "JBossWS";
 
    private String[] archives = new String[0];
+   private OutputStream appclientOutputStream;
+   private String appclientArg;
    private ClassLoader originalClassLoader;
    private Map<String, Map<String, String>> securityDomains = new HashMap<String, Map<String,String>>();
    private boolean defaultSecurityDomainRequirement = false;
@@ -64,6 +67,13 @@ public class JBossWSTestSetup extends TestSetup
    {
       super(new TestSuite(testClass));
       getArchiveArray(archiveList);
+   }
+   
+   public JBossWSTestSetup(Class<?> testClass, String archiveList, OutputStream appclientOutputStream)
+   {
+      super(new TestSuite(testClass));
+      getArchiveArray(archiveList);
+      this.appclientOutputStream = appclientOutputStream;
    }
    
    public JBossWSTestSetup(Class<?> testClass, String archiveList, boolean requiresDefaultSecurityDomain)
@@ -165,7 +175,7 @@ public class JBossWSTestSetup extends TestSetup
          {
             URL archiveURL = getArchiveURL(archive.substring(archive.indexOf('#') + 1));
             clientJars.add(archiveURL);
-            JBossWSTestHelper.deployAppclient(archive);
+            JBossWSTestHelper.deployAppclient(archive, appclientOutputStream, appclientArg);
          }
          else if (archive.endsWith("-client.jar"))
          {
