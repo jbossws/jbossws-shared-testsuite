@@ -21,13 +21,13 @@
  */
 package org.jboss.test.ws.jaxws.samples.serviceref;
 
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceClient;
-
 
 /**
  * JBossWS Generated Source
@@ -43,15 +43,16 @@ import javax.xml.ws.WebServiceClient;
  */
 @WebServiceClient(name = "EndpointService", targetNamespace = "http://serviceref.samples.jaxws.ws.test.jboss.org/", wsdlLocation = "http://tddell:8080/jaxws-samples-serviceref?wsdl")
 public class EndpointService
-    extends Service
+    extends Service implements Serializable
 {
 
-    private final static URL TESTENDPOINTSERVICE_WSDL_LOCATION;
+   private static final long serialVersionUID = 1L;
+   private final static URL TESTENDPOINTSERVICE_WSDL_LOCATION;
 
     static {
         URL url = null;
         try {
-            url = new URL("http://tddell:8080/jaxws-samples-serviceref?wsdl");
+            url = new URL("http://localhost:8080/jaxws-samples-serviceref?wsdl");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

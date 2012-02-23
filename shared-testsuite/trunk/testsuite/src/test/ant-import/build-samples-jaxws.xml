@@ -281,17 +281,25 @@
            <include name="org/jboss/test/ws/jaxws/samples/serviceref/EndpointService.class"/>
         </classes>
      </war>
-     <jar destfile="${tests.output.dir}/test-libs/jaxws-samples-serviceref-client.jar">
+     <jar destfile="${tests.output.dir}/test-libs/jaxws-samples-serviceref-appclient.jar">
         <fileset dir="${tests.output.dir}/test-classes">
            <include name="org/jboss/test/ws/jaxws/samples/serviceref/ApplicationClient.class"/>
            <include name="org/jboss/test/ws/jaxws/samples/serviceref/EndpointService.class"/>
            <include name="org/jboss/test/ws/jaxws/samples/serviceref/Endpoint.class"/>
         </fileset>
+        <manifest>
+           <attribute name="main-class" value="org.jboss.ws.common.appclient.AppclientKiller"/>
+           <attribute name="Dependencies" value="org.jboss.ws.common"/>
+        </manifest>
         <metainf dir="${tests.output.dir}/test-resources/jaxws/samples/serviceref/META-INF">
            <include name="application-client.xml"/>
-           <include name="jboss-client.xml"/>
            <include name="wsdl/**"/>
         </metainf>
+     </jar>
+     <jar destfile="${tests.output.dir}/test-libs/jaxws-samples-serviceref-appclient.ear">
+        <fileset dir="${tests.output.dir}/test-libs">
+           <include name="jaxws-samples-serviceref-appclient.jar"/>
+        </fileset>
      </jar>
      <war destfile="${tests.output.dir}/test-libs/jaxws-samples-serviceref-servlet-client.war" webxml="${tests.output.dir}/test-resources/jaxws/samples/serviceref/servlet-client/WEB-INF/web.xml">
         <classes dir="${tests.output.dir}/test-classes">
@@ -424,7 +432,7 @@
         <include name="org/jboss/test/ws/jaxws/samples/webserviceref/EndpointImpl.class"/>
       </classes>
     </war>
-    <jar destfile="${tests.output.dir}/test-libs/jaxws-samples-webserviceref-client.jar">
+    <jar destfile="${tests.output.dir}/test-libs/jaxws-samples-webserviceref-appclient.jar">
       <fileset dir="${tests.output.dir}/test-classes">
         <include name="org/jboss/test/ws/jaxws/samples/webserviceref/EndpointClientOne.class"/>
         <include name="org/jboss/test/ws/jaxws/samples/webserviceref/EndpointService.class"/>
@@ -438,6 +446,11 @@
       <manifest>
         <attribute name="main-class" value="org.jboss.test.ws.jaxws.samples.webserviceref.EndpointClientOne"/>
       </manifest>
+    </jar>
+    <jar destfile="${tests.output.dir}/test-libs/jaxws-samples-webserviceref-appclient.ear">
+       <fileset dir="${tests.output.dir}/test-libs">
+          <include name="jaxws-samples-webserviceref-appclient.jar"/>
+       </fileset>
     </jar>
     <war destfile="${tests.output.dir}/test-libs/jaxws-samples-webserviceref-servlet-client.war"
       webxml="${tests.output.dir}/test-resources/jaxws/samples/webserviceref/WEB-INF-client/web.xml">

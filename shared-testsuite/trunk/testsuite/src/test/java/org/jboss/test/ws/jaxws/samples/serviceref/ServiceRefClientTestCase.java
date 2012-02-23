@@ -39,7 +39,7 @@ import org.jboss.wsf.test.JBossWSTestSetup;
  * Test the JAXWS <service-ref>
  *
  * @author Thomas.Diesler@jboss.com
- * @author <a href="mailto:richard.opalka@jboss.org">Richard Opalka</a>
+ * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
  */
 public class ServiceRefClientTestCase extends JBossWSTest
 {
@@ -47,7 +47,7 @@ public class ServiceRefClientTestCase extends JBossWSTest
 
    public static Test suite()
    {
-      String archives = "jaxws-samples-serviceref.war,jaxws-samples-serviceref-client.jar";
+      String archives = "jaxws-samples-serviceref.war,jaxws-samples-serviceref-appclient.ear#jaxws-samples-serviceref-appclient.jar";
       return new JBossWSTestSetup(ServiceRefClientTestCase.class, archives);
    }
 
@@ -73,8 +73,8 @@ public class ServiceRefClientTestCase extends JBossWSTest
 
    public void testApplicationClient() throws Exception
    {
-      InitialContext iniCtx = getInitialContext("jbossws-client");
-      Service service = (Service) iniCtx.lookup("java:comp/env/service2");
+      InitialContext iniCtx = getAppclientInitialContext();
+      Service service = (Service) iniCtx.lookup("java:service2");
       Endpoint port = service.getPort(Endpoint.class);
       assertNotNull(port);
 

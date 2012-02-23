@@ -138,11 +138,14 @@ public class EndpointClientOne
          throw new WebServiceException(ex);
       }
 
+      System.out.println("TEST START");
       for (Endpoint port : ports)
       {
+         System.out.println("Testing: " + port);
          String outStr = port.echo(inStr);
          if (inStr.equals(outStr) == false)
             throw new WebServiceException("Invalid echo return: " + inStr);
       }
+      System.out.println("TEST END");
    }
 }
