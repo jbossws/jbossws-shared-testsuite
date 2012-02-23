@@ -24,6 +24,7 @@ package org.jboss.wsf.test;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
@@ -42,7 +43,6 @@ import javax.xml.ws.soap.SOAPBinding;
 
 import org.jboss.logging.Logger;
 import org.jboss.ws.common.concurrent.CopyJob;
-import org.jboss.ws.common.io.NullOutputStream;
 import org.jboss.ws.common.io.TeeOutputStream;
 import org.jboss.wsf.spi.SPIProvider;
 import org.jboss.wsf.spi.SPIProviderResolver;
@@ -115,7 +115,7 @@ public class JBossWSTestHelper
    /** Deploy the given archive to the appclient.
     * Archive name is always in form archive.ear#appclient.jar
     */
-   public static void deployAppclient(final String archive) throws Exception
+   public static Process deployAppclient(final String archive, final OutputStream appclientOS, final String appclientArg) throws Exception
    {
       if (DEPLOY_PROCESS_ENABLED)
       {
@@ -126,10 +126,17 @@ public class JBossWSTestHelper
          final String appclientFullName = getArchiveFile(earName).getParent() + FS + archive;
          final String touchFile = JBOSS_HOME + FS + "bin" + FS + appclientName + ".kill";
          final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-         appclientProcess = new ProcessBuilder().command(appclientScript, appclientFullName, touchFile)
-               .start();
-         CopyJob inputStreamJob = new CopyJob(appclientProcess.getInputStream(), new TeeOutputStream(baos, System.out));
-         CopyJob errorStreamJob = new CopyJob(appclientProcess.getErrorStream(), System.err);
+         if (appclientOS == null)
+         {
+            appclientProcess = new ProcessBuilder().command(appclientScript, appclientFullName, touchFile).start();
+         }
+         else
+         {
+            appclientProcess = new ProcessBuilder().command(appclientScript, appclientFullName, appclientArg).start();
+         }
+         final CopyJob inputStreamJob = new CopyJob(appclientProcess.getInputStream(),
+               appclientOS == null ? new TeeOutputStream(baos, System.out) : new TeeOutputStream(baos, System.out, appclientOS));
+         final CopyJob errorStreamJob = new CopyJob(appclientProcess.getErrorStream(), System.err);
          // unfortunately the following threads are needed because of Windows behavior
          System.out.println("Appclient output stream:");
          new Thread(inputStreamJob).start();
@@ -146,6 +153,7 @@ public class JBossWSTestHelper
          }
          System.out.println("appclient started");
       }
+      return appclientProcess;
    }
 
    /** Undeploy the given archive from the appclient
