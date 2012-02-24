@@ -46,7 +46,23 @@
     
     <!-- Verify required properties that must be set before this file is imported -->
     <fail message="Tests output dir not set." unless="tests.output.dir"/>
-    
+
+    <!-- appclient patch -->
+    <copy
+      file="${jboss.home}/appclient/configuration/appclient.xml"
+      tofile="${jboss.home}/appclient/configuration/appclient.xml.orig"
+      failonerror="false"
+      overwrite="false"
+      verbose="true"
+    />
+    <copy
+      file="${basedir}/tests/etc/appclient/${jbossws.integration.target}/appclient.xml"
+      tofile="${jboss.home}/appclient/configuration/appclient.xml"
+      failonerror="false"
+      overwrite="true"
+      verbose="true"
+    />
+
     <!-- Verify availabililty of tools.jar -->
     <condition property="tools.jar" value="${java.home}/lib/tools.jar">
       <available file="${java.home}/lib/tools.jar"/>
@@ -401,6 +417,9 @@
       <fileset dir="${jboss.home}/modules/org/jboss/xnio/nio/main/">
         <include name="xnio-nio-*.jar"/>
       </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/remote-naming/main/">
+        <include name="jboss-remote-naming-*.jar"/>
+      </fileset>
       <pathelement location="${tools.jar}"/>
     </path>
   </target>
@@ -433,11 +452,9 @@
       <!-- copy etc -->
       <copy todir="${tests.output.dir}/test-classes">
         <fileset dir="@{srcdir}/etc">
-          <include name="jndi.properties"/>
-          <include name="jboss-ejb-client.properties"/>
+          <include name="*.properties"/>
           <include name="tst.policy"/>
           <include name="log4j.xml"/>
-          <include name="jbossws-*.properties"/>
         </fileset>
         <filterset>
           <filter token="jboss.bind.address" value="${node0}"/>
