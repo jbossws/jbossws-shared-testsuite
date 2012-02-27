@@ -21,13 +21,7 @@
  */
 package org.jboss.test.ws.jaxrpc.samples.serviceref;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import javax.naming.InitialContext;
-import javax.xml.namespace.QName;
-import javax.xml.rpc.Service;
 
 import junit.framework.Test;
 
@@ -51,12 +45,23 @@ public class ServiceRefEJBTestCase extends JBossWSTest
 
    public void testEJBClient() throws Exception
    {
-      InitialContext iniCtx = getInitialContext();
-      EJBRemoteHome ejbHome = (EJBRemoteHome)iniCtx.lookup("ejb:/jaxrpc-samples-serviceref-ejbclient//EJBClient!" + EJBRemoteHome.class.getName());
-      EJBRemote ejbRemote = ejbHome.create();
+      InitialContext iniCtx = null;
+      try 
+      {
+         iniCtx = getServerInitialContext();
+         EJBRemoteHome ejbHome = (EJBRemoteHome)iniCtx.lookup("ejb:/jaxrpc-samples-serviceref-ejbclient//EJBClient!" + EJBRemoteHome.class.getName());
+         EJBRemote ejbRemote = ejbHome.create();
 
-      String helloWorld = "Hello World!";
-      Object retObj = ejbRemote.echo(helloWorld);
-      assertEquals(helloWorld, retObj);
+         String helloWorld = "Hello World!";
+         Object retObj = ejbRemote.echo(helloWorld);
+         assertEquals(helloWorld, retObj);
+      }
+      finally
+      {
+         if (iniCtx != null)
+         {
+            iniCtx.close();
+         }
+      }
    }
 }

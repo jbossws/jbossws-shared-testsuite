@@ -43,7 +43,7 @@ public class JBWS1841TestCase extends JBossWSTest
 
    private static EndpointInterface port;
    private static StatelessRemote remote;
-
+   private static InitialContext ctx;
    public static Test suite()
    {
       return new JBossWSTestSetup(JBWS1841TestCase.class, "jaxws-jbws1841.jar");
@@ -57,8 +57,17 @@ public class JBWS1841TestCase extends JBossWSTest
          QName serviceName = new QName("http://www.openuri.org/2004/04/HelloWorld", "EndpointService");
          port = Service.create(wsdlURL, serviceName).getPort(EndpointInterface.class);
 
-         InitialContext ctx = getInitialContext();
+         ctx = getServerInitialContext();
          remote = (StatelessRemote)ctx.lookup("ejb:/jaxws-jbws1841//" + StatelessBean.class.getSimpleName() + "!" + StatelessRemote.class.getName());
+      }
+   }
+
+   protected void tearDown() throws Exception
+   {
+      if (ctx != null)
+      {
+         ctx.close();
+         ctx = null;
       }
    }
 

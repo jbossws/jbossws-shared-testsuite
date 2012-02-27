@@ -73,26 +73,36 @@ public class ServiceRefClientTestCase extends JBossWSTest
 
    public void testApplicationClient() throws Exception
    {
-      InitialContext iniCtx = getAppclientInitialContext();
-      Service service = (Service) iniCtx.lookup("java:service2");
-      Endpoint port = service.getPort(Endpoint.class);
-      assertNotNull(port);
-
-      if(isIntegrationNative())
+      InitialContext iniCtx = null;
+      try
       {
-         BindingProvider bp = (BindingProvider)port;
-         boolean mtomEnabled = ((SOAPBinding)bp.getBinding()).isMTOMEnabled();
-         assertTrue("MTOM should be enabled on port", mtomEnabled);
+         iniCtx = getAppclientInitialContext();
+         Service service = (Service) iniCtx.lookup("java:service2");
+         Endpoint port = service.getPort(Endpoint.class);
+         assertNotNull(port);
+
+         if(isIntegrationNative())
+         {
+            BindingProvider bp = (BindingProvider)port;
+            boolean mtomEnabled = ((SOAPBinding)bp.getBinding()).isMTOMEnabled();
+            assertTrue("MTOM should be enabled on port", mtomEnabled);
+         }
+         else
+         {
+            // MTOM property at service-ref level not possible with sun-ri         
+         }
+
+         String request = "ApplicationClient";
+         String response = port.echo(request);
+         assertEquals(response, request);
       }
-      else
+      finally
       {
-         // MTOM property at service-ref level not possible with sun-ri         
+         if (iniCtx != null)
+         {
+            iniCtx.close();
+         }
       }
-
-      String request = "ApplicationClient";
-      String response = port.echo(request);
-      assertEquals(response, request);
-
    }
 
 }

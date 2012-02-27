@@ -62,10 +62,11 @@ public class WebServiceRefEJB3TestCase extends JBossWSTest
 
    public void testEJB3Client() throws Exception
    {
+      InitialContext iniCtx = null;
       deploy("jaxws-samples-webserviceref-ejb3-client.jar");
       try
       {
-         InitialContext iniCtx = getInitialContext();
+         iniCtx = getServerInitialContext();
          EJB3Remote ejb3Remote = (EJB3Remote)iniCtx.lookup("ejb:/jaxws-samples-webserviceref-ejb3-client//EJB3Client!" + EJB3Remote.class.getName());
 
          String helloWorld = "Hello World!";
@@ -74,6 +75,10 @@ public class WebServiceRefEJB3TestCase extends JBossWSTest
       }
       finally
       {
+         if (iniCtx != null)
+         {
+            iniCtx.close();
+         }
          undeploy("jaxws-samples-webserviceref-ejb3-client.jar");
       }
    }

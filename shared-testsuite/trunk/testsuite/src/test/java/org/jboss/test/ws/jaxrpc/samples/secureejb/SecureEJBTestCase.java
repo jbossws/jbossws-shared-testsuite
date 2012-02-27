@@ -43,16 +43,32 @@ public class SecureEJBTestCase extends JBossWSTest
 {
    public static final String USERNAME = "kermit";
    public static final String PASSWORD = "thefrog";
+   private InitialContext appclientCtx;
 
    public static Test suite() throws Exception
    {
       return new JBossWSTestSetup(SecureEJBTestCase.class, "jaxrpc-samples-secureejb.jar, jaxrpc-samples-secureejb-appclient.ear#jaxrpc-samples-secureejb-appclient.jar", true);
    }
 
+   public void setUp() throws Exception
+   {
+      super.setUp();
+      appclientCtx = getAppclientInitialContext();
+   }
+
+   public void tearDown() throws Exception
+   {
+      if (appclientCtx != null)
+      {
+         appclientCtx.close();
+         appclientCtx = null;
+      }
+      super.tearDown();
+   }
+
    public void testRoleSecuredServiceAccess() throws Exception
    {
-      InitialContext iniCtx = getAppclientInitialContext();
-      Service service = (Service)iniCtx.lookup("java:service/RoleSecured");
+      Service service = (Service)appclientCtx.lookup("java:service/RoleSecured");
       QName portName = new QName("http://org.jboss.ws/samples/secureejb", "RoleSecuredPort");
       OrganizationService port = (OrganizationService)service.getPort(portName, OrganizationService.class);
 
@@ -76,8 +92,7 @@ public class SecureEJBTestCase extends JBossWSTest
 
    public void testBasicSecuredServiceAccess() throws Exception
    {
-      InitialContext iniCtx = getAppclientInitialContext();
-      Service service = (Service)iniCtx.lookup("java:service/BasicSecured");
+      Service service = (Service)appclientCtx.lookup("java:service/BasicSecured");
       QName portName = new QName("http://org.jboss.ws/samples/secureejb", "BasicSecuredPort");
       OrganizationService port = (OrganizationService)service.getPort(portName, OrganizationService.class);
 
@@ -101,8 +116,7 @@ public class SecureEJBTestCase extends JBossWSTest
 
    public void testConfidentialServiceAccess() throws Exception
    {
-      InitialContext iniCtx = getAppclientInitialContext();
-      Service service = (Service)iniCtx.lookup("java:service/ConfidentialSecured");
+      Service service = (Service)appclientCtx.lookup("java:service/ConfidentialSecured");
       QName portName = new QName("http://org.jboss.ws/samples/secureejb", "ConfidentialPort");
       OrganizationService port = (OrganizationService)service.getPort(portName, OrganizationService.class);
 

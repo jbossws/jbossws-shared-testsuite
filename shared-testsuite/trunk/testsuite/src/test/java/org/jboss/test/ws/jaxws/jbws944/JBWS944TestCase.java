@@ -56,26 +56,46 @@ public class JBWS944TestCase extends JBossWSTest
 
    public void testRemoteAccess() throws Exception
    {
-      InitialContext iniCtx = getInitialContext();
-      EJB3RemoteBusinessInterface ejb3Remote = (EJB3RemoteBusinessInterface)iniCtx.lookup("ejb:/jaxws-jbws944//FooBean01!" + EJB3RemoteBusinessInterface.class.getName());
+      InitialContext iniCtx = null;
+      try {
+         iniCtx = getServerInitialContext();
+         EJB3RemoteBusinessInterface ejb3Remote = (EJB3RemoteBusinessInterface)iniCtx.lookup("ejb:/jaxws-jbws944//FooBean01!" + EJB3RemoteBusinessInterface.class.getName());
 
-      String helloWorld = "Hello world!";
-      Object retObj = ejb3Remote.echo(helloWorld);
-      assertEquals(helloWorld, retObj);
+         String helloWorld = "Hello world!";
+         Object retObj = ejb3Remote.echo(helloWorld);
+         assertEquals(helloWorld, retObj);
+      } 
+      finally
+      {
+         if (iniCtx != null)
+         {
+            iniCtx.close();
+         }
+      }
    }
 
    // This tests whether the remote proxy also implements
    // the home interface and that it can be narrowed to it.
    public void testNarrowedRemoteAccess() throws Exception
    {
-      InitialContext iniCtx = getInitialContext();
-      Object obj = iniCtx.lookup("ejb:/jaxws-jbws944//FooBean01!" + EJB3RemoteHome.class.getName());
-      EJB3RemoteHome ejb3Home = (EJB3RemoteHome)PortableRemoteObject.narrow(obj, EJB3RemoteHome.class);
-      EJB3RemoteInterface ejb3Remote = ejb3Home.create();
+      InitialContext iniCtx = null;
+      try {
+         iniCtx = getServerInitialContext();
+         Object obj = iniCtx.lookup("ejb:/jaxws-jbws944//FooBean01!" + EJB3RemoteHome.class.getName());
+         EJB3RemoteHome ejb3Home = (EJB3RemoteHome)PortableRemoteObject.narrow(obj, EJB3RemoteHome.class);
+         EJB3RemoteInterface ejb3Remote = ejb3Home.create();
 
-      String helloWorld = "Hello world!";
-      Object retObj = ejb3Remote.echo(helloWorld);
-      assertEquals(helloWorld, retObj);
+         String helloWorld = "Hello world!";
+         Object retObj = ejb3Remote.echo(helloWorld);
+         assertEquals(helloWorld, retObj);
+      } 
+      finally
+      {
+         if (iniCtx != null)
+         {
+            iniCtx.close();
+         }
+      }
    }
 
    public void testWebService() throws Exception

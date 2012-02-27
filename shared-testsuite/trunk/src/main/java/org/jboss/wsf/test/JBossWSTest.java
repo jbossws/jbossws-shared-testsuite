@@ -292,19 +292,19 @@ public abstract class JBossWSTest extends TestCase
        return env;
    }
 
-   /** Get the appclient remote env context
+   /** Gets the appclient remote env context.
+    * Every test calling this method have to ensure InitialContext.close()
+    * method is called at end of test to clean up all associated caches.
     */
    protected static InitialContext getAppclientInitialContext() throws NamingException, IOException
    {
-//       InitialContext iniCtx = new InitialContext();
-//       Hashtable env = iniCtx.getEnvironment();
-//       env.put(Context.PROVIDER_URL, "remote://" + JBossWSTestHelper.getServerHost() + ":4448");
-//       return new InitialContext(env);
        final Hashtable<String, String> env = getEnvironment("appclient.jndi.properties");
        return new InitialContext(env);
    }
 
    /** Get the server remote env context
+    * Every test calling this method have to ensure InitialContext.close()
+    * method is called at end of test to clean up all associated caches.
     */
    protected static InitialContext getServerInitialContext() throws NamingException, IOException
    {
