@@ -23,6 +23,7 @@ package org.jboss.test.ws.jaxws.jbws1581;
 
 import java.net.URL;
 
+import javax.naming.InitialContext;
 import javax.wsdl.Definition;
 import javax.wsdl.factory.WSDLFactory;
 
@@ -55,8 +56,20 @@ public class JBWS1581EarTestCase extends JBossWSTest
 
    public void testEJBVehicle() throws Exception
    {
-      EJB3Remote remote = (EJB3Remote)getInitialContext().lookup("ejb:/jaxws-jbws1581-ejb3//EJB3Bean!" + EJB3Remote.class.getName());
-      String retStr = remote.runTest("Hello World!");
-      assertEquals("Hello World!", retStr);
+      InitialContext iniCtx = null;
+      try
+      {
+         iniCtx = getServerInitialContext();
+         EJB3Remote remote = (EJB3Remote)iniCtx.lookup("ejb:/jaxws-jbws1581-ejb3//EJB3Bean!" + EJB3Remote.class.getName());
+         String retStr = remote.runTest("Hello World!");
+         assertEquals("Hello World!", retStr);
+      }
+      finally
+      {
+         if (iniCtx != null)
+         {
+            iniCtx.close();
+         }
+      }
    }
 }

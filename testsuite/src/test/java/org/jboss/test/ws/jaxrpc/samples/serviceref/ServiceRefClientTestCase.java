@@ -71,13 +71,24 @@ public class ServiceRefClientTestCase extends JBossWSTest
 
    public void testApplicationClient() throws Exception
    {
-      final InitialContext ctx = getAppclientInitialContext();
-      final TestEndpoint port1 = (TestEndpoint)((Service)ctx.lookup("java:service1")).getPort(TestEndpoint.class);
-      final TestEndpoint port2 = ((TestEndpointService)ctx.lookup("java:service2")).getTestEndpointPort();
-      final String msg = "Hello World!";
+      InitialContext ctx = null;
+      try
+      {
+         ctx = getAppclientInitialContext();
+         final TestEndpoint port1 = (TestEndpoint)((Service)ctx.lookup("java:service1")).getPort(TestEndpoint.class);
+         final TestEndpoint port2 = ((TestEndpointService)ctx.lookup("java:service2")).getTestEndpointPort();
+         final String msg = "Hello World!";
 
-      assertEquals(msg, port1.echo(msg));
-      assertEquals(msg, port2.echo(msg));
+         assertEquals(msg, port1.echo(msg));
+         assertEquals(msg, port2.echo(msg));
+      }
+      finally
+      {
+         if (ctx != null)
+         {
+            ctx.close();
+         }
+      }
    }
 
 }
