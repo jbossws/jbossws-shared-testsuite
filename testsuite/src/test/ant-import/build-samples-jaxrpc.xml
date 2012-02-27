@@ -427,10 +427,10 @@
         <include name="org/jboss/test/ws/jaxrpc/samples/secureejb/OrganizationService.class"/>
         <include name="org/jboss/test/ws/jaxrpc/samples/secureejb/OrganizationHome.class"/>
         <include name="org/jboss/test/ws/jaxrpc/samples/secureejb/OrganizationRemote.class"/>
+        <include name="org/jboss/test/ws/appclient/AppclientKiller.class"/>
       </fileset>
       <manifest>
-          <attribute name="main-class" value="org.jboss.ws.common.appclient.AppclientKiller"/>
-          <attribute name="Dependencies" value="org.jboss.ws.common"/>
+          <attribute name="main-class" value="org.jboss.test.ws.appclient.AppclientKiller"/>
       </manifest>
       <metainf dir="${tests.output.dir}/test-resources/jaxrpc/samples/secureejb/META-INF">
         <include name="application-client.xml"/>
@@ -463,10 +463,10 @@
         <include name="org/jboss/test/ws/jaxrpc/samples/serviceref/ApplicationClient.class"/>
         <include name="org/jboss/test/ws/jaxrpc/samples/serviceref/TestEndpointService.class"/>
         <include name="org/jboss/test/ws/jaxrpc/samples/serviceref/TestEndpoint.class"/>
+        <include name="org/jboss/test/ws/appclient/AppclientKiller.class"/>
       </fileset>
       <manifest>
-          <attribute name="main-class" value="org.jboss.ws.common.appclient.AppclientKiller"/>
-          <attribute name="Dependencies" value="org.jboss.ws.common"/>
+          <attribute name="main-class" value="org.jboss.test.ws.appclient.AppclientKiller"/>
       </manifest>
       <metainf dir="${tests.output.dir}/test-resources/jaxrpc/samples/serviceref/META-INF">
         <include name="application-client.xml"/>

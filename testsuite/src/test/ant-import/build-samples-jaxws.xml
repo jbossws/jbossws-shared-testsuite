@@ -286,11 +286,11 @@
            <include name="org/jboss/test/ws/jaxws/samples/serviceref/ApplicationClient.class"/>
            <include name="org/jboss/test/ws/jaxws/samples/serviceref/EndpointService.class"/>
            <include name="org/jboss/test/ws/jaxws/samples/serviceref/Endpoint.class"/>
-        </fileset>
-        <manifest>
-           <attribute name="main-class" value="org.jboss.ws.common.appclient.AppclientKiller"/>
-           <attribute name="Dependencies" value="org.jboss.ws.common"/>
-        </manifest>
+           <include name="org/jboss/test/ws/appclient/AppclientKiller.class"/>
+      </fileset>
+      <manifest>
+          <attribute name="main-class" value="org.jboss.test.ws.appclient.AppclientKiller"/>
+      </manifest>
         <metainf dir="${tests.output.dir}/test-resources/jaxws/samples/serviceref/META-INF">
            <include name="application-client.xml"/>
            <include name="wsdl/**"/>
