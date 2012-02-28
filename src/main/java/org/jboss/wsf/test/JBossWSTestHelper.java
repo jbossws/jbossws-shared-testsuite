@@ -30,6 +30,8 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.management.MBeanServerConnection;
@@ -115,7 +117,7 @@ public class JBossWSTestHelper
    /** Deploy the given archive to the appclient.
     * Archive name is always in form archive.ear#appclient.jar
     */
-   public static Process deployAppclient(final String archive, final OutputStream appclientOS, final String appclientArg) throws Exception
+   public static Process deployAppclient(final String archive, final OutputStream appclientOS, final String... appclientArgs) throws Exception
    {
       if (DEPLOY_PROCESS_ENABLED)
       {
@@ -132,7 +134,15 @@ public class JBossWSTestHelper
          }
          else
          {
-            appclientProcess = new ProcessBuilder().command(appclientScript, appclientFullName, appclientArg).start();
+            final List<String> args = new LinkedList<String>();
+            args.add(appclientScript);
+            args.add(appclientFullName);
+            // propagate appclient args
+            for (final String appclientArg : appclientArgs)
+            {
+               args.add(appclientArg);
+            }
+            appclientProcess = new ProcessBuilder().command(args).start();
          }
          final CopyJob inputStreamJob = new CopyJob(appclientProcess.getInputStream(),
                appclientOS == null ? new TeeOutputStream(baos, System.out) : new TeeOutputStream(baos, System.out, appclientOS));
