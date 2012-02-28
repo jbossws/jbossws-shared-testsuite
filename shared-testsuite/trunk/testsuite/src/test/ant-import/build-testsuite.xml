@@ -115,7 +115,7 @@
     <property name="jboss.lib" value="${jboss.home}/lib"/>
   	
     <!-- Java Endorsed -->
-    <condition property="endorsed.dirs" value="${jboss.home}/lib/endorsed${path.separator}${jboss.home}/modules/javax/xml/ws/api/main/">
+    <condition property="endorsed.dirs" value="${jboss.home}/modules/javax/xml/ws/api/main/">
       <isset property="jboss.home"/>
     </condition>
     
@@ -710,7 +710,7 @@
     <eclipseClasspathGenerator pathId="tests.eclipse.classpath" excludesFile="${excludesfile}" srcPath="tests/java"/>
     <eclipseProjectGenerator projectName="JBossWS Testsuite"/>
     <eclipseJUnitTestGenerator projectName="JBossWS Testsuite" projectWorkingDir="${tests.output.dir}" srcDir="${tests.dir}/test-java"
-      integrationTarget="${jbossws.integration.target}" endorsedDir="${jboss.lib}/endorsed" jbossHome="${jboss.home}" namingProviderUrl="${node0.jndi.url}"
+      integrationTarget="${jbossws.integration.target}" endorsedDir="${endorsed.dirs}" jbossHome="${jboss.home}" namingProviderUrl="${node0.jndi.url}"
       securityPolicy="${tests.output.dir}/test-classes/tst.policy" testResourcesDir="${tests.output.dir}/test-resources" testLibsDir="${tests.output.dir}/test-libs">
       <fileset dir="${tests.output.dir}/test-classes" includes="org/jboss/test/ws/**/*TestCase.class" excludes="exclude.wildcard"/>
     </eclipseJUnitTestGenerator>
