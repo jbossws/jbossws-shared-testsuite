@@ -21,7 +21,9 @@
  */
 package org.jboss.test.ws.jaxws.samples.serviceref;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 
 import javax.naming.InitialContext;
@@ -33,6 +35,7 @@ import javax.xml.ws.soap.SOAPBinding;
 import junit.framework.Test;
 
 import org.jboss.wsf.test.JBossWSTest;
+import org.jboss.wsf.test.JBossWSTestHelper;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
 /**
@@ -47,7 +50,7 @@ public class ServiceRefClientTestCase extends JBossWSTest
 
    public static Test suite()
    {
-      String archives = "jaxws-samples-serviceref.war,jaxws-samples-serviceref-appclient.ear#jaxws-samples-serviceref-appclient.jar";
+      String archives = "jaxws-samples-serviceref.war";
       return new JBossWSTestSetup(ServiceRefClientTestCase.class, archives);
    }
 
@@ -73,36 +76,18 @@ public class ServiceRefClientTestCase extends JBossWSTest
 
    public void testApplicationClient() throws Exception
    {
-      InitialContext iniCtx = null;
-      try
-      {
-         iniCtx = getAppclientInitialContext();
-         Service service = (Service) iniCtx.lookup("java:service2");
-         Endpoint port = service.getPort(Endpoint.class);
-         assertNotNull(port);
-
-         if(isIntegrationNative())
-         {
-            BindingProvider bp = (BindingProvider)port;
-            boolean mtomEnabled = ((SOAPBinding)bp.getBinding()).isMTOMEnabled();
-            assertTrue("MTOM should be enabled on port", mtomEnabled);
-         }
-         else
-         {
-            // MTOM property at service-ref level not possible with sun-ri         
-         }
-
-         String request = "ApplicationClient";
-         String response = port.echo(request);
-         assertEquals(response, request);
+      final OutputStream appclientOS = new ByteArrayOutputStream();
+      JBossWSTestHelper.deployAppclient("jaxws-samples-serviceref-appclient.ear#jaxws-samples-serviceref-appclient.jar", appclientOS, "Hello World!");
+      // wait till appclient stops
+      String appclientLog = appclientOS.toString();
+      while (!appclientLog.contains("stopped in")) {
+         Thread.sleep(100);
+         appclientLog = appclientOS.toString();
       }
-      finally
-      {
-         if (iniCtx != null)
-         {
-            iniCtx.close();
-         }
-      }
+      // assert appclient logs
+      assertTrue(appclientLog.contains("TEST START"));
+      assertTrue(appclientLog.contains("TEST END"));
+      assertFalse(appclientLog.contains("not overridden through service-ref"));
+      assertFalse(appclientLog.contains("Invalid echo return"));
    }
-
 }
