@@ -79,8 +79,13 @@ public class WebServiceRefClientTestCase extends JBossWSTest
       final String appclientArg = "Hello World!";
       final OutputStream appclientOS = new ByteArrayOutputStream();
       final Process appclientProcess = JBossWSTestHelper.deployAppclient("jaxws-samples-webserviceref-appclient.ear#jaxws-samples-webserviceref-appclient.jar", appclientOS, appclientArg);
-      appclientProcess.waitFor();
-      final String appclientLog = appclientOS.toString();
+      // wait till appclient stops
+      String appclientLog = appclientOS.toString();
+      while (!appclientLog.contains("stopped in")) {
+         Thread.sleep(100);
+         appclientLog = appclientOS.toString();
+      }
+      // assert appclient logs
       assertTrue(!appclientLog.contains("Invalid echo return"));
       assertTrue(appclientLog.contains("TEST START"));
       assertTrue(appclientLog.contains("TEST END"));
