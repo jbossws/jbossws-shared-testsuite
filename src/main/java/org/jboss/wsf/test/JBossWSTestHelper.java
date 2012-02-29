@@ -176,7 +176,7 @@ public class JBossWSTestHelper
          final int sharpIndex = archive.indexOf('#');
          final File touchFile = new File(JBOSS_HOME + FS + "bin" + FS + archive.substring(sharpIndex + 1) + ".kill");
          touchFile.createNewFile();
-         appclientProcess.waitFor();
+         Thread.sleep(200);
          appclientProcess = null;
          touchFile.delete();
          System.out.println("appclient stopped");
