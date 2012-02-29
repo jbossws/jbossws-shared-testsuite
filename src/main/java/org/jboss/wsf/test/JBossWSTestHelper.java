@@ -80,6 +80,7 @@ public class JBossWSTestHelper
    private static String testArchiveDir;
    private static String testResourcesDir;
    private static Process appclientProcess;
+   private static OutputStream appclientOutput;
    
    private static synchronized Deployer getDeployer()
    {
@@ -127,7 +128,7 @@ public class JBossWSTestHelper
          final String appclientName = archive.substring(sharpIndex + 1);
          final String appclientFullName = getArchiveFile(earName).getParent() + FS + archive;
          final String touchFile = JBOSS_HOME + FS + "bin" + FS + appclientName + ".kill";
-         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+         appclientOutput = new ByteArrayOutputStream();
          if (appclientOS == null)
          {
             appclientProcess = new ProcessBuilder().command(appclientScript, appclientFullName, touchFile).start();
@@ -145,7 +146,7 @@ public class JBossWSTestHelper
             appclientProcess = new ProcessBuilder().command(args).start();
          }
          final CopyJob inputStreamJob = new CopyJob(appclientProcess.getInputStream(),
-               appclientOS == null ? new TeeOutputStream(baos, System.out) : new TeeOutputStream(baos, System.out, appclientOS));
+               appclientOS == null ? new TeeOutputStream(appclientOutput, System.out) : new TeeOutputStream(appclientOutput, System.out, appclientOS));
          final CopyJob errorStreamJob = new CopyJob(appclientProcess.getErrorStream(), System.err);
          // unfortunately the following threads are needed because of Windows behavior
          System.out.println("Appclient output stream:");
@@ -153,7 +154,7 @@ public class JBossWSTestHelper
          new Thread(errorStreamJob).start();
          int countOfAttempts = 0;
          final int maxCountOfAttempts = 30; // max wait time: 30 seconds
-         while (!baos.toString().contains("Deployed \"" + earName + "\""))
+         while (!appclientOutput.toString().contains("Deployed \"" + earName + "\""))
          {
             Thread.sleep(1000);
             if (countOfAttempts++ == maxCountOfAttempts)
@@ -176,7 +177,19 @@ public class JBossWSTestHelper
          final int sharpIndex = archive.indexOf('#');
          final File touchFile = new File(JBOSS_HOME + FS + "bin" + FS + archive.substring(sharpIndex + 1) + ".kill");
          touchFile.createNewFile();
-         Thread.sleep(200);
+         appclientProcess.waitFor();
+         /*
+         int countOfAttempts = 0;
+         final int maxCountOfAttempts = 30; // max wait time: 30 seconds
+         while (!appclientOutput.toString().contains("stopped in"))
+         {
+            Thread.sleep(1000);
+            if (countOfAttempts++ == maxCountOfAttempts)
+            {
+               throw new RuntimeException("Cannot stop appclient");
+            }
+         }
+         */
          appclientProcess = null;
          touchFile.delete();
          System.out.println("appclient stopped");
