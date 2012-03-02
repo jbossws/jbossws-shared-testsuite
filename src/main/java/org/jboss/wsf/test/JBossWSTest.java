@@ -312,20 +312,6 @@ public abstract class JBossWSTest extends TestCase
        return new InitialContext(env);
    }
 
-   // TODO: remove
-   @Deprecated
-   protected static InitialContext getInitialContext(String s) throws NamingException, IOException
-   {
-       return getServerInitialContext();
-   }
-
-   // TODO: remove
-   @Deprecated
-   protected static InitialContext getInitialContext() throws NamingException, IOException
-   {
-       return getServerInitialContext();
-   }
-
    public static void assertEquals(Element expElement, Element wasElement, boolean ignoreWhitespace)
    {
       normalizeWhitespace(expElement, ignoreWhitespace);
