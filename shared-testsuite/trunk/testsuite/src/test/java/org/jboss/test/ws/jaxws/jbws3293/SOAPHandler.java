@@ -55,7 +55,7 @@ public class SOAPHandler extends GenericSOAPHandler<LogicalMessageContext>
          Document document = body.extractContentAsDocument();
          Node node = document;
 
-         System.out.println(DOMWriter.printNode(node, true));
+         log.info(DOMWriter.printNode(node, true));
 
          NodeList nodes = node.getChildNodes();
          for (int i = 0; i < nodes.getLength(); i++)
@@ -73,7 +73,7 @@ public class SOAPHandler extends GenericSOAPHandler<LogicalMessageContext>
             }
          }
 
-         System.out.println(DOMWriter.printNode(node, true));
+         log.info(DOMWriter.printNode(node, true));
 
          // Add document back as removed by call to 'extractContentAsDocument()'
          body.addDocument(document);
