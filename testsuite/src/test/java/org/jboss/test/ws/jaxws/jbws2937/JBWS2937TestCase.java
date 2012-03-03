@@ -191,7 +191,7 @@ public final class JBWS2937TestCase extends JBossWSTest
       DOMResult dr = new DOMResult(); 
       epr.writeTo(dr);
       Node endpointReferenceElement = dr.getNode();
-      System.out.println(DOMUtils.node2String(endpointReferenceElement));
+      Logger.getLogger(this.getClass()).info(DOMUtils.node2String(endpointReferenceElement));
    }
 
    private void assertEquals(final UserType user1, final UserType user2)

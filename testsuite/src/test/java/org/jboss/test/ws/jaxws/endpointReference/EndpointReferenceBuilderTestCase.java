@@ -26,6 +26,7 @@ import javax.xml.transform.dom.DOMResult;
 import javax.xml.ws.wsaddressing.W3CEndpointReference;
 import javax.xml.ws.wsaddressing.W3CEndpointReferenceBuilder;
 
+import org.jboss.logging.Logger;
 import org.jboss.ws.common.DOMUtils;
 import org.jboss.wsf.test.JBossWSTest;
 import org.w3c.dom.Element;
@@ -77,7 +78,7 @@ public final class EndpointReferenceBuilderTestCase extends JBossWSTest
       DOMResult dr = new DOMResult(); 
       epr.writeTo(dr);
       Node endpointReferenceElement = dr.getNode();
-      System.out.println(DOMUtils.node2String(endpointReferenceElement));
+      Logger.getLogger(this.getClass()).info(DOMUtils.node2String(endpointReferenceElement));
       assertMetaData(endpointReferenceElement);
       assertRefParam(endpointReferenceElement, PARAM1_QNAME, "Hello");
       assertRefParam(endpointReferenceElement, PARAM2_QNAME, "World");
@@ -99,7 +100,7 @@ public final class EndpointReferenceBuilderTestCase extends JBossWSTest
       DOMResult dr = new DOMResult(); 
       epr.writeTo(dr);
       Node endpointReferenceElement = dr.getNode();
-      System.out.println(DOMUtils.node2String(endpointReferenceElement));
+      Logger.getLogger(this.getClass()).info(DOMUtils.node2String(endpointReferenceElement));
       assertMetaData(endpointReferenceElement);
       assertRefParam(endpointReferenceElement, PARAM1_QNAME, "Hello");
       assertRefParam(endpointReferenceElement, PARAM2_QNAME, "World");
