@@ -81,6 +81,8 @@ public class JBossWSTestHelper
    private static String testResourcesDir;
    private static Process appclientProcess;
    private static OutputStream appclientOutput;
+   private static CopyJob appclientOutTask;
+   private static CopyJob appclientErrTask;
    
    private static synchronized Deployer getDeployer()
    {
@@ -145,24 +147,26 @@ public class JBossWSTestHelper
             }
             appclientProcess = new ProcessBuilder().command(args).start();
          }
-         final CopyJob inputStreamJob = new CopyJob(appclientProcess.getInputStream(),
-               appclientOS == null ? new TeeOutputStream(appclientOutput, System.out) : new TeeOutputStream(appclientOutput, System.out, appclientOS));
-         final CopyJob errorStreamJob = new CopyJob(appclientProcess.getErrorStream(), System.err);
-         // unfortunately the following threads are needed because of Windows behavior
-         System.out.println("Appclient output stream:");
-         new Thread(inputStreamJob).start();
-         new Thread(errorStreamJob).start();
-         int countOfAttempts = 0;
-         final int maxCountOfAttempts = 30; // max wait time: 30 seconds
-         while (!appclientOutput.toString().contains("Deployed \"" + earName + "\""))
-         {
-            Thread.sleep(1000);
-            if (countOfAttempts++ == maxCountOfAttempts)
-            {
-               throw new RuntimeException("Cannot deploy " + appclientFullName + " to appclient");
-            }
+         // appclient out
+         if (appclientOutTask != null) {
+            appclientOutTask.kill();
          }
+         appclientOutTask = new CopyJob(appclientProcess.getInputStream(),
+               appclientOS == null ? new TeeOutputStream(appclientOutput, System.out) : new TeeOutputStream(appclientOutput, System.out, appclientOS));
+         // appclient err
+         if (appclientErrTask != null) {
+            appclientErrTask.kill();
+         }
+         appclientErrTask = new CopyJob(appclientProcess.getErrorStream(), System.err);
+         // unfortunately the following threads are needed because of Windows behavior
+         new Thread(appclientOutTask).start();
+         new Thread(appclientErrTask).start();
+         final String patternToMatch = "Deployed \"" + earName + "\"";
+         final String errorMessage = "Cannot deploy " + appclientFullName + " to appclient";
+         awaitOutput(patternToMatch, errorMessage);
+         System.out.println("-----------------");
          System.out.println("appclient started");
+         System.out.println("-----------------");
       }
       return appclientProcess;
    }
@@ -175,27 +179,39 @@ public class JBossWSTestHelper
       if (DEPLOY_PROCESS_ENABLED)
       {
          final int sharpIndex = archive.indexOf('#');
+         final String earName = archive.substring(0, sharpIndex);
+         final String appclientFullName = getArchiveFile(earName).getParent() + FS + archive;
          final File touchFile = new File(JBOSS_HOME + FS + "bin" + FS + archive.substring(sharpIndex + 1) + ".kill");
          touchFile.createNewFile();
-         appclientProcess.waitFor();
-         /*
-         int countOfAttempts = 0;
-         final int maxCountOfAttempts = 30; // max wait time: 30 seconds
-         while (!appclientOutput.toString().contains("stopped in"))
+         final String patternToMatch = "stopped in";
+         final String errorMessage = "Cannot undeploy " + appclientFullName + " from appclient";
+         try
          {
-            Thread.sleep(1000);
-            if (countOfAttempts++ == maxCountOfAttempts)
-            {
-               throw new RuntimeException("Cannot stop appclient");
-            }
+            awaitOutput(patternToMatch, errorMessage);
          }
-         */
-         appclientProcess = null;
-         touchFile.delete();
+         finally
+         {
+            touchFile.delete();
+         }
+         System.out.println("-----------------");
          System.out.println("appclient stopped");
+         System.out.println("-----------------");
       }
    }
 
+   private static void awaitOutput(final String patternToMatch, final String errorMessage) throws InterruptedException {
+      int countOfAttempts = 0;
+      final int maxCountOfAttempts = 120; // max wait time: 2 minutes
+      while (!appclientOutput.toString().contains(patternToMatch))
+      {
+         Thread.sleep(1000);
+         if (countOfAttempts++ == maxCountOfAttempts)
+         {
+            throw new RuntimeException(errorMessage);
+         }
+      }
+   }
+   
    public static boolean isTargetJBoss7()
    {
        String target = getIntegrationTarget();
