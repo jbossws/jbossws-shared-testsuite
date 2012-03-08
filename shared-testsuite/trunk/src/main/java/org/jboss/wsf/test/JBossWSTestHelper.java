@@ -69,6 +69,8 @@ public class JBossWSTestHelper
    private static final String SYSPROP_JBOSS_BIND_ADDRESS = "jboss.bind.address";
    private static final String SYSPROP_TEST_ARCHIVE_DIRECTORY = "test.archive.directory";
    private static final String SYSPROP_TEST_RESOURCES_DIRECTORY = "test.resources.directory";
+   private static final String TEST_USERNAME = "test.username";
+   private static final String TEST_PASSWORD = "test.password";
    private static final boolean DEPLOY_PROCESS_ENABLED = !Boolean.getBoolean("disable.test.archive.deployment");
    private static Deployer DEPLOYER;
 
@@ -407,6 +409,22 @@ public class JBossWSTestHelper
       return testResourcesDir;
    }
    
+   public static String getTestUsername() {
+      String prop = System.getProperty(TEST_USERNAME);
+      if (prop == null || "".equals(prop)) {
+         prop = "kermit";
+      }
+      return prop; 
+   }
+
+   public static String getTestPassword() {
+      String prop = System.getProperty(TEST_PASSWORD);
+      if (prop == null || "".equals(prop)) {
+         prop = "thefrog";
+      }
+      return prop; 
+   }
+
    public static void addSecurityDomain(String name, Map<String,String> authenticationOptions) throws Exception
    {
       getDeployer().addSecurityDomain(name, authenticationOptions);
