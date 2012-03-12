@@ -30,9 +30,12 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.management.MBeanServerConnection;
 import javax.management.remote.JMXConnectorFactory;
@@ -81,10 +84,15 @@ public class JBossWSTestHelper
    private static String implVersion;
    private static String testArchiveDir;
    private static String testResourcesDir;
-   private static Process appclientProcess;
-   private static OutputStream appclientOutput;
-   private static CopyJob appclientOutTask;
-   private static CopyJob appclientErrTask;
+   private static Map<String, AppclientProcess> appclients = new HashMap<String, JBossWSTestHelper.AppclientProcess>();
+   private static ExecutorService es = Executors.newCachedThreadPool();
+   
+   private static class AppclientProcess {
+      public Process process;
+      public CopyJob outTask;
+      public CopyJob errTask;
+      public OutputStream output;
+   }
    
    private static synchronized Deployer getDeployer()
    {
@@ -132,10 +140,11 @@ public class JBossWSTestHelper
          final String appclientName = archive.substring(sharpIndex + 1);
          final String appclientFullName = getArchiveFile(earName).getParent() + FS + archive;
          final String touchFile = JBOSS_HOME + FS + "bin" + FS + appclientName + ".kill";
-         appclientOutput = new ByteArrayOutputStream();
+         AppclientProcess ap = new AppclientProcess();
+         ap.output = new ByteArrayOutputStream();
          if (appclientOS == null)
          {
-            appclientProcess = new ProcessBuilder().command(appclientScript, appclientFullName, touchFile).start();
+            ap.process = new ProcessBuilder().command(appclientScript, appclientFullName, touchFile).start();
          }
          else
          {
@@ -147,30 +156,26 @@ public class JBossWSTestHelper
             {
                args.add(appclientArg);
             }
-            appclientProcess = new ProcessBuilder().command(args).start();
+            ap.process = new ProcessBuilder().command(args).start();
          }
          // appclient out
-         if (appclientOutTask != null) {
-            appclientOutTask.kill();
-         }
-         appclientOutTask = new CopyJob(appclientProcess.getInputStream(),
-               appclientOS == null ? new TeeOutputStream(appclientOutput, System.out) : new TeeOutputStream(appclientOutput, System.out, appclientOS));
+         ap.outTask = new CopyJob(ap.process.getInputStream(),
+               appclientOS == null ? new TeeOutputStream(ap.output, System.out) : new TeeOutputStream(ap.output, System.out, appclientOS));
          // appclient err
-         if (appclientErrTask != null) {
-            appclientErrTask.kill();
-         }
-         appclientErrTask = new CopyJob(appclientProcess.getErrorStream(), System.err);
+         ap.errTask = new CopyJob(ap.process.getErrorStream(), System.err);
          // unfortunately the following threads are needed because of Windows behavior
-         new Thread(appclientOutTask).start();
-         new Thread(appclientErrTask).start();
+         es.submit(ap.outTask);
+         es.submit(ap.errTask);
          final String patternToMatch = "Deployed \"" + earName + "\"";
          final String errorMessage = "Cannot deploy " + appclientFullName + " to appclient";
-         awaitOutput(patternToMatch, errorMessage);
+         awaitOutput(ap.output, patternToMatch, errorMessage);
          System.out.println("-----------------");
          System.out.println("appclient started");
          System.out.println("-----------------");
+         appclients.put(archive, ap);
+         return ap.process;
       }
-      return appclientProcess;
+      return null;
    }
 
    /** Undeploy the given archive from the appclient
@@ -180,6 +185,7 @@ public class JBossWSTestHelper
    {
       if (DEPLOY_PROCESS_ENABLED)
       {
+         AppclientProcess ap = appclients.get(archive);
          final int sharpIndex = archive.indexOf('#');
          final String earName = archive.substring(0, sharpIndex);
          final String appclientFullName = getArchiveFile(earName).getParent() + FS + archive;
@@ -189,22 +195,26 @@ public class JBossWSTestHelper
          final String errorMessage = "Cannot undeploy " + appclientFullName + " from appclient";
          try
          {
-            awaitOutput(patternToMatch, errorMessage);
+            awaitOutput(ap.output, patternToMatch, errorMessage);
          }
          finally
          {
             touchFile.delete();
+            ap.outTask.kill();
+            ap.errTask.kill();
+            ap.process.destroy();
+            appclients.remove(archive);
          }
          System.out.println("-----------------");
          System.out.println("appclient stopped");
          System.out.println("-----------------");
       }
    }
-
-   private static void awaitOutput(final String patternToMatch, final String errorMessage) throws InterruptedException {
+   
+   private static void awaitOutput(final OutputStream os, final String patternToMatch, final String errorMessage) throws InterruptedException {
       int countOfAttempts = 0;
       final int maxCountOfAttempts = 120; // max wait time: 2 minutes
-      while (!appclientOutput.toString().contains(patternToMatch))
+      while (!os.toString().contains(patternToMatch))
       {
          Thread.sleep(1000);
          if (countOfAttempts++ == maxCountOfAttempts)
