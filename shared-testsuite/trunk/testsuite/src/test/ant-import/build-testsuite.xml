@@ -49,15 +49,8 @@
 
     <!-- appclient patch -->
     <copy
-      file="${jboss.home}/appclient/configuration/appclient.xml"
-      tofile="${jboss.home}/appclient/configuration/appclient.xml.orig"
-      failonerror="false"
-      overwrite="false"
-      verbose="true"
-    />
-    <copy
-      file="${basedir}/tests/etc/appclient/${jbossws.integration.target}/appclient.xml"
-      tofile="${jboss.home}/appclient/configuration/appclient.xml"
+      file="${basedir}/tests/etc/appclient/${jbossws.integration.target}/appclient-ws.xml"
+      tofile="${jboss.home}/appclient/configuration/appclient-ws.xml"
       failonerror="false"
       overwrite="true"
       verbose="true"
