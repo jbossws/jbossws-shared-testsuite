@@ -30,6 +30,7 @@ import javax.xml.rpc.ServiceFactory;
 
 import junit.framework.Test;
 
+import org.jboss.wsf.test.CleanupOperation;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -48,7 +49,12 @@ public class OneWayTestCase extends JBossWSTest
 
    public static Test suite()
    {
-      return new JBossWSTestSetup(OneWayTestCase.class, "jaxrpc-samples-oneway.war, jaxrpc-samples-oneway-client.jar");
+      return new JBossWSTestSetup(OneWayTestCase.class, "jaxrpc-samples-oneway.war, jaxrpc-samples-oneway-client.jar", new CleanupOperation() {
+         @Override
+         public void cleanUp() {
+            port = null;
+         }
+      });
    }
 
    protected void setUp() throws Exception

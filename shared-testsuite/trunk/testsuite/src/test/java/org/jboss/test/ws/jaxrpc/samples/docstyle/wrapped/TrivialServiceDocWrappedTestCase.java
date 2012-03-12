@@ -30,6 +30,7 @@ import javax.xml.rpc.ServiceFactory;
 
 import junit.framework.Test;
 
+import org.jboss.wsf.test.CleanupOperation;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -47,7 +48,12 @@ public class TrivialServiceDocWrappedTestCase extends JBossWSTest
 
    public static Test suite()
    {
-      return new JBossWSTestSetup(TrivialServiceDocWrappedTestCase.class, "jaxrpc-samples-docstyle-wrapped.war, jaxrpc-samples-docstyle-wrapped-client.jar");
+      return new JBossWSTestSetup(TrivialServiceDocWrappedTestCase.class, "jaxrpc-samples-docstyle-wrapped.war, jaxrpc-samples-docstyle-wrapped-client.jar", new CleanupOperation() {
+         @Override
+         public void cleanUp() {
+            port = null;
+         }
+      });
    }
 
    protected void setUp() throws Exception

@@ -23,6 +23,7 @@ package org.jboss.test.ws.jaxws.samples.swaref;
 
 import junit.framework.Test;
 
+import org.jboss.wsf.test.CleanupOperation;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -46,11 +47,22 @@ public class SWARefTestCase extends JBossWSTest
    private QName wrappedServiceQName = new QName("http://swaref.samples.jaxws.ws.test.jboss.org/", "WrappedEndpointService");
    private QName rpcLitServiceQName = new QName("http://swaref.samples.jaxws.ws.test.jboss.org/", "RpcLitEndpointService");
 
-   private static DataHandler data = new DataHandler("Client data", "text/plain");
+   private static DataHandler data;
 
    public static Test suite()
    {
-      return new JBossWSTestSetup(SWARefTestCase.class, "jaxws-samples-swaref.jar");
+      return new JBossWSTestSetup(SWARefTestCase.class, "jaxws-samples-swaref.jar", new CleanupOperation() {
+         @Override
+         public void cleanUp() {
+            data = null;
+         }
+      });
+   }
+   
+   protected void setUp() throws Exception {
+      if (data == null) {
+         data = new DataHandler("Client data", "text/plain");
+      }
    }
 
    public void testBeanAnnotationWithBare() throws Exception

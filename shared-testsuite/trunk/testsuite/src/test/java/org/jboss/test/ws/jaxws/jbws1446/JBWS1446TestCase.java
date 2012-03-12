@@ -21,7 +21,6 @@
  */
 package org.jboss.test.ws.jaxws.jbws1446;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.xml.namespace.QName;
@@ -42,26 +41,18 @@ import org.jboss.wsf.test.JBossWSTestSetup;
  */
 public class JBWS1446TestCase extends JBossWSTest
 {
-   private static EndpointInterface port;
-   
    public static Test suite()
    {
       return new JBossWSTestSetup(JBWS1446TestCase.class, "jaxws-jbws1446.jar");
    }
 
-   public void setUp() throws MalformedURLException
-   {
-      if (port == null)
-      {
-         URL wsdlURL = new URL("http://" + getServerHost() + ":8080/jaxws-jbws1446/EJB3Bean?wsdl");
-         QName serviceName = new QName("http://jbws1446.jaxws.ws.test.jboss.org/", "EJB3BeanService");
-         Service service = Service.create(wsdlURL, serviceName);
-         port = service.getPort(EndpointInterface.class);
-      }
-   }
-
    public void testObjectAccess() throws Exception
    {
+      URL wsdlURL = new URL("http://" + getServerHost() + ":8080/jaxws-jbws1446/EJB3Bean?wsdl");
+      QName serviceName = new QName("http://jbws1446.jaxws.ws.test.jboss.org/", "EJB3BeanService");
+      Service service = Service.create(wsdlURL, serviceName);
+      EndpointInterface port = service.getPort(EndpointInterface.class);
+      
       Object hello = port.helloObject("hello");
       assertEquals("hello", hello);
    }

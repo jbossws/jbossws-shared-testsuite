@@ -40,28 +40,19 @@ import org.jboss.wsf.test.JBossWSTestSetup;
 public class JBWS981TestCase extends JBossWSTest
 {
 
-   private static EndpointInterface port;
-
    public static Test suite()
    {
       return new JBossWSTestSetup(JBWS981TestCase.class, "jaxws-jbws981.jar");
    }
 
-   protected void setUp() throws Exception
-   {
-      super.setUp();
-      if (port == null)
-      {
-         URL wsdlURL = new URL("http://" + getServerHost() + ":8080/jaxws-jbws981/EndpointService/EJB3Bean?wsdl");
-         QName serviceName = new QName("http://www.jboss.org/test/ws/jaxws/jbws981", "EndpointService");
-         Service.create(wsdlURL, serviceName);
-         Service service = Service.create(wsdlURL, serviceName);
-         port = (EndpointInterface)service.getPort(EndpointInterface.class);
-      }
-   }
-
    public void testCall() throws Exception
    {
+      URL wsdlURL = new URL("http://" + getServerHost() + ":8080/jaxws-jbws981/EndpointService/EJB3Bean?wsdl");
+      QName serviceName = new QName("http://www.jboss.org/test/ws/jaxws/jbws981", "EndpointService");
+      Service.create(wsdlURL, serviceName);
+      Service service = Service.create(wsdlURL, serviceName);
+      EndpointInterface port = (EndpointInterface)service.getPort(EndpointInterface.class);
+      
       String message = "Web service mapped to virtual host.";
       assertEquals("Web service mapped to virtual host.", port.hello(message));
    }

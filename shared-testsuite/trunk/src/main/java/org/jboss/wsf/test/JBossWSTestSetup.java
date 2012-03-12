@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2011, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2012, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -37,7 +37,9 @@ import javax.naming.NamingException;
 import javax.security.sasl.SaslException;
 
 import junit.extensions.TestSetup;
+import junit.framework.Protectable;
 import junit.framework.Test;
+import junit.framework.TestResult;
 import junit.framework.TestSuite;
 
 import org.jboss.logging.Logger;
@@ -62,11 +64,18 @@ public class JBossWSTestSetup extends TestSetup
    private ClassLoader originalClassLoader;
    private Map<String, Map<String, String>> securityDomains;
    private boolean defaultSecurityDomainRequirement = false;
+   private CleanupOperation cleanupOp;
 
    public JBossWSTestSetup(Class<?> testClass, String archiveList)
    {
       super(new TestSuite(testClass));
       getArchiveArray(archiveList);
+   }
+   
+   public JBossWSTestSetup(Class<?> testClass, String archiveList, CleanupOperation cleanupOp)
+   {
+      this(testClass, archiveList);
+      this.cleanupOp = cleanupOp;
    }
    
    public JBossWSTestSetup(Class<?> testClass, String archiveList, OutputStream appclientOutputStream)
@@ -80,6 +89,12 @@ public class JBossWSTestSetup extends TestSetup
    {
       this(testClass, archiveList);
       setDefaultSecurityDomainRequirement(requiresDefaultSecurityDomain);
+   }
+
+   public JBossWSTestSetup(Class<?> testClass, String archiveList, boolean requiresDefaultSecurityDomain, CleanupOperation cleanupOp)
+   {
+      this(testClass, archiveList, requiresDefaultSecurityDomain);
+      this.cleanupOp = cleanupOp;
    }
 
    public JBossWSTestSetup(Test test, String archiveList)
@@ -97,6 +112,29 @@ public class JBossWSTestSetup extends TestSetup
    public JBossWSTestSetup(Test test)
    {
       super(test);
+   }
+   
+   /**
+    * Override junit.extensions.TestSetup:run(TestResult result) to call cleanup operation
+    * before tearing down the whole test setup. Required for allowing tests to perform
+    * final cleanup of static references.
+    */
+   @Override
+   public void run(final TestResult result)
+   {
+      Protectable p = new Protectable()
+      {
+         public void protect() throws Exception
+         {
+            setUp();
+            basicRun(result);
+            if (cleanupOp != null) {
+               cleanupOp.cleanUp();
+            }
+            tearDown();
+         }
+      };
+      result.runProtected(this, p);
    }
 
    public File getArchiveFile(String archive)

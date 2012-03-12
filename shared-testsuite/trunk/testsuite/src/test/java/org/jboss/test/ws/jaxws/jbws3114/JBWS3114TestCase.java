@@ -38,23 +38,16 @@ public class JBWS3114TestCase extends JBossWSTest
 
    public final String TARGET_ENDPOINT_ADDRESS = "http://" + getServerHost() + ":8080/jaxws-jbws3114";
 
-   private static Endpoint port;
-
    public static Test suite() throws Exception
    {
       return new JBossWSTestSetup(JBWS3114TestCase.class, "jaxws-jbws3114.war");
    }
 
-   public void setUp() throws Exception
-   {
-      super.setUp();
-      URL wsdlURL = new URL(TARGET_ENDPOINT_ADDRESS + "?wsdl");
-      EndpointService service = new EndpointService(wsdlURL);
-      port = service.getEndpointPort();
-   }
-
    public void testConfigureTimeout() throws Exception
    {
+      URL wsdlURL = new URL(TARGET_ENDPOINT_ADDRESS + "?wsdl");
+      EndpointService service = new EndpointService(wsdlURL);
+      Endpoint port = service.getEndpointPort();
       String response = port.echo("testjbws3114");
       assertEquals("testjbws3114", response);
       ((BindingProvider) port).getRequestContext().put("javax.xml.ws.client.connectionTimeout", "6000");

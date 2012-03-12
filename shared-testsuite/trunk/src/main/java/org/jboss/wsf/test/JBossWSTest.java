@@ -36,11 +36,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.management.MBeanServerConnection;
-import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -58,11 +56,11 @@ import org.w3c.dom.NodeList;
  *
  * @author <a href="mailto:tdiesler@redhat.com">Thomas Diesler</a>
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
+ * @author <a href="mailto:alessio.soldano@jboss.com">Alessio Soldano</a>
  */
 public abstract class JBossWSTest extends TestCase
 {
    protected static Logger log = Logger.getLogger(JBossWSTest.class.getName());
-   //private static JBossWSTestHelper delegate = new JBossWSTestHelper();
 
    public JBossWSTest()
    {
@@ -72,7 +70,7 @@ public abstract class JBossWSTest extends TestCase
    {
       super(name);
    }
-
+   
    /**
     * Execute <b>command</b> in separate process.
     * @param command command to execute
@@ -130,8 +128,7 @@ public abstract class JBossWSTest extends TestCase
       if (command == null)
          throw new NullPointerException( "Command cannot be null" );
 
-      System.out.println("Executing command: " + command);
-      log.debug("Executing command: " + command);
+      log.info("Executing command: " + command);
 
       StringTokenizer st = new StringTokenizer(command, " \t\r");
       List<String> tokenizedCommand = new LinkedList<String>();

@@ -38,6 +38,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import junit.framework.Test;
 
+import org.jboss.wsf.test.CleanupOperation;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -57,7 +58,12 @@ public class AttachmentProxyTestCase extends JBossWSTest
    /** Deploy the test ear */
    public static Test suite() throws Exception
    {
-      return new JBossWSTestSetup(AttachmentProxyTestCase.class, "jaxrpc-samples-swa.war, jaxrpc-samples-swa-client.jar");
+      return new JBossWSTestSetup(AttachmentProxyTestCase.class, "jaxrpc-samples-swa.war, jaxrpc-samples-swa-client.jar", new CleanupOperation() {
+         @Override
+         public void cleanUp() {
+            port = null;
+         }
+      });
    }
 
    protected void setUp() throws Exception

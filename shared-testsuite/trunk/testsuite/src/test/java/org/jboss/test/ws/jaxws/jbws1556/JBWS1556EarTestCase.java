@@ -29,6 +29,7 @@ import javax.xml.ws.Service;
 
 import junit.framework.Test;
 
+import org.jboss.wsf.test.CleanupOperation;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -46,7 +47,12 @@ public class JBWS1556EarTestCase extends JBossWSTest
    
    public static Test suite()
    {
-      return new JBossWSTestSetup(JBWS1556EarTestCase.class, "jaxws-jbws1556.ear");
+      return new JBossWSTestSetup(JBWS1556EarTestCase.class, "jaxws-jbws1556.ear", new CleanupOperation() {
+         @Override
+         public void cleanUp() {
+            port = null;
+         }
+      });
    }
 
    public void setUp() throws MalformedURLException
