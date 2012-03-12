@@ -60,7 +60,7 @@ public class JBossWSTestSetup extends TestSetup
    private OutputStream appclientOutputStream;
    private String appclientArg;
    private ClassLoader originalClassLoader;
-   private Map<String, Map<String, String>> securityDomains = new HashMap<String, Map<String,String>>();
+   private Map<String, Map<String, String>> securityDomains;
    private boolean defaultSecurityDomainRequirement = false;
 
    public JBossWSTestSetup(Class<?> testClass, String archiveList)
@@ -137,7 +137,7 @@ public class JBossWSTestSetup extends TestSetup
       String integrationTarget = JBossWSTestHelper.getIntegrationTarget();
       log.debug("Integration target: " + integrationTarget);
       
-      if (!securityDomains.isEmpty())
+      if (securityDomains != null && !securityDomains.isEmpty())
       {
          for (String key : securityDomains.keySet())
          {
@@ -249,7 +249,7 @@ public class JBossWSTestSetup extends TestSetup
       {
          Thread.currentThread().setContextClassLoader(originalClassLoader);
          
-         if (!securityDomains.isEmpty())
+         if (securityDomains != null && !securityDomains.isEmpty())
          {
             for (String key : securityDomains.keySet())
             {
@@ -275,6 +275,9 @@ public class JBossWSTestSetup extends TestSetup
    
    public void addSecurityDomainRequirement(String securityDomainName, Map<String, String> authenticationOptions)
    {
+      if (securityDomains == null) {
+         securityDomains = new HashMap<String, Map<String,String>>();
+      }
       securityDomains.put(securityDomainName, authenticationOptions);
    }
    
