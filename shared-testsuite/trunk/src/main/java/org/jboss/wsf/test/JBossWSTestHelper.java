@@ -23,6 +23,7 @@ package org.jboss.wsf.test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Inet6Address;
@@ -84,6 +85,7 @@ public class JBossWSTestHelper
    private static String implVersion;
    private static String testArchiveDir;
    private static String testResourcesDir;
+   private static String appclientOutputDir;
    private static Map<String, AppclientProcess> appclients = new HashMap<String, JBossWSTestHelper.AppclientProcess>();
    private static ExecutorService es = Executors.newCachedThreadPool();
    
@@ -92,6 +94,7 @@ public class JBossWSTestHelper
       public CopyJob outTask;
       public CopyJob errTask;
       public OutputStream output;
+      public OutputStream log;
    }
    
    private static synchronized Deployer getDeployer()
@@ -140,6 +143,16 @@ public class JBossWSTestHelper
          final String appclientName = archive.substring(sharpIndex + 1);
          final String appclientFullName = getArchiveFile(earName).getParent() + FS + archive;
          final String touchFile = JBOSS_HOME + FS + "bin" + FS + appclientName + ".kill";
+         final String appclientOutputDirName = System.getProperty("appclient.output.dir");
+         if (appclientOutputDirName == null)
+         {
+            throw new IllegalStateException("System property appclient.output.dir not configured");
+         }
+         final File appclientOutputDir = new File(appclientOutputDirName);
+         if (!appclientOutputDir.exists())
+         {
+            appclientOutputDir.mkdirs();
+         }
          AppclientProcess ap = new AppclientProcess();
          ap.output = new ByteArrayOutputStream();
          if (appclientOS == null)
@@ -158,20 +171,18 @@ public class JBossWSTestHelper
             }
             ap.process = new ProcessBuilder().command(args).start();
          }
+         ap.log = new FileOutputStream(new File(getAppclientOutputDir(), appclientName + ".log-" + System.currentTimeMillis()));
          // appclient out
          ap.outTask = new CopyJob(ap.process.getInputStream(),
-               appclientOS == null ? new TeeOutputStream(ap.output, System.out) : new TeeOutputStream(ap.output, System.out, appclientOS));
+               appclientOS == null ? new TeeOutputStream(ap.output, ap.log) : new TeeOutputStream(ap.output, ap.log, appclientOS));
          // appclient err
-         ap.errTask = new CopyJob(ap.process.getErrorStream(), System.err);
+         ap.errTask = new CopyJob(ap.process.getErrorStream(), ap.log);
          // unfortunately the following threads are needed because of Windows behavior
          es.submit(ap.outTask);
          es.submit(ap.errTask);
          final String patternToMatch = "Deployed \"" + earName + "\"";
          final String errorMessage = "Cannot deploy " + appclientFullName + " to appclient";
          awaitOutput(ap.output, patternToMatch, errorMessage);
-         System.out.println("-----------------");
-         System.out.println("appclient started");
-         System.out.println("-----------------");
          appclients.put(archive, ap);
          return ap.process;
       }
@@ -202,13 +213,32 @@ public class JBossWSTestHelper
             touchFile.delete();
             ap.outTask.kill();
             ap.errTask.kill();
+            ap.log.close();
             ap.process.destroy();
             appclients.remove(archive);
          }
-         System.out.println("-----------------");
-         System.out.println("appclient stopped");
-         System.out.println("-----------------");
       }
+   }
+
+   private static String getAppclientOutputDir()
+   {
+      if (appclientOutputDir == null)
+      {
+         appclientOutputDir = System.getProperty("appclient.output.dir");
+         if (appclientOutputDir == null)
+         {
+            throw new IllegalStateException("System property appclient.output.dir not configured");
+         }
+         final File appclientOutputDirectory = new File(appclientOutputDir);
+         if (!appclientOutputDirectory.exists())
+         {
+            if (!appclientOutputDirectory.mkdirs())
+            {
+               throw new IllegalStateException("Unable to create directory " + appclientOutputDir);
+            }
+         }
+      }
+      return appclientOutputDir;
    }
    
    private static void awaitOutput(final OutputStream os, final String patternToMatch, final String errorMessage) throws InterruptedException {

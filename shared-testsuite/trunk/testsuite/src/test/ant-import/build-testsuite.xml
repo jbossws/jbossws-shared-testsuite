@@ -571,6 +571,7 @@
       
       <sysproperty key="jdk.home" value="${env.JAVA_HOME}"/>
       <sysproperty key="log4j.output.dir" value="${tests.output.dir}"/>
+      <sysproperty key="appclient.output.dir" value="${tests.output.dir}/appclient-logs"/>
       <sysproperty key="client.scenario" value="${client.scenario}"/>
       <sysproperty key="interop" value="${interop}"/>
       <sysproperty key="java.endorsed.dirs" value="${endorsed.dirs}"/>
@@ -626,6 +627,7 @@
       
       <sysproperty key="jdk.home" value="${env.JAVA_HOME}"/>
       <sysproperty key="log4j.output.dir" value="${tests.output.dir}"/>
+      <sysproperty key="appclient.output.dir" value="${tests.output.dir}/appclient-logs"/>
       <sysproperty key="client.scenario" value="${client.scenario}"/>
       <sysproperty key="interop" value="${interop}"/>
       <sysproperty key="java.endorsed.dirs" value="${endorsed.dirs}"/>
