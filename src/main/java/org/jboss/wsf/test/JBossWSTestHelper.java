@@ -157,12 +157,13 @@ public class JBossWSTestHelper
          ap.output = new ByteArrayOutputStream();
          if (appclientOS == null)
          {
-            ap.process = new ProcessBuilder().command(appclientScript, appclientFullName, touchFile).start();
+            ap.process = new ProcessBuilder().command(appclientScript, "--appclient-config=appclient-ws.xml", appclientFullName, touchFile).start();
          }
          else
          {
             final List<String> args = new LinkedList<String>();
             args.add(appclientScript);
+            args.add("--appclient-config=appclient-ws.xml");
             args.add(appclientFullName);
             // propagate appclient args
             for (final String appclientArg : appclientArgs)
