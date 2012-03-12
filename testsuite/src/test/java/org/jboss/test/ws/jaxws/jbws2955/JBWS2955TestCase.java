@@ -33,23 +33,16 @@ public class JBWS2955TestCase extends JBossWSTest
    
    public final String TARGET_ENDPOINT_ADDRESS = "http://" + getServerHost() + ":8080/jaxws-jbws2955";
 
-   private static Endpoint port;
-
    public static Test suite() throws Exception
    {
       return new JBossWSTestSetup(JBWS2955TestCase.class, "jaxws-jbws2955.war");
    }
 
-   public void setUp() throws Exception
-   {
-      super.setUp();
-      URL wsdlURL = new URL(TARGET_ENDPOINT_ADDRESS + "?wsdl");
-      EndpointService service = new EndpointService(wsdlURL);
-      port = service.getEndpointPort();
-   }
-
    public void testCall() throws Exception
    {     
+      URL wsdlURL = new URL(TARGET_ENDPOINT_ADDRESS + "?wsdl");
+      EndpointService service = new EndpointService(wsdlURL);
+      Endpoint port = service.getEndpointPort();
       
       String response = port.echo("testJBWS2955");
       assertEquals("PutByClientSOAPHandler", response);

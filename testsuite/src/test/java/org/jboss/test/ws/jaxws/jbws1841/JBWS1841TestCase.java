@@ -22,6 +22,8 @@
 package org.jboss.test.ws.jaxws.jbws1841;
 
 import junit.framework.Test;
+
+import org.jboss.wsf.test.CleanupOperation;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -46,7 +48,13 @@ public class JBWS1841TestCase extends JBossWSTest
    private static InitialContext ctx;
    public static Test suite()
    {
-      return new JBossWSTestSetup(JBWS1841TestCase.class, "jaxws-jbws1841.jar");
+      return new JBossWSTestSetup(JBWS1841TestCase.class, "jaxws-jbws1841.jar", new CleanupOperation() {
+         @Override
+         public void cleanUp() {
+            port = null;
+            remote = null;
+         }
+      });
    }
 
    protected void setUp() throws Exception

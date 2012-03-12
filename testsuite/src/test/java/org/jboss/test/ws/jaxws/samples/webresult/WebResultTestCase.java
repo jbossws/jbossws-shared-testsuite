@@ -22,7 +22,6 @@
 package org.jboss.test.ws.jaxws.samples.webresult;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.net.URL;
 
 import javax.xml.namespace.QName;
@@ -35,6 +34,7 @@ import javax.xml.ws.Service;
 
 import junit.framework.Test;
 
+import org.jboss.wsf.test.CleanupOperation;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -52,7 +52,12 @@ public class WebResultTestCase extends JBossWSTest
 
    public static Test suite()
    {
-      return new JBossWSTestSetup(WebResultTestCase.class, "jaxws-samples-webresult.war");
+      return new JBossWSTestSetup(WebResultTestCase.class, "jaxws-samples-webresult.war", new CleanupOperation() {
+         @Override
+         public void cleanUp() {
+            port = null;
+         }
+      });
    }
 
    public void setUp() throws Exception

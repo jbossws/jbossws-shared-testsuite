@@ -38,6 +38,7 @@ import javax.xml.ws.Service;
 
 import junit.framework.Test;
 
+import org.jboss.wsf.test.CleanupOperation;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -55,7 +56,13 @@ public class JBWS1797TestCase extends JBossWSTest
 
    public static Test suite()
    {
-      return new JBossWSTestSetup(JBWS1797TestCase.class, "jaxws-jbws1797.war");
+      return new JBossWSTestSetup(JBWS1797TestCase.class, "jaxws-jbws1797.war", new CleanupOperation() {
+         @Override
+         public void cleanUp() {
+            port = null;
+            wsdlURL = null;
+         }
+      });
    }
 
    @Override

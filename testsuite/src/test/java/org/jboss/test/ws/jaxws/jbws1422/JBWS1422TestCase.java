@@ -28,6 +28,7 @@ import javax.xml.ws.Service;
 
 import junit.framework.Test;
 
+import org.jboss.wsf.test.CleanupOperation;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -44,7 +45,12 @@ public class JBWS1422TestCase extends JBossWSTest
 
    public static Test suite()
    {
-      return new JBossWSTestSetup(JBWS1422TestCase.class, "jaxws-jbws1422.jar");
+      return new JBossWSTestSetup(JBWS1422TestCase.class, "jaxws-jbws1422.jar", new CleanupOperation() {
+         @Override
+         public void cleanUp() {
+            port = null;
+         }
+      });
    }
 
    @Override

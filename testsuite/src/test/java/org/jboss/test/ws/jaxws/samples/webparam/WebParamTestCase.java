@@ -21,7 +21,6 @@
  */
 package org.jboss.test.ws.jaxws.samples.webparam;
 
-import java.io.File;
 import java.net.URL;
 
 import javax.xml.namespace.QName;
@@ -30,6 +29,7 @@ import javax.xml.ws.Service;
 
 import junit.framework.Test;
 
+import org.jboss.wsf.test.CleanupOperation;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -47,7 +47,12 @@ public class WebParamTestCase extends JBossWSTest
 
    public static Test suite()
    {
-      return new JBossWSTestSetup(WebParamTestCase.class, "jaxws-samples-webparam.war");
+      return new JBossWSTestSetup(WebParamTestCase.class, "jaxws-samples-webparam.war", new CleanupOperation() {
+         @Override
+         public void cleanUp() {
+            port = null;
+         }
+      });
    }
 
    public void setUp() throws Exception

@@ -36,19 +36,19 @@ import org.jboss.wsf.test.JBossWSTest;
  */
 public final class JBWS2917TestCase extends JBossWSTest
 {
-   private static final String XML_SOURCE = "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>\n" +
-   "<EndpointReference xmlns='http://www.w3.org/2005/08/addressing'>\n" +
-   "  <Address>http://localhost:8080/jaxws-endpointReference</Address>\n" +
-   "  <Metadata\n" + 
-   "    wsdli:wsdlLocation='http://org.jboss.ws/endpointReference http://localhost:8080/jaxws-endpointReference?wsdl'\n" +
-   "    xmlns:wsdli='http://www.w3.org/ns/wsdl-instance'>\n" +
-   "    <wsam:InterfaceName xmlns:wsam='http://www.w3.org/2005/08/addressing' xmlns:wsns='http://org.jboss.ws/endpointReference'>wsns:Endpoint</wsam:InterfaceName>\n" +
-   "    <wsam:ServiceName xmlns:wsam='http://www.w3.org/2005/08/addressing' xmlns:wsns='http://org.jboss.ws/endpointReference' xmlns='' EndpointName='HelloPort'>wsns:EndpointService</wsam:ServiceName>\n" +
-   "  </Metadata>\n" +
-   "</EndpointReference>\n";
-
    public void testToString() throws Exception
    {
+      String XML_SOURCE = "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>\n" +
+         "<EndpointReference xmlns='http://www.w3.org/2005/08/addressing'>\n" +
+         "  <Address>http://localhost:8080/jaxws-endpointReference</Address>\n" +
+         "  <Metadata\n" + 
+         "    wsdli:wsdlLocation='http://org.jboss.ws/endpointReference http://localhost:8080/jaxws-endpointReference?wsdl'\n" +
+         "    xmlns:wsdli='http://www.w3.org/ns/wsdl-instance'>\n" +
+         "    <wsam:InterfaceName xmlns:wsam='http://www.w3.org/2005/08/addressing' xmlns:wsns='http://org.jboss.ws/endpointReference'>wsns:Endpoint</wsam:InterfaceName>\n" +
+         "    <wsam:ServiceName xmlns:wsam='http://www.w3.org/2005/08/addressing' xmlns:wsns='http://org.jboss.ws/endpointReference' xmlns='' EndpointName='HelloPort'>wsns:EndpointService</wsam:ServiceName>\n" +
+         "  </Metadata>\n" +
+         "</EndpointReference>\n";
+      
       assertTrue("lost xmlns:wsns namespace declaration", this.getXML(XML_SOURCE).indexOf("xmlns:wsns") != -1);
       StreamSource source = new StreamSource(new StringReader(XML_SOURCE));
       EndpointReference epRef = EndpointReference.readFrom(source);

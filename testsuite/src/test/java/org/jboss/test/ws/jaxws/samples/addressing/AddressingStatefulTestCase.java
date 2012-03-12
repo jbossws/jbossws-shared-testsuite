@@ -29,6 +29,7 @@ import javax.xml.ws.soap.AddressingFeature;
 
 import junit.framework.Test;
 
+import org.jboss.wsf.test.CleanupOperation;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -46,7 +47,13 @@ public class AddressingStatefulTestCase extends JBossWSTest
    
    public static Test suite()
    {
-      return new JBossWSTestSetup(AddressingStatefulTestCase.class, "jaxws-samples-wsaddressing.war");
+      return new JBossWSTestSetup(AddressingStatefulTestCase.class, "jaxws-samples-wsaddressing.war", new CleanupOperation() {
+         @Override
+         public void cleanUp() {
+            port1 = null;
+            port2 = null;
+         }
+      });
    }
 
    protected void setUp() throws Exception
