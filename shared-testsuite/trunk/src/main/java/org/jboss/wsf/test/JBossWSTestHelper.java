@@ -21,9 +21,7 @@
  */
 package org.jboss.wsf.test;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Inet6Address;
@@ -31,12 +29,7 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.management.MBeanServerConnection;
 import javax.management.remote.JMXConnectorFactory;
@@ -48,8 +41,6 @@ import javax.xml.ws.Service.Mode;
 import javax.xml.ws.soap.SOAPBinding;
 
 import org.jboss.logging.Logger;
-import org.jboss.ws.common.concurrent.CopyJob;
-import org.jboss.ws.common.io.TeeOutputStream;
 import org.jboss.wsf.spi.SPIProvider;
 import org.jboss.wsf.spi.SPIProviderResolver;
 import org.jboss.wsf.spi.deployer.Deployer;
@@ -65,10 +56,6 @@ public class JBossWSTestHelper
 {
    private static final Logger LOGGER = Logger.getLogger(JBossWSTestHelper.class);
    
-   private static final String JBOSS_HOME = System.getProperty("jboss.home");
-   private static final String FS = System.getProperty("file.separator"); // '/' on unix, '\' on windows
-   private static final String PS = System.getProperty("path.separator"); // ':' on unix, ';' on windows
-   private static final String EXT = ":".equals(PS) ? ".sh" : ".bat";
    private static final String SYSPROP_JBOSSWS_INTEGRATION_TARGET = "jbossws.integration.target";
    private static final String SYSPROP_JBOSS_BIND_ADDRESS = "jboss.bind.address";
    private static final String SYSPROP_TEST_ARCHIVE_DIRECTORY = "test.archive.directory";
@@ -85,18 +72,7 @@ public class JBossWSTestHelper
    private static String implVersion;
    private static String testArchiveDir;
    private static String testResourcesDir;
-   private static String appclientOutputDir;
-   private static Map<String, AppclientProcess> appclients = new HashMap<String, JBossWSTestHelper.AppclientProcess>();
-   private static ExecutorService es = Executors.newCachedThreadPool();
-   
-   private static class AppclientProcess {
-      public Process process;
-      public CopyJob outTask;
-      public CopyJob errTask;
-      public OutputStream output;
-      public OutputStream log;
-   }
-   
+
    private static synchronized Deployer getDeployer()
    {
       //lazy loading of deployer
@@ -137,55 +113,7 @@ public class JBossWSTestHelper
    {
       if (DEPLOY_PROCESS_ENABLED)
       {
-         final int sharpIndex = archive.indexOf('#');
-         final String appclientScript = JBOSS_HOME + FS + "bin" + FS + "appclient" + EXT;
-         final String earName = archive.substring(0, sharpIndex);
-         final String appclientName = archive.substring(sharpIndex + 1);
-         final String appclientFullName = getArchiveFile(earName).getParent() + FS + archive;
-         final String touchFile = JBOSS_HOME + FS + "bin" + FS + appclientName + ".kill";
-         final String appclientOutputDirName = System.getProperty("appclient.output.dir");
-         if (appclientOutputDirName == null)
-         {
-            throw new IllegalStateException("System property appclient.output.dir not configured");
-         }
-         final File appclientOutputDir = new File(appclientOutputDirName);
-         if (!appclientOutputDir.exists())
-         {
-            appclientOutputDir.mkdirs();
-         }
-         AppclientProcess ap = new AppclientProcess();
-         ap.output = new ByteArrayOutputStream();
-         if (appclientOS == null)
-         {
-            ap.process = new ProcessBuilder().command(appclientScript, "--appclient-config=appclient-ws.xml", appclientFullName, touchFile).start();
-         }
-         else
-         {
-            final List<String> args = new LinkedList<String>();
-            args.add(appclientScript);
-            args.add("--appclient-config=appclient-ws.xml");
-            args.add(appclientFullName);
-            // propagate appclient args
-            for (final String appclientArg : appclientArgs)
-            {
-               args.add(appclientArg);
-            }
-            ap.process = new ProcessBuilder().command(args).start();
-         }
-         ap.log = new FileOutputStream(new File(getAppclientOutputDir(), appclientName + ".log-" + System.currentTimeMillis()));
-         // appclient out
-         ap.outTask = new CopyJob(ap.process.getInputStream(),
-               appclientOS == null ? new TeeOutputStream(ap.output, ap.log) : new TeeOutputStream(ap.output, ap.log, appclientOS));
-         // appclient err
-         ap.errTask = new CopyJob(ap.process.getErrorStream(), ap.log);
-         // unfortunately the following threads are needed because of Windows behavior
-         es.submit(ap.outTask);
-         es.submit(ap.errTask);
-         final String patternToMatch = "Deployed \"" + earName + "\"";
-         final String errorMessage = "Cannot deploy " + appclientFullName + " to appclient";
-         awaitOutput(ap.output, patternToMatch, errorMessage);
-         appclients.put(archive, ap);
-         return ap.process;
+         return AppclientHelper.deployAppclient(archive, appclientOS, appclientArgs);
       }
       return null;
    }
@@ -193,68 +121,14 @@ public class JBossWSTestHelper
    /** Undeploy the given archive from the appclient
     * Archive name is always in form archive.ear#appclient.jar
     */
-   public static void undeployAppclient(final String archive) throws Exception
+   public static void undeployAppclient(final String archive, boolean awaitShutdown) throws Exception
    {
       if (DEPLOY_PROCESS_ENABLED)
       {
-         AppclientProcess ap = appclients.get(archive);
-         final int sharpIndex = archive.indexOf('#');
-         final String earName = archive.substring(0, sharpIndex);
-         final String appclientFullName = getArchiveFile(earName).getParent() + FS + archive;
-         final File touchFile = new File(JBOSS_HOME + FS + "bin" + FS + archive.substring(sharpIndex + 1) + ".kill");
-         touchFile.createNewFile();
-         final String patternToMatch = "stopped in";
-         final String errorMessage = "Cannot undeploy " + appclientFullName + " from appclient";
-         try
-         {
-            awaitOutput(ap.output, patternToMatch, errorMessage);
-         }
-         finally
-         {
-            touchFile.delete();
-            ap.outTask.kill();
-            ap.errTask.kill();
-            ap.log.close();
-            ap.process.destroy();
-            appclients.remove(archive);
-         }
+         AppclientHelper.undeployAppclient(archive, awaitShutdown);
       }
    }
 
-   private static String getAppclientOutputDir()
-   {
-      if (appclientOutputDir == null)
-      {
-         appclientOutputDir = System.getProperty("appclient.output.dir");
-         if (appclientOutputDir == null)
-         {
-            throw new IllegalStateException("System property appclient.output.dir not configured");
-         }
-         final File appclientOutputDirectory = new File(appclientOutputDir);
-         if (!appclientOutputDirectory.exists())
-         {
-            if (!appclientOutputDirectory.mkdirs())
-            {
-               throw new IllegalStateException("Unable to create directory " + appclientOutputDir);
-            }
-         }
-      }
-      return appclientOutputDir;
-   }
-   
-   private static void awaitOutput(final OutputStream os, final String patternToMatch, final String errorMessage) throws InterruptedException {
-      int countOfAttempts = 0;
-      final int maxCountOfAttempts = 120; // max wait time: 2 minutes
-      while (!os.toString().contains(patternToMatch))
-      {
-         Thread.sleep(1000);
-         if (countOfAttempts++ == maxCountOfAttempts)
-         {
-            throw new RuntimeException(errorMessage);
-         }
-      }
-   }
-   
    public static boolean isTargetJBoss7()
    {
        String target = getIntegrationTarget();

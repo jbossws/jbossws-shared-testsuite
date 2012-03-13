@@ -21,8 +21,7 @@
  */
 package org.jboss.wsf.test;
 
-public abstract class CleanupOperation {
-   
-   public abstract void cleanUp();
-   
+public interface CleanupOperation
+{
+    void cleanUp();
 }
