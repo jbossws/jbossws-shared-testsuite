@@ -76,18 +76,25 @@ public class ServiceRefClientTestCase extends JBossWSTest
 
    public void testApplicationClient() throws Exception
    {
-      final OutputStream appclientOS = new ByteArrayOutputStream();
-      JBossWSTestHelper.deployAppclient("jaxws-samples-serviceref-appclient.ear#jaxws-samples-serviceref-appclient.jar", appclientOS, "Hello World!");
-      // wait till appclient stops
-      String appclientLog = appclientOS.toString();
-      while (!appclientLog.contains("stopped in")) {
-         Thread.sleep(100);
-         appclientLog = appclientOS.toString();
+      try
+      {
+         final OutputStream appclientOS = new ByteArrayOutputStream();
+         JBossWSTestHelper.deployAppclient("jaxws-samples-serviceref-appclient.ear#jaxws-samples-serviceref-appclient.jar", appclientOS, "Hello World!");
+         // wait till appclient stops
+         String appclientLog = appclientOS.toString();
+         while (!appclientLog.contains("stopped in")) {
+            Thread.sleep(100);
+            appclientLog = appclientOS.toString();
+         }
+         // assert appclient logs
+         assertTrue(appclientLog.contains("TEST START"));
+         assertTrue(appclientLog.contains("TEST END"));
+         assertFalse(appclientLog.contains("not overridden through service-ref"));
+         assertFalse(appclientLog.contains("Invalid echo return"));
       }
-      // assert appclient logs
-      assertTrue(appclientLog.contains("TEST START"));
-      assertTrue(appclientLog.contains("TEST END"));
-      assertFalse(appclientLog.contains("not overridden through service-ref"));
-      assertFalse(appclientLog.contains("Invalid echo return"));
+      finally
+      {
+         JBossWSTestHelper.undeployAppclient("jaxws-samples-serviceref-appclient.ear#jaxws-samples-serviceref-appclient.jar", false);
+      }
    }
 }

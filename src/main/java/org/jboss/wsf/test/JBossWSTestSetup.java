@@ -281,7 +281,7 @@ public class JBossWSTestSetup extends TestSetup
             String archive = archives[archives.length - i - 1];
             if (archive.endsWith("-appclient.jar"))
             {
-                JBossWSTestHelper.undeployAppclient(archive);
+                JBossWSTestHelper.undeployAppclient(archive, true);
             }
             else
             {

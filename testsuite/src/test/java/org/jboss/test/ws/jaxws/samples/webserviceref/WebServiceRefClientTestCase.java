@@ -76,18 +76,25 @@ public class WebServiceRefClientTestCase extends JBossWSTest
 
    public void testApplicationClient() throws Throwable
    {
-      final String appclientArg = "Hello World!";
-      final OutputStream appclientOS = new ByteArrayOutputStream();
-      final Process appclientProcess = JBossWSTestHelper.deployAppclient("jaxws-samples-webserviceref-appclient.ear#jaxws-samples-webserviceref-appclient.jar", appclientOS, appclientArg);
-      // wait till appclient stops
-      String appclientLog = appclientOS.toString();
-      while (!appclientLog.contains("stopped in")) {
-         Thread.sleep(100);
-         appclientLog = appclientOS.toString();
+      try
+      {
+         final String appclientArg = "Hello World!";
+         final OutputStream appclientOS = new ByteArrayOutputStream();
+         final Process appclientProcess = JBossWSTestHelper.deployAppclient("jaxws-samples-webserviceref-appclient.ear#jaxws-samples-webserviceref-appclient.jar", appclientOS, appclientArg);
+         // wait till appclient stops
+         String appclientLog = appclientOS.toString();
+         while (!appclientLog.contains("stopped in")) {
+            Thread.sleep(100);
+            appclientLog = appclientOS.toString();
+         }
+         // assert appclient logs
+         assertTrue(!appclientLog.contains("Invalid echo return"));
+         assertTrue(appclientLog.contains("TEST START"));
+         assertTrue(appclientLog.contains("TEST END"));
       }
-      // assert appclient logs
-      assertTrue(!appclientLog.contains("Invalid echo return"));
-      assertTrue(appclientLog.contains("TEST START"));
-      assertTrue(appclientLog.contains("TEST END"));
+      finally
+      {
+         JBossWSTestHelper.undeployAppclient("jaxws-samples-webserviceref-appclient.ear#jaxws-samples-webserviceref-appclient.jar", false);
+      }
    }
 }
