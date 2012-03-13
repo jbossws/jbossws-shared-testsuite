@@ -103,6 +103,12 @@ public class JBossWSTestSetup extends TestSetup
       getArchiveArray(archiveList);
    }
    
+   public JBossWSTestSetup(Test test, String archiveList, CleanupOperation cleanupOp)
+   {
+      this(test, archiveList);
+      this.cleanupOp = cleanupOp;
+   }
+   
    public JBossWSTestSetup(Test test, String archiveList, boolean requiresDefaultSecurityDomain)
    {
       this(test, archiveList);
