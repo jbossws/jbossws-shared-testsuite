@@ -207,6 +207,21 @@ public class JBossWSTestHelper
    {
       try
       {
+         if (host.startsWith(":"))
+         {
+            throw new IllegalArgumentException("JBossWS test suite requires IPv6 addresses to be wrapped with [] brackets. Expected format is: [" + host + "]");
+         }
+         if (host.startsWith("["))
+         {
+            if (System.getProperty("java.net.preferIPv4Stack") == null)
+            {
+               throw new IllegalStateException("always provide java.net.preferIPv4Stack JVM property when using IPv6 address format");
+            }
+            if (System.getProperty("java.net.preferIPv6Addresses") == null)
+            {
+               throw new IllegalStateException("always provide java.net.preferIPv6Addresses JVM property when using IPv6 address format");
+            }
+         }
          final boolean isIPv6Address = InetAddress.getByName(host) instanceof Inet6Address;
          final boolean isIPv6Formatted = isIPv6Address && host.startsWith("[");
          return isIPv6Address && !isIPv6Formatted ? "[" + host + "]" : host;

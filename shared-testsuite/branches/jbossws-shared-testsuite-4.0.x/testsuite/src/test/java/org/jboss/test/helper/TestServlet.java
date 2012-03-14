@@ -58,7 +58,12 @@ public class TestServlet extends HttpServlet
       try
       {
          ClientHelper helper = (ClientHelper) Class.forName(helperClassName).newInstance();
-         helper.setTargetEndpoint("http://" + System.getProperty("jboss.bind.address", "localhost") + ":8080" + path);
+         String jbossBindAddress = System.getProperty("jboss.bind.address", "localhost");
+         if (jbossBindAddress.startsWith(":"))
+         {
+            jbossBindAddress = "[" + jbossBindAddress + "]"; 
+         }
+         helper.setTargetEndpoint("http://" + jbossBindAddress + ":8080" + path);
          List<String> failedTests = new LinkedList<String>();
          List<String> errorTests = new LinkedList<String>();
          Method[] methods = helper.getClass().getMethods();
