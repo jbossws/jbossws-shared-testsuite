@@ -83,6 +83,7 @@ public class EndpointServlet extends HttpServlet
    {
       // Create the port
       String hostName = System.getProperty("jboss.bind.address", "localhost");
+      hostName = hostName.indexOf(":") != -1 ? "[" + hostName + "]" : hostName;
 //    URL wsdlURL = getServletContext().getResource("/WEB-INF/wsdl/TestService.wsdl");
       URL wsdlURL = new URL("http://" + hostName + ":8081/jaxws-endpoint?wsdl");
       QName qname = new QName("http://org.jboss.ws/jaxws/endpoint", "EndpointService");
