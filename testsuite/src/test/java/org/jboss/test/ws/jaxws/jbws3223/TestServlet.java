@@ -40,9 +40,12 @@ public class TestServlet extends HttpServlet
       String param = req.getParameter("param");
       boolean clCheck = Boolean.parseBoolean(req.getParameter("clCheck"));
       Client client = new Client(clCheck);
-      String hostName = System.getProperty("jboss.bind.address", "localhost");
-      //URL wsdlURL = getServletContext().getResource("/WEB-INF/wsdl/TestService.wsdl");
-      URL wsdlURL = new URL("http://" + hostName + ":8080/jaxws-jbws3223?wsdl");
+      String jbossBindAddress = System.getProperty("jboss.bind.address", "localhost");
+      if (jbossBindAddress.startsWith(":"))
+      {
+         jbossBindAddress = "[" + jbossBindAddress + "]"; 
+      }
+      URL wsdlURL = new URL("http://" + jbossBindAddress + ":8080/jaxws-jbws3223?wsdl");
       String retStr = client.run(param, wsdlURL);
       
       // Return the result

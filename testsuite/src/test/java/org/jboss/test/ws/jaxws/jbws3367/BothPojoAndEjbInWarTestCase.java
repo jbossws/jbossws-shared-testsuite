@@ -50,7 +50,7 @@ public class BothPojoAndEjbInWarTestCase extends JBossWSTest
    public void testPOJOEndpoint() throws Exception
    {
       final QName serviceName = new QName("org.jboss.test.ws.jaxws.jbws3367", "POJOEndpointService");
-      final URL wsdlURL = new URL("http://localhost:8080/jbws3367-customized/POJOEndpoint?wsdl");
+      final URL wsdlURL = new URL("http://" + getServerHost() +  ":8080/jbws3367-customized/POJOEndpoint?wsdl");
       final Service service = Service.create(wsdlURL, serviceName);
       final EndpointIface port = service.getPort(EndpointIface.class);
       final String result = port.echo("hello");
@@ -60,7 +60,7 @@ public class BothPojoAndEjbInWarTestCase extends JBossWSTest
    public void testEJB3Endpoint() throws Exception
    {
       final QName serviceName = new QName("org.jboss.test.ws.jaxws.jbws3367", "EJB3EndpointService");
-      final URL wsdlURL = new URL("http://localhost:8080/jbws3367-customized/EJB3Endpoint?wsdl");
+      final URL wsdlURL = new URL("http://" + getServerHost() +  ":8080/jbws3367-customized/EJB3Endpoint?wsdl");
       final Service service = Service.create(wsdlURL, serviceName);
       final EndpointIface port = service.getPort(EndpointIface.class);
       final String result = port.echo("hello");
