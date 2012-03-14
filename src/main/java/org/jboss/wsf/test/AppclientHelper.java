@@ -119,7 +119,14 @@ final class AppclientHelper
             args.add(appclientArg);
          }
       }
-      ap.process = new ProcessBuilder().command(args).start();
+      final ProcessBuilder pb = new ProcessBuilder().command(args);
+      // always propagate IPv6 related properties
+      final StringBuilder javaOptsValue = new StringBuilder();
+      javaOptsValue.append("\"-Djboss.bind.address=").append(undoIPv6Brackets(System.getProperty("jboss.bind.address", "localhost"))).append("\" ");
+      javaOptsValue.append("\"-Djava.net.preferIPv4Stack=").append(System.getProperty("java.net.preferIPv4Stack", "true")).append("\" ");
+      javaOptsValue.append("\"-Djava.net.preferIPv6Addresses=").append(System.getProperty("java.net.preferIPv6Addresses", "false")).append("\" ");
+      pb.environment().put("JAVA_OPTS", javaOptsValue.toString());
+      ap.process = pb.start();
       ap.log = new FileOutputStream(new File(getAppclientOutputDir(), appclientShortName + ".log-" + System.currentTimeMillis()));
       // appclient out
       ap.outTask = new CopyJob(ap.process.getInputStream(),
@@ -130,6 +137,11 @@ final class AppclientHelper
       es.submit(ap.outTask);
       es.submit(ap.errTask);
       return ap;
+   }
+
+   private static String undoIPv6Brackets(final String s)
+   {
+      return s.startsWith("[") ? s.substring(1, s.length() - 1) : s; 
    }
 
    private static void shutdownAppclient(final String archive, final OutputStream os) throws IOException, InterruptedException

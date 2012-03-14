@@ -48,7 +48,7 @@ public class Usecase1TestCase extends JBossWSTest
    public void testAnonymousEndpoint() throws Exception
    {
       final QName serviceName = new QName("org.jboss.test.ws.jaxws.jbws3276", "AnonymousPOJOService");
-      final URL wsdlURL = new URL("http://localhost:8080/jaxws-jbws3276-usecase1/AnonymousPOJOService?wsdl");
+      final URL wsdlURL = new URL("http://" + getServerHost() +  ":8080/jaxws-jbws3276-usecase1/AnonymousPOJOService?wsdl");
       final Service service = Service.create(wsdlURL, serviceName);
       final POJOIface port = service.getPort(POJOIface.class);
       final String result = port.echo("hello");
@@ -58,7 +58,7 @@ public class Usecase1TestCase extends JBossWSTest
    public void testDeclaredEndpoint() throws Exception
    {
       final QName serviceName = new QName("org.jboss.test.ws.jaxws.jbws3276", "POJOImplService");
-      final URL wsdlURL = new URL("http://localhost:8080/jaxws-jbws3276-usecase1/POJOService?wsdl");
+      final URL wsdlURL = new URL("http://" + getServerHost() +  ":8080/jaxws-jbws3276-usecase1/POJOService?wsdl");
       final Service service = Service.create(wsdlURL, serviceName);
       final POJOIface port = service.getPort(POJOIface.class);
       final String result = port.echo("hello");
