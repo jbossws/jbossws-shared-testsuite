@@ -660,7 +660,7 @@
       <sysproperty key="test.classes.directory" value="${tests.output.dir}/test-classes"/>
       <sysproperty key="test.resources.directory" value="${tests.output.dir}/test-resources"/>
       <sysproperty key="test.username" value="${test.username}"/>
-      <sysproperty key="test.password" value="${test.password"/>
+      <sysproperty key="test.password" value="${test.password}"/>
       <sysproperty key="binary.distribution" value="true"/>
       <classpath>
         <path refid="tests.client.classpath"/>
