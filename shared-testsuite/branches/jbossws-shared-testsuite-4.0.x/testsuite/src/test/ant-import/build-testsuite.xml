@@ -594,7 +594,6 @@
       <sysproperty key="test.resources.directory" value="${tests.output.dir}/test-resources"/>
       <sysproperty key="test.username" value="${test.username}"/>
       <sysproperty key="test.password" value="${test.password}"/>
-      <sysproperty key="binary.distribution" value="true"/>
       <classpath>
         <path refid="tests.client.classpath"/>
         <pathelement location="${tests.output.dir}/test-classes"/>
@@ -661,7 +660,6 @@
       <sysproperty key="test.resources.directory" value="${tests.output.dir}/test-resources"/>
       <sysproperty key="test.username" value="${test.username}"/>
       <sysproperty key="test.password" value="${test.password"/>
-      <sysproperty key="binary.distribution" value="true"/>
       <classpath>
         <path refid="tests.client.classpath"/>
         <pathelement location="${tests.output.dir}/test-classes"/>
@@ -696,34 +694,6 @@
   
   <target name="tests-clean" description="Delete all generated test files.">
     <delete dir="${tests.output.dir}"/>
-  </target>
-  
-  <!-- ================================================================== -->
-  <!-- Eclipse conf generation                                            -->
-  <!-- ================================================================== -->
-  
-  <target name="eclipse" depends="tests-jars" description="Generates the JBossWS Testsuite Eclipse project">
-    <fail message="Sorry, this target is for src/binary distribution only.">
-      <condition>
-        <not>
-          <isset property="build.dir"/>
-        </not>
-      </condition>
-    </fail>
-    <path id="tests.eclipse.classpath">
-      <path refid="tests.client.classpath"/>
-      <path refid="tests.javac.classpath"/>
-    </path>
-    <taskdef name="eclipseClasspathGenerator" classname="org.jboss.ws.tools.ant.EclipseClasspathTask" classpathref="ws.stack.classpath"/>
-    <taskdef name="eclipseProjectGenerator" classname="org.jboss.ws.tools.ant.EclipseProjectTask" classpathref="ws.stack.classpath"/>
-    <taskdef name="eclipseJUnitTestGenerator" classname="org.jboss.ws.tools.ant.EclipseJUnitTestsTask" classpathref="ws.stack.classpath"/>
-    <eclipseClasspathGenerator pathId="tests.eclipse.classpath" excludesFile="${excludesfile}" srcPath="tests/java"/>
-    <eclipseProjectGenerator projectName="JBossWS Testsuite"/>
-    <eclipseJUnitTestGenerator projectName="JBossWS Testsuite" projectWorkingDir="${tests.output.dir}" srcDir="${tests.dir}/test-java"
-      integrationTarget="${jbossws.integration.target}" endorsedDir="${endorsed.dirs}" jbossHome="${jboss.home}" namingProviderUrl="${node0.jndi.url}"
-      securityPolicy="${tests.output.dir}/test-classes/tst.policy" testResourcesDir="${tests.output.dir}/test-resources" testLibsDir="${tests.output.dir}/test-libs">
-      <fileset dir="${tests.output.dir}/test-classes" includes="org/jboss/test/ws/**/*TestCase.class" excludes="exclude.wildcard"/>
-    </eclipseJUnitTestGenerator>
   </target>
   
 </project>
