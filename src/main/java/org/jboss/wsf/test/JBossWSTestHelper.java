@@ -341,7 +341,7 @@ public class JBossWSTestHelper
    
    public static String getTestUsername() {
       String prop = System.getProperty(TEST_USERNAME);
-      if (prop == null || "".equals(prop) || ("${" + TEST_USERNAME + "}").equals(prop)) {
+      if (prop == null || "".equals(prop)) {
          prop = "kermit";
       }
       return prop; 
@@ -349,7 +349,7 @@ public class JBossWSTestHelper
 
    public static String getTestPassword() {
       String prop = System.getProperty(TEST_PASSWORD);
-      if (prop == null || "".equals(prop) || ("${" + TEST_PASSWORD + "}").equals(prop)) {
+      if (prop == null || "".equals(prop)) {
          prop = "thefrog";
       }
       return prop; 
