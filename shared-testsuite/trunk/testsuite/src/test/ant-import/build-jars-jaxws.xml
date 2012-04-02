@@ -1160,6 +1160,26 @@
 			</webinf>
 		</war>
 
+        <!-- jaxws-jbws3437 -->
+	    <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3477.war" needxmlfile="false">
+	      <classes dir="${tests.output.dir}/test-classes">
+	        <include name="org/jboss/test/ws/jaxws/jbws3477/TestServlet.class"/>
+	        <include name="org/jboss/test/ws/jaxws/jbws3477/Helper.class"/>
+	      </classes>
+	    </war>
+
+        <!-- jaxws-jbws3477-custom-provider -->
+	    <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3477-custom-provider.war" needxmlfile="false">
+	      <classes dir="${tests.output.dir}/test-classes">
+	        <include name="org/jboss/test/ws/jaxws/jbws3477/TestServlet.class"/>
+	        <include name="org/jboss/test/ws/jaxws/jbws3477/Helper.class"/>
+	        <include name="org/jboss/test/ws/jaxws/jbws3477/DummyProvider.class"/>
+	      </classes>
+	      <classes dir="${tests.output.dir}/test-resources/jaxws/jbws3477">
+	        <include name="META-INF/services/*"/>
+	      </classes>
+	    </war>
+
         <!-- jaxws-as3581 -->
         <war warfile="${tests.output.dir}/test-libs/jaxws-as3581.war" webxml="${tests.output.dir}/test-resources/jaxws/as3581/WEB-INF/web.xml">
             <classes dir="${tests.output.dir}/test-classes">
