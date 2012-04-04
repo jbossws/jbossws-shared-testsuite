@@ -122,6 +122,9 @@
     <condition property="jbossws-native-core.default-filename" value="4.0.2.GA">
       <equals arg1="${jbossws.integration.target}" arg2="jboss711"/>
     </condition>
+    <condition property="jbossws-native-core.default-filename" value="4.0.2.GA">
+      <equals arg1="${jbossws.integration.target}" arg2="jboss712"/>
+    </condition>
 
     <echo/>
     <echo message="-----------------------------------------------"/>
