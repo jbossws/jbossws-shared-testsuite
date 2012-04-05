@@ -30,6 +30,7 @@ import javax.wsdl.factory.WSDLFactory;
 import junit.framework.Test;
 
 import org.jboss.wsf.test.JBossWSTest;
+import org.jboss.wsf.test.JBossWSTestHelper;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
 /**
@@ -40,21 +41,57 @@ import org.jboss.wsf.test.JBossWSTestSetup;
  * @author Thomas.Diesler@jboss.com
  * @since 19-Mar-2007
  */
-public class JBWS1581WarTestCase extends JBossWSTest
+public class JBWS1581TestCase extends JBossWSTest
 {
    public static Test suite()
    {
-       return new JBossWSTestSetup(JBWS1581WarTestCase.class, "jaxws-jbws1581-pojo.war, jaxws-jbws1581-ejb3.jar");
+       return new JBossWSTestSetup(JBWS1581TestCase.class, "jaxws-jbws1581-ejb3.jar");
+   }
+   
+   public void testWSDLAccessWar() throws Exception {
+      try {
+         JBossWSTestHelper.deploy("jaxws-jbws1581-pojo.war");
+         internalTestWSDLAccess();
+      } finally {
+         JBossWSTestHelper.undeploy("jaxws-jbws1581-pojo.war");
+      }
+   }
+   
+   public void testEJBVehicleWar() throws Exception {
+      try {
+         JBossWSTestHelper.deploy("jaxws-jbws1581-pojo.war");
+         internalTestEJBVehicle();
+      } finally {
+         JBossWSTestHelper.undeploy("jaxws-jbws1581-pojo.war");
+      }
    }
 
-   public void testWSDLAccess() throws Exception
+   public void testWSDLAccessEar() throws Exception {
+      try {
+         JBossWSTestHelper.deploy("jaxws-jbws1581.ear");
+         internalTestWSDLAccess();
+      } finally {
+         JBossWSTestHelper.undeploy("jaxws-jbws1581.ear");
+      }
+   }
+   
+   public void testEJBVehicleEar() throws Exception {
+      try {
+         JBossWSTestHelper.deploy("jaxws-jbws1581.ear");
+         internalTestEJBVehicle();
+      } finally {
+         JBossWSTestHelper.undeploy("jaxws-jbws1581.ear");
+      }
+   }
+
+   private void internalTestWSDLAccess() throws Exception
    {
       URL wsdlURL = new URL("http://" + getServerHost() + ":8080/jaxws-jbws1581-pojo?wsdl");
       Definition wsdl = WSDLFactory.newInstance().newWSDLReader().readWSDL(wsdlURL.toString());
       assertNotNull("wsdl expected", wsdl);
    }
 
-   public void testEJBVehicle() throws Exception
+   private void internalTestEJBVehicle() throws Exception
    {
       InitialContext iniCtx = null;
       try

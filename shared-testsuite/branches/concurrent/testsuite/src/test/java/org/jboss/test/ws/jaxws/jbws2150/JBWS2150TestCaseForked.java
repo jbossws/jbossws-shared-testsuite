@@ -41,7 +41,7 @@ import com.ibm.wsdl.extensions.soap.SOAPAddressImpl;
  * [JBWS-2150] Migrate AddressRewritingTestCase to jaxws
  * @author richard.opalka@jboss.com
  */
-public final class JBWS2150TestCase extends JBossWSTest
+public final class JBWS2150TestCaseForked extends JBossWSTest
 {
    private static final ObjectName SERVER_CONFIG_OBJECT_NAME = ObjectNameFactory.create("jboss.ws:service=ServerConfig");
    private static final String NAMESPACE = "http://test.jboss.org/addressrewrite";

@@ -898,7 +898,7 @@
 		</war>
 
 		<!-- jaxws-jbws2934 -->
-		<war warfile="${tests.output.dir}/test-libs/jaxws-jbws2934.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws2934/WEB-INF/web.xml">
+		<war warfile="${tests.output.dir}/test-libs/jaxws-jbws2934-jse.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws2934/WEB-INF/web.xml">
 			<classes dir="${tests.output.dir}/test-classes">
 				<include name="org/jboss/test/ws/jaxws/jbws2934/*.class" />
 				<exclude name="org/jboss/test/ws/jaxws/jbws2934/EndpointEJB.class" />
@@ -906,7 +906,7 @@
 			</classes>
 		</war>
 
-		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws2934.jar">
+		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws2934-ejb.jar">
 			<fileset dir="${tests.output.dir}/test-classes">
 				<include name="org/jboss/test/ws/jaxws/jbws2934/*.class" />
 				<exclude name="org/jboss/test/ws/jaxws/jbws2934/EndpointJSE.class" />
@@ -1207,7 +1207,7 @@
                 	        <include name="org/jboss/test/ws/jaxws/jbws3367/EndpointIface.class"/>
                 	        <include name="org/jboss/test/ws/jaxws/jbws3367/EJB3Endpoint.class"/>
                         </classes>
-                        <webinf dir="${tests.output.dir}/test-resources/jaxws/jbws3367/WEB-INF">
+                        <webinf dir="${tests.output.dir}/test-resources/jaxws/jbws3367/WEB-INF-2">
                                 <include name="jboss-web.xml" />
                         </webinf>
                 </war>

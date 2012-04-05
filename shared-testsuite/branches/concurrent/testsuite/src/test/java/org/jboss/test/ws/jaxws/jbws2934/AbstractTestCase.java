@@ -39,11 +39,12 @@ abstract class AbstractTestCase extends JBossWSTest
 {
    private static final int THREADS_COUNT = 20;
    private static final int REQUESTS_COUNT = 20;
-   private static final String ENDPOINT_ADDRESS = "http://" + getServerHost() + ":8080/jaxws-jbws2934"; 
    private final Endpoint[] proxies = new Endpoint[THREADS_COUNT];
    private final Thread[] threads = new Thread[THREADS_COUNT];
    private final TestJob[] jobs = new TestJob[THREADS_COUNT];
    private final Logger log = Logger.getLogger(this.getClass());
+   
+   protected abstract String getEndpointAddress();
    
    @Override
    protected void setUp() throws Exception
@@ -51,7 +52,7 @@ abstract class AbstractTestCase extends JBossWSTest
       super.setUp();
 
       QName serviceName = new QName("http://jboss.org/jbws2934", "EndpointService");
-      URL wsdlURL = new URL(ENDPOINT_ADDRESS + "?wsdl");
+      URL wsdlURL = new URL(getEndpointAddress() + "?wsdl");
 
       Service service = Service.create(wsdlURL, serviceName);
       for (int i = 0; i < THREADS_COUNT; i++)
@@ -63,7 +64,7 @@ abstract class AbstractTestCase extends JBossWSTest
       for (int i = 0; i < THREADS_COUNT; i++)
       {
          log.debug("Creating thread " + (i + 1));
-         jobs[i] = new TestJob(proxies[i], REQUESTS_COUNT, "TestJob" + i);
+         jobs[i] = new TestJob(proxies[i], REQUESTS_COUNT, "TestJob" + i, getEndpointAddress());
          threads[i] = new Thread(jobs[i]);
       }
       for (int i = 0; i < THREADS_COUNT; i++)
@@ -88,13 +89,15 @@ abstract class AbstractTestCase extends JBossWSTest
       private final Endpoint proxy; 
       private final int countOfRequests;
       private Exception exception;
+      private final String endpointAddress; 
       private static final Logger log = Logger.getLogger(TestJob.class);
 
-      TestJob(Endpoint proxy, int countOfRequests, String jobName)
+      TestJob(Endpoint proxy, int countOfRequests, String jobName, String endpointAddress)
       {
          this.proxy = proxy;
          this.countOfRequests = countOfRequests;
          this.jobName = jobName;
+         this.endpointAddress = endpointAddress;
       }
       
       public void run()
@@ -121,7 +124,7 @@ abstract class AbstractTestCase extends JBossWSTest
       {
          BindingProvider bp = (BindingProvider)proxy;
          String queryString = "?" + this.jobName + "=" + value;
-         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, ENDPOINT_ADDRESS + queryString);
+         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointAddress + queryString);
       }
       
       Exception getException()
