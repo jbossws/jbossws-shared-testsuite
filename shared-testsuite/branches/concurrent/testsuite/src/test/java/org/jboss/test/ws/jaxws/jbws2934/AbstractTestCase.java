@@ -61,21 +61,25 @@ abstract class AbstractTestCase extends JBossWSTest
 
    public void testEndpointConcurrently() throws Exception
    {
+      boolean traceEnabled = log.isTraceEnabled();
       for (int i = 0; i < THREADS_COUNT; i++)
       {
-         log.debug("Creating thread " + (i + 1));
+         if (traceEnabled)
+            log.debug("Creating thread " + (i + 1));
          jobs[i] = new TestJob(proxies[i], REQUESTS_COUNT, "TestJob" + i, getEndpointAddress());
          threads[i] = new Thread(jobs[i]);
       }
       for (int i = 0; i < THREADS_COUNT; i++)
       {
-    	 log.debug("Starting thread " + (i + 1));
+         if (traceEnabled)
+            log.debug("Starting thread " + (i + 1));
          threads[i].start();
       }
       Exception e = null;
       for (int i = 0; i < THREADS_COUNT; i++)
       {
-    	 log.debug("Joining thread " + (i + 1));
+         if (traceEnabled)
+            log.debug("Joining thread " + (i + 1));
          threads[i].join();
          if (e == null)
             e = jobs[i].getException();
@@ -104,11 +108,13 @@ abstract class AbstractTestCase extends JBossWSTest
       {
          try
          {
+            boolean traceEnabled = log.isTraceEnabled();
             for (int i = 0; i < this.countOfRequests; i++)
             {
                this.setQueryParameter(proxy, i);
                int retVal = proxy.getQueryParameter(jobName);
-               log.debug("Thread=" + this.jobName + ", iteration=" + i);
+               if (traceEnabled)
+                  log.trace("Thread=" + this.jobName + ", iteration=" + i);
                if (retVal != (i + 1))
                   throw new RuntimeException("Thread=" + this.jobName + ", iteration=" + i + ", received=" + retVal);
             }
