@@ -29,6 +29,7 @@ import javax.xml.ws.Service;
 
 import junit.framework.Test;
 
+import org.jboss.wsf.test.CleanupOperation;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -40,11 +41,16 @@ import org.jboss.wsf.test.JBossWSTestSetup;
  */
 public class WebServiceContextEJBTestCase extends JBossWSTest
 {
-   private Endpoint port;
+   private static Endpoint port;
 
    public static Test suite()
    {
-      return new JBossWSTestSetup(WebServiceContextEJBTestCase.class, "jaxws-samples-context.jar", true);
+      return new JBossWSTestSetup(WebServiceContextEJBTestCase.class, "jaxws-samples-context.jar", true, new CleanupOperation() {
+         @Override
+         public void cleanUp() {
+            port = null;
+         }
+      });
    }
 
    public void setUp() throws Exception

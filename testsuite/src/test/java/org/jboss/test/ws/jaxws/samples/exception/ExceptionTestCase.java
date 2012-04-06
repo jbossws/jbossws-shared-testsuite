@@ -35,7 +35,7 @@ public class ExceptionTestCase extends JBossWSTest
 {
    public static Test suite()
    {
-      return new JBossWSTestSetup(ExceptionTestCase.class, "jaxws-samples-exception.war");
+      return new JBossWSTestSetup(ExceptionTestCase.class, "jaxws-samples-exception-jse.war");
    }
 
    public void testRuntimeException() throws Exception
@@ -76,6 +76,6 @@ public class ExceptionTestCase extends JBossWSTest
    
    protected ExceptionHelper getHelper()
    {
-      return new ExceptionHelper("http://" + getServerHost() + ":8080/jaxws-samples-exception/ExceptionEndpointService");
+      return new ExceptionHelper("http://" + getServerHost() + ":8080/jaxws-samples-exception-jse/ExceptionEndpointService");
    }
 }
