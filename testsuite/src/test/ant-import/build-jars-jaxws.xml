@@ -411,6 +411,15 @@
 			</webinf>
 		</war>
 
+		<!-- jaxws-jbws1809 -->
+		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws1809.jar">
+			<fileset dir="${tests.output.dir}/test-classes">
+				<include name="org/jboss/test/ws/jaxws/jbws1809/*.class" />
+				<exclude name="org/jboss/test/ws/jaxws/jbws1809/*TestCase.class" />
+			</fileset>
+			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws1809/META-INF" />
+		</jar>
+
 		<!-- jaxws-jbws1813 -->
 		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws1813.jar" manifest="${tests.output.dir}/test-resources/jaxws/jbws1813/META-INF/MANIFEST.MF">
 			<fileset dir="${tests.output.dir}/test-classes">
@@ -707,6 +716,22 @@
 			</metainf>
 		</jar>
 
+		<!-- jaxws-jbws2259 -->
+		<war warfile="${tests.output.dir}/test-libs/jaxws-jbws2259.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws2259/WEB-INF/web.xml">
+			<classes dir="${tests.output.dir}/test-classes">
+				<include name="org/jboss/test/ws/jaxws/jbws2259/Endpoint.class" />
+				<include name="org/jboss/test/ws/jaxws/jbws2259/EndpointImpl.class" />
+				<include name="org/jboss/test/ws/jaxws/jbws2259/CustomHandler.class" />
+				<include name="org/jboss/test/ws/jaxws/jbws2259/Photo.class" />
+			</classes>
+			<webinf dir="${tests.output.dir}/test-resources/jaxws/jbws2259/WEB-INF">
+				<include name="jaxws-endpoint-config.xml" />
+			</webinf>
+            <manifest>
+                <attribute name="Dependencies" value="org.jboss.ws.native.jbossws-native-core"/>
+            </manifest>
+		</war>
+
 		<!-- jaxws-jbws2268 -->
 		<war warfile="${tests.output.dir}/test-libs/jaxws-jbws2268.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws2268/WEB-INF/web.xml">
 			<classes dir="${tests.output.dir}/test-classes">
@@ -949,6 +974,19 @@
 			</fileset>
 		</jar>
 
+		<!-- jaxws-jbws2978 -->
+		<war warfile="${tests.output.dir}/test-libs/jaxws-jbws2978.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws2978/WEB-INF/web.xml">
+			<classes dir="${tests.output.dir}/test-classes">
+				<include name="org/jboss/test/ws/jaxws/jbws2978/AddNumbers.class" />
+				<include name="org/jboss/test/ws/jaxws/jbws2978/AddNumbersImpl.class" />
+				<include name="org/jboss/test/ws/jaxws/jbws2978/AddNumbersRequest.class" />
+				<include name="org/jboss/test/ws/jaxws/jbws2978/AddNumbersResponse.class" />
+			</classes>
+			<webinf dir="${tests.output.dir}/test-resources/jaxws/jbws2978/WEB-INF">
+				<include name="jboss-web.xml" />
+			</webinf>
+		</war>
+
 		<!-- jaxws-jbws2999 -->
 		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws2999.jar">
 			<fileset dir="${tests.output.dir}/test-classes">
@@ -1066,6 +1104,14 @@
 			</webinf>
 		</war>
 
+        <!-- jaxws-jbws3250 -->
+        <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3250.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3250/WEB-INF/web.xml">
+            <classes dir="${tests.output.dir}/test-classes">
+               <include name="org/jboss/test/ws/jaxws/jbws3250/*.class" />
+               <exclude name="org/jboss/test/ws/jaxws/jbws3250/*TestCase*.class" />
+            </classes>
+        </war>
+		
                 <!-- jaxws-jbws3282 -->
                 <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3282.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3282/WEB-INF/web.xml">
                         <classes dir="${tests.output.dir}/test-classes">
