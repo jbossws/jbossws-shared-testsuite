@@ -21,8 +21,8 @@
  */
 package org.jboss.test.ws.jaxws.jbws2259;
 
+import java.awt.Image;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.jws.WebService;
 import javax.xml.ws.BindingType;
@@ -63,7 +63,7 @@ public class EndpointImpl implements Endpoint
       {
          Object content = dh.getContent();
          log.info("Content - " + content.toString());
-         if (content instanceof InputStream == false)
+         if (content instanceof Image == false)
          {
             throw new WebServiceException("Unexpected content '" + content.getClass().getName() + "'");
          }
