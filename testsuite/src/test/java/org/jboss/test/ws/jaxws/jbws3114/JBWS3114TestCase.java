@@ -51,7 +51,7 @@ public class JBWS3114TestCase extends JBossWSTest
       String response = port.echo("testjbws3114");
       assertEquals("testjbws3114", response);
       ((BindingProvider) port).getRequestContext().put("javax.xml.ws.client.connectionTimeout", "6000");
-      ((BindingProvider) port).getRequestContext().put("javax.xml.ws.client.receiveTimeout", "1000");
+      ((BindingProvider) port).getRequestContext().put("javax.xml.ws.client.receiveTimeout", "1");
       try
       {
          port.echo("testjbws3114");

@@ -115,6 +115,14 @@
       <isset property="jboss.home"/>
     </condition>
     
+    <!-- JBossWS Native Core version -->
+    <condition property="jbossws-native-core.default-filename" value="4.0.1.GA">
+      <equals arg1="${jbossws.integration.target}" arg2="jboss710"/>
+    </condition>
+    <condition property="jbossws-native-core.default-filename" value="4.0.2.GA">
+      <equals arg1="${jbossws.integration.target}" arg2="jboss711"/>
+    </condition>
+
     <echo/>
     <echo message="-----------------------------------------------"/>
     <echo message="jboss.home   = ${jboss.home}"/>
@@ -393,6 +401,15 @@
       <fileset dir="${jboss.home}/modules/org/jboss/xb/main/">
         <include name="jbossxb-*.jar"/>
       </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/ws/native/jbossws-native-core/main/">
+        <include name="jbossws-native-core-${jbossws-native-core.filename}.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/ws/native/jbossws-native-core/main/">
+        <include name="jbossws-native-core.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/org/jboss/ws/native/jbossws-native-core/main/">
+        <include name="jbossws-native-core-${jbossws-native-core.default-filename}.jar"/>
+      </fileset>
       <!-- END ## jaxrpc tests ## -->
       <fileset dir="${jboss.home}/modules/org/apache/xalan/main/">
         <include name="serializer-*.jar"/>
@@ -642,7 +659,7 @@
       <sysproperty key="test.classes.directory" value="${tests.output.dir}/test-classes"/>
       <sysproperty key="test.resources.directory" value="${tests.output.dir}/test-resources"/>
       <sysproperty key="test.username" value="${test.username}"/>
-      <sysproperty key="test.password" value="${test.password}"/>
+      <sysproperty key="test.password" value="${test.password"/>
       <classpath>
         <path refid="tests.client.classpath"/>
         <pathelement location="${tests.output.dir}/test-classes"/>

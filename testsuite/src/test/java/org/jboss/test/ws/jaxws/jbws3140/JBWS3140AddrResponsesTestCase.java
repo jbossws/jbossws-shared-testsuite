@@ -29,42 +29,23 @@ import java.net.URL;
 import junit.framework.Test;
 
 import org.jboss.wsf.test.JBossWSTest;
-import org.jboss.wsf.test.JBossWSTestHelper;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
-public class JBWS3140TestCase extends JBossWSTest
+public class JBWS3140AddrResponsesTestCase extends JBossWSTest
 {
    public final String servletClientURL = "http://" + getServerHost() + ":8080/jbws3140-client/ServletTest";
    public static Test suite() throws Exception
    {
-      return new JBossWSTestSetup(JBWS3140TestCase.class, "jbws3140-client.war");
+      return new JBossWSTestSetup(JBWS3140AddrResponsesTestCase.class, "jbws3140-responses-server.war, jbws3140-client.war");
    }
 
    public void testWsaResponses() throws Exception
    {
-      try {
-         JBossWSTestHelper.deploy("jbws3140-responses-server.war");
-         HttpURLConnection connection = (HttpURLConnection) new URL(servletClientURL + "?mtom=small").openConnection();
-         String result = readConnection(connection).toString();
-         assertTrue("SOAPFaultException is expected but received: " + result, result.indexOf("SOAPFaultException") > -1);
-         String expectedDetail = "A header representing a Message Addressing Property is not valid";
-         assertTrue("Expected message wasn't found in response: " + result, result.indexOf(expectedDetail) > -1);
-      } finally {
-         JBossWSTestHelper.undeploy("jbws3140-responses-server.war");
-      }
-   }
-   
-   public void testMtomSmall() throws Exception
-   {
-      try {
-         JBossWSTestHelper.deploy("jbws3140-server.war");
-         HttpURLConnection connection = (HttpURLConnection) new URL(servletClientURL + "?mtom=small").openConnection();
-         String result = readConnection(connection).toString();
-         String expected ="--ClientMTOMEnabled--ServerMTOMEnabled--ServerAddressingEnabled--ClientAddressingEnabled";     
-         assertTrue("Expected string wasn't found in response: " + result, result.indexOf(expected) > -1);
-      } finally {
-         JBossWSTestHelper.undeploy("jbws3140-server.war");
-      }
+      HttpURLConnection connection = (HttpURLConnection) new URL(servletClientURL + "?mtom=small").openConnection();
+      String result = readConnection(connection).toString();
+      assertTrue("SOAPFaultException is expected but received: " + result, result.indexOf("SOAPFaultException") > -1);
+      String expectedDetail = "A header representing a Message Addressing Property is not valid";
+      assertTrue("Expected message wasn't found in response: " + result, result.indexOf(expectedDetail) > -1);
    }
    
    private ByteArrayOutputStream readConnection(HttpURLConnection connection) 

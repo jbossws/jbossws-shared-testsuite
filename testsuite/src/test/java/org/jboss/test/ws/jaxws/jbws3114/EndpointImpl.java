@@ -31,7 +31,7 @@ public class EndpointImpl implements Endpoint
       try
       {
          //To cause the receive timeout
-         Thread.sleep(3000);
+         Thread.sleep(3);
       }
       catch (InterruptedException e)
       {

@@ -53,7 +53,7 @@
     </war>
 
     <!-- jaxws-samples-context -->
-    <war warfile="${tests.output.dir}/test-libs/jaxws-samples-context-jse.war" webxml="${tests.output.dir}/test-resources/jaxws/samples/context/WEB-INF/web.xml">
+    <war warfile="${tests.output.dir}/test-libs/jaxws-samples-context.war" webxml="${tests.output.dir}/test-resources/jaxws/samples/context/WEB-INF/web.xml">
       <classes dir="${tests.output.dir}/test-classes">
         <include name="org/jboss/test/ws/jaxws/samples/context/EndpointJSE.class"/>
       </classes>
@@ -109,7 +109,7 @@
     </jar>
 
     <!-- jaxws-samples-exception -->
-    <war warfile="${tests.output.dir}/test-libs/jaxws-samples-exception-jse.war" webxml="${tests.output.dir}/test-resources/jaxws/samples/exception/WEB-INF/web.xml">
+    <war warfile="${tests.output.dir}/test-libs/jaxws-samples-exception.war" webxml="${tests.output.dir}/test-resources/jaxws/samples/exception/WEB-INF/web.xml">
       <classes dir="${tests.output.dir}/test-classes">
         <include name="org/jboss/test/ws/jaxws/samples/exception/server/jaxws/**"/>
       	<include name="org/jboss/test/ws/jaxws/samples/exception/server/EndpointImpl.class"/>
