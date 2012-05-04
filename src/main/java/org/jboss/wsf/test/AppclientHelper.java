@@ -127,9 +127,9 @@ final class AppclientHelper
          final ProcessBuilder pb = new ProcessBuilder().command(args);
          // always propagate IPv6 related properties
          final StringBuilder javaOptsValue = new StringBuilder();
-         javaOptsValue.append("\"-Djboss.bind.address=").append(undoIPv6Brackets(System.getProperty("jboss.bind.address", "localhost"))).append("\" ");
-         javaOptsValue.append("\"-Djava.net.preferIPv4Stack=").append(System.getProperty("java.net.preferIPv4Stack", "true")).append("\" ");
-         javaOptsValue.append("\"-Djava.net.preferIPv6Addresses=").append(System.getProperty("java.net.preferIPv6Addresses", "false")).append("\" ");
+         javaOptsValue.append("-Djboss.bind.address=").append(undoIPv6Brackets(System.getProperty("jboss.bind.address", "localhost"))).append(" ");
+         javaOptsValue.append("-Djava.net.preferIPv4Stack=").append(System.getProperty("java.net.preferIPv4Stack", "true")).append(" ");
+         javaOptsValue.append("-Djava.net.preferIPv6Addresses=").append(System.getProperty("java.net.preferIPv6Addresses", "false")).append(" ");
          pb.environment().put("JAVA_OPTS", javaOptsValue.toString());
          ap.process = pb.start();
          ap.log = new FileOutputStream(new File(getAppclientOutputDir(), appclientShortName + ".log-" + System.currentTimeMillis()));
@@ -177,7 +177,7 @@ final class AppclientHelper
       int countOfAttempts = 0;
       final int maxCountOfAttempts = 120; // max wait time: 2 minutes
       while (!os.toString().contains(patternToMatch))
-      {
+      {    	 
          Thread.sleep(1000);
          if (countOfAttempts++ == maxCountOfAttempts)
          {
