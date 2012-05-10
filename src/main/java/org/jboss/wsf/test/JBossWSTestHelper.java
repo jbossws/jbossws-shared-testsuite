@@ -135,16 +135,16 @@ public class JBossWSTestHelper
        return target.startsWith("jboss7");
    }
 
-   public static boolean isTargetJBoss70()
-   {
-       String target = getIntegrationTarget();
-       return target.startsWith("jboss70");
-   }
-
    public static boolean isTargetJBoss71()
    {
        String target = getIntegrationTarget();
        return target.startsWith("jboss71");
+   }
+
+   public static boolean isTargetJBoss72()
+   {
+       String target = getIntegrationTarget();
+       return target.startsWith("jboss72");
    }
 
    public static boolean isIntegrationNative()
@@ -252,12 +252,7 @@ public class JBossWSTestHelper
    private static MBeanServerConnection getAS7ServerConnection(String integrationTarget)
    {
        String host = getServerHost();
-       String urlString;
-       if (integrationTarget.startsWith("jboss70")) {
-          urlString = System.getProperty("jmx.service.url", "service:jmx:rmi:///jndi/rmi://" + host + ":" + 1090 + "/jmxrmi");
-       } else {
-          urlString = System.getProperty("jmx.service.url", "service:jmx:remoting-jmx://" + host + ":" + 9999);
-       }
+       String urlString = System.getProperty("jmx.service.url", "service:jmx:remoting-jmx://" + host + ":" + 9999);
        try {
            JMXServiceURL serviceURL = new JMXServiceURL(urlString);
            return JMXConnectorFactory.connect(serviceURL, null).getMBeanServerConnection();
@@ -274,8 +269,6 @@ public class JBossWSTestHelper
 
          if (integrationTarget == null)
             throw new IllegalStateException("Cannot obtain system property: " + SYSPROP_JBOSSWS_INTEGRATION_TARGET);
-
-         LOGGER.warn("TODO: [JBWS-3211] implement integrationTarget mismatch check for AS 7.x");
       }
 
       return integrationTarget;
