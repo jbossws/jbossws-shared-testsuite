@@ -72,17 +72,24 @@ public class AddressingStatefulTestCase extends JBossWSTest
          port2 = new AddressingPort(service2.getPort(StatefulEndpoint.class, new AddressingFeature(true, true)));
       }
    }
-   
-   public void testAddItem() throws Exception
+
+   public void testItemLifecycle() throws Exception
+   {
+      firstAddItem();
+      secondGetItems();
+      thirdCheckout();
+   }
+
+   private void firstAddItem() throws Exception
    {
       port1.addItem("Ice Cream");
       port1.addItem("Ferrari");
-      
+
       port2.addItem("Mars Bar");
       port2.addItem("Porsche");
    }
 
-   public void testGetItems() throws Exception
+   private void secondGetItems() throws Exception
    {
       String items1 = port1.getItems();
       assertEquals("[Ice Cream, Ferrari]", items1);
@@ -91,7 +98,7 @@ public class AddressingStatefulTestCase extends JBossWSTest
       assertEquals("[Mars Bar, Porsche]", items2);
    }
 
-   public void testCheckout() throws Exception
+   private void thirdCheckout() throws Exception
    {
       port1.checkout();
       assertEquals("[]", port1.getItems());
