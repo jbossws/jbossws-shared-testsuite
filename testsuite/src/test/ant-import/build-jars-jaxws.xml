@@ -1112,34 +1112,74 @@
             </classes>
         </war>
 		
-                <!-- jaxws-jbws3282 -->
-                <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3282.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3282/WEB-INF/web.xml">
-                        <classes dir="${tests.output.dir}/test-classes">
-                	        <include name="org/jboss/test/ws/jaxws/jbws3282/EndpointImpl.class"/>
-                	        <include name="org/jboss/test/ws/jaxws/jbws3282/Endpoint.class"/>
-                	        <include name="org/jboss/test/ws/jaxws/jbws3282/*Handler.class"/>
-                	      	<include name="org/jboss/test/ws/jaxws/jbws3282/jaxws-handlers-server.xml"/>
-                        </classes>
-                        <webinf dir="${tests.output.dir}/test-resources/jaxws/jbws3282/WEB-INF">
-                                <include name="**/*" />
-                        </webinf>
-                </war>
+        <!-- jaxws-jbws3282 -->
+        <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3282.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3282/WEB-INF/web.xml">
+            <classes dir="${tests.output.dir}/test-classes">
+    	        <include name="org/jboss/test/ws/jaxws/jbws3282/EndpointImpl.class"/>
+      	        <include name="org/jboss/test/ws/jaxws/jbws3282/Endpoint.class"/>
+      	        <include name="org/jboss/test/ws/jaxws/jbws3282/*Handler.class"/>
+       	      	<include name="org/jboss/test/ws/jaxws/jbws3282/jaxws-handlers-server.xml"/>
+            </classes>
+            <webinf dir="${tests.output.dir}/test-resources/jaxws/jbws3282/WEB-INF">
+                <include name="**/jaxws-endpoint-config.xml" />
+            </webinf>
+        </war>
+
+        <!-- jaxws-jbws3287-A -->
+        <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3287-A.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3287/WEB-INF/web-A.xml">
+            <classes dir="${tests.output.dir}/test-classes">
+    	        <include name="org/jboss/test/ws/jaxws/jbws3287/EndpointImpl.class"/>
+      	        <include name="org/jboss/test/ws/jaxws/jbws3287/Endpoint.class"/>
+      	        <include name="org/jboss/test/ws/jaxws/jbws3287/*Handler.class"/>
+       	      	<include name="org/jboss/test/ws/jaxws/jbws3287/jaxws-handlers-server.xml"/>
+            </classes>
+            <webinf dir="${tests.output.dir}/test-resources/jaxws/jbws3287/WEB-INF">
+                <include name="**/jaxws-endpoint-config.xml" />
+                <include name="**/jboss-webservices.xml" />
+            </webinf>
+        </war>
+
+        <!-- jaxws-jbws3287-B -->
+        <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3287-B.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3287/WEB-INF/web-B.xml">
+            <classes dir="${tests.output.dir}/test-classes">
+    	        <include name="org/jboss/test/ws/jaxws/jbws3287/EndpointImpl.class"/>
+      	        <include name="org/jboss/test/ws/jaxws/jbws3287/Endpoint.class"/>
+      	        <include name="org/jboss/test/ws/jaxws/jbws3287/*Handler.class"/>
+       	      	<include name="org/jboss/test/ws/jaxws/jbws3287/jaxws-handlers-server.xml"/>
+            </classes>
+            <webinf dir="${tests.output.dir}/test-resources/jaxws/jbws3287/WEB-INF">
+                <include name="**/jaxws-endpoint-config.xml" />
+            </webinf>
+        </war>
+
+        <!-- jaxws-jbws3287-C -->
+		<jar destfile="${tests.output.dir}/test-libs/jaxws-jbws3287-C.jar">
+			<fileset dir="${tests.output.dir}/test-classes">
+				<include name="org/jboss/test/ws/jaxws/jbws3287/EJB3EndpointImpl.class"/>
+				<include name="org/jboss/test/ws/jaxws/jbws3287/Endpoint.class"/>
+				<include name="org/jboss/test/ws/jaxws/jbws3287/*Handler.class"/>
+				<include name="org/jboss/test/ws/jaxws/jbws3287/jaxws-handlers-server.xml"/>
+			</fileset>
+			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws3287/META-INF">
+				<include name="**/*" />
+			</metainf>
+		</jar>
+
+        <!-- jaxws-jbws3276 -->
+        <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3276-usecase1.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3276/WEB-INF/web.xml">
+            <classes dir="${tests.output.dir}/test-classes">
+      	        <include name="org/jboss/test/ws/jaxws/jbws3276/POJOIface.class"/>
+      	        <include name="org/jboss/test/ws/jaxws/jbws3276/POJOImpl.class"/>
+      	        <include name="org/jboss/test/ws/jaxws/jbws3276/AnonymousPOJO.class"/>
+            </classes>
+        </war>
 		
-                <!-- jaxws-jbws3276 -->
-                <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3276-usecase1.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3276/WEB-INF/web.xml">
-                        <classes dir="${tests.output.dir}/test-classes">
-                	        <include name="org/jboss/test/ws/jaxws/jbws3276/POJOIface.class"/>
-                	        <include name="org/jboss/test/ws/jaxws/jbws3276/POJOImpl.class"/>
-                	        <include name="org/jboss/test/ws/jaxws/jbws3276/AnonymousPOJO.class"/>
-                        </classes>
-                </war>
-		
-                <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3276-usecase2.war" needxmlfile="false">
-                        <classes dir="${tests.output.dir}/test-classes">
-                	        <include name="org/jboss/test/ws/jaxws/jbws3276/POJOIface.class"/>
-                	        <include name="org/jboss/test/ws/jaxws/jbws3276/AnonymousPOJO.class"/>
-                        </classes>
-                </war>
+        <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3276-usecase2.war" needxmlfile="false">
+            <classes dir="${tests.output.dir}/test-classes">
+   	            <include name="org/jboss/test/ws/jaxws/jbws3276/POJOIface.class"/>
+    	        <include name="org/jboss/test/ws/jaxws/jbws3276/AnonymousPOJO.class"/>
+            </classes>
+        </war>
 		
         <!-- jaxws-jbws3293 -->
         <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3293.war" webxml="${tests.output.dir}/test-resources/jaxws/jbws3293/WEB-INF/web.xml">
