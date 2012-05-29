@@ -515,7 +515,6 @@
   <target name="tests-smoke" depends="tests-init" description="Run smoke unit tests">
     <antcall target="tests-run-internal">
       <param name="include.wildcard" value="org/jboss/test/ws/jaxws/samples/**/*TestCase.class org/jboss/test/ws/*/smoke/**/*TestCase.class org/jboss/test/ws/*/smoke/**/*TestCaseForked.class"/>
-      <param name="exclude.wildcard" value="org/jboss/test/ws/*/samples/jaxr/**"/>
       <!--
       According to our commit policy, haltonfailure MUST be be true for tests-smoke
       It is a prerequisite for any commit that this target passes without failure.
@@ -529,7 +528,6 @@
   <target name="tests-samples" depends="tests-init" description="Run samples unit tests">
     <antcall target="tests-run-internal">
       <param name="include.wildcard" value="org/jboss/test/ws/*/samples/**/*TestCase.class"/>
-      <param name="exclude.wildcard" value="org/jboss/test/ws/*/samples/jaxr/**"/>
       <param name="haltonfailure" value="false"/>
     </antcall>
   </target>
@@ -538,7 +536,6 @@
   <target name="tests-integration" depends="tests-jars" description="Run integration unit tests">
     <antcall target="tests-run-internal">
       <param name="include.wildcard" value="org/jboss/test/ws/jaxws/samples/**/*TestCase.class org/jboss/test/ws/*/smoke/**/*TestCase.class"/>
-      <param name="exclude.wildcard" value="org/jboss/test/ws/*/samples/jaxr/**"/>
       <param name="haltonfailure" value="false"/>
     </antcall>
     <antcall target="tests-report"/>
