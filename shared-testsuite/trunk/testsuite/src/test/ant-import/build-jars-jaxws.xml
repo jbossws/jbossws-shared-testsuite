@@ -112,6 +112,20 @@
 			</fileset>
 		</jar>
 
+        <!-- jaxws-clientConfig -->
+		<war warfile="${tests.output.dir}/test-libs/jaxws-clientConfig.war" needxmlfile="false">
+			<classes dir="${tests.output.dir}/test-classes">
+				<include name="org/jboss/test/ws/jaxws/clientConfig/Endpoint*.class" />
+			</classes>
+		</war>
+		
+        <!-- jaxws-clientConfig-client -->
+	    <jar destfile="${tests.output.dir}/test-libs/jaxws-clientConfig-client.jar">
+	      <metainf dir="${tests.output.dir}/test-resources/jaxws/clientConfig/META-INF">
+	        <include name="jaxws-client-config.xml" />
+	      </metainf>
+	    </jar>
+
 		<!-- jaxws-complex -->
 		<war warfile="${tests.output.dir}/test-libs/jaxws-complex.war" webxml="${tests.output.dir}/test-resources/jaxws/complex/WEB-INF/web.xml">
 			<classes dir="${tests.output.dir}/test-classes">
