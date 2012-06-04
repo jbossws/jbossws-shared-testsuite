@@ -40,8 +40,20 @@ public class EndpointImpl2
 
     public String getString()
     {
-        if (EndpointImpl.ex != null) throw EndpointImpl.ex;
-        return EndpointImpl.value;
+        for (int i = 0; i < 30; i++)
+        {
+           if (EndpointImpl.ex != null) throw EndpointImpl.ex;
+           if (EndpointImpl.value != null) return EndpointImpl.value;
+           try
+           {
+               Thread.sleep(1000);
+           }
+           catch (InterruptedException e)
+           {
+               throw new RuntimeException(e);
+           }
+        }
+        throw new RuntimeException("Timeout: Cannot get injected value");
     }
 
 }

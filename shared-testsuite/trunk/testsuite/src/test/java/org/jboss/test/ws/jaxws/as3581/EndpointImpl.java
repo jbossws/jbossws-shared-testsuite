@@ -38,8 +38,8 @@ import javax.naming.NamingException;
 public class EndpointImpl
 {
 
-    static String value;
-    static RuntimeException ex;
+    static volatile String value;
+    static volatile RuntimeException ex;
 
     @Oneway
     public void doit()
