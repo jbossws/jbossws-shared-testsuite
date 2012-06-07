@@ -21,19 +21,12 @@
  */
 package org.jboss.test.ws.jaxws.clientConfig;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ServiceLoader;
-
-import javax.xml.namespace.QName;
-import javax.xml.ws.BindingProvider;
-import javax.xml.ws.Service;
-import javax.xml.ws.handler.Handler;
 
 import junit.framework.Test;
 
-import org.jboss.ws.api.configuration.ClientConfigurer;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -45,40 +38,48 @@ import org.jboss.wsf.test.JBossWSTestSetup;
  */
 public class ClientConfigurationTestCase extends JBossWSTest
 {
-   private static final String targetNS = "http://clientConfig.jaxws.ws.test.jboss.org/";
-
    public static Test suite()
    {
-      return new JBossWSTestSetup(ClientConfigurationTestCase.class, "jaxws-clientConfig.war,jaxws-clientConfig-client.jar");
+      return new JBossWSTestSetup(ClientConfigurationTestCase.class, "jaxws-clientConfig.war,jaxws-clientConfig-client.jar, jaxws-clientConfig-inContainer-client.war");
    }
    
-   public void testClientConfigurer()
-   {
-      Iterator<ClientConfigurer> it = ServiceLoader.load(ClientConfigurer.class).iterator();
-      assertTrue(it.hasNext());
-      ClientConfigurer configurer = it.next();
-      assertNotNull(configurer);
-      assertEquals("org.jboss.ws.common.configuration.ConfigHelper", configurer.getClass().getName());
+   public void testClientConfigurer() {
+      Helper helper = new Helper();
+      assertTrue(helper.testClientConfigurer());
    }
 
-   public void testCustomClientConfiguration() throws Exception
+   public void testCustomClientConfiguration() throws Exception {
+      Helper helper = new Helper();
+      helper.setTargetEndpoint("http://" + getServerHost() + ":8080/jaxws-clientConfig/EndpointImpl");
+      assertTrue(helper.testCustomClientConfigurationFromFile());
+   }
+   
+   public void testClientConfigurerInContainer() throws Exception {
+      assertEquals("1", runTestInContainer("testClientConfigurer"));
+   }
+   
+   public void testCustomClientConfigurationFromFileInContainer() throws Exception {
+      assertEquals("1", runTestInContainer("testCustomClientConfigurationFromFile"));
+   }
+   
+   public void testDefaultClientConfigurationInContainer() throws Exception {
+      if (true) {
+         System.out.println("FIXME: [JBWS-3335] Add client-configuration to AS7 domain model");
+         return;
+      }
+      assertEquals("1", runTestInContainer("testDefaultClientConfiguration"));
+   }
+   
+   public void testCustomClientConfigurationInContainer() throws Exception {
+      assertEquals("1", runTestInContainer("testCustomClientConfiguration"));
+   }
+   
+   private String runTestInContainer(String test) throws Exception
    {
-      QName serviceName = new QName(targetNS, "EndpointImplService");
-      URL wsdlURL = new URL("http://" + getServerHost() + ":8080/jaxws-clientConfig/EndpointImpl?wsdl");
-
-      Service service = Service.create(wsdlURL, serviceName);
-      Endpoint port = (Endpoint)service.getPort(Endpoint.class);
-      
-      BindingProvider bp = (BindingProvider)port;
-      @SuppressWarnings("rawtypes")
-      List<Handler> hc = bp.getBinding().getHandlerChain();
-      hc.add(new UserHandler());
-      bp.getBinding().setHandlerChain(hc);
-      
-      ClientConfigurer configurer = ServiceLoader.load(ClientConfigurer.class).iterator().next();
-      configurer.addConfigHandlers(bp, "META-INF/jaxws-client-config.xml", "Custom Client Config");
-
-      String resStr = port.echo("Kermit");
-      assertEquals("Kermit|RoutOut|CustomOut|UserOut|LogOut|endpoint|LogIn|UserIn|CustomIn|RoutIn", resStr);
+      URL url = new URL("http://" + getServerHost()
+            + ":8080/jaxws-clientConfig-inContainer-client?path=/jaxws-clientConfig/EndpointImpl&method=" + test
+            + "&helper=" + Helper.class.getName());
+      BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+      return br.readLine();
    }
 }
