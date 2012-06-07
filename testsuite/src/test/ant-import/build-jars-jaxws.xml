@@ -119,6 +119,23 @@
 			</classes>
 		</war>
 		
+        <!-- jaxws-clientConfig-inContainer-client -->
+		<war warfile="${tests.output.dir}/test-libs/jaxws-clientConfig-inContainer-client.war" needxmlfile="false">
+			<classes dir="${tests.output.dir}/test-classes">
+				<include name="org/jboss/test/ws/jaxws/clientConfig/Endpoint.class" />
+				<include name="org/jboss/test/ws/jaxws/clientConfig/*Handler.class" />
+				<include name="org/jboss/test/ws/jaxws/clientConfig/Helper.class" />
+				<include name="org/jboss/test/helper/TestServlet.class"/>
+				<include name="org/jboss/test/helper/ClientHelper.class"/>
+			</classes>
+			<classes dir="${tests.output.dir}/test-resources/jaxws/clientConfig">
+				<include name="META-INF/jaxws-client-config.xml"/>
+			</classes>
+			<manifest>
+                    <attribute name="Dependencies" value="org.jboss.ws.common services"/>
+            </manifest>
+		</war>
+		
         <!-- jaxws-clientConfig-client -->
 	    <jar destfile="${tests.output.dir}/test-libs/jaxws-clientConfig-client.jar">
 	      <metainf dir="${tests.output.dir}/test-resources/jaxws/clientConfig/META-INF">
