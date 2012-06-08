@@ -87,6 +87,34 @@ public class Helper implements ClientHelper
       return ("Kermit|RoutOut|CustomOut|UserOut|LogOut|endpoint|LogIn|UserIn|CustomIn|RoutIn".equals(resStr));
    }
    
+   public boolean testConfigurationChange() throws Exception
+   {
+      QName serviceName = new QName("http://clientConfig.jaxws.ws.test.jboss.org/", "EndpointImplService");
+      URL wsdlURL = new URL(address + "?wsdl");
+
+      Service service = Service.create(wsdlURL, serviceName);
+      Endpoint port = (Endpoint)service.getPort(Endpoint.class);
+      
+      BindingProvider bp = (BindingProvider)port;
+      @SuppressWarnings("rawtypes")
+      List<Handler> hc = bp.getBinding().getHandlerChain();
+      hc.add(new UserHandler());
+      bp.getBinding().setHandlerChain(hc);
+      
+      ClientConfigurer configurer = ServiceLoader.load(ClientConfigurer.class).iterator().next();
+      configurer.addConfigHandlers(bp, "META-INF/jaxws-client-config.xml", "Custom Client Config");
+
+      String resStr = port.echo("Kermit");
+      if (!"Kermit|RoutOut|CustomOut|UserOut|LogOut|endpoint|LogIn|UserIn|CustomIn|RoutIn".equals(resStr)) {
+         return false;
+      }
+      
+      configurer.addConfigHandlers(bp, "META-INF/jaxws-client-config.xml", "Another Client Config");
+      
+      resStr = port.echo("Kermit");
+      return ("Kermit|RoutOut|UserOut|endpoint|UserIn|RoutIn".equals(resStr));
+   }
+   
    /**
     * This test hacks the current ServerConfig temporarily adding an handler from this testcase deployment
     * into the AS default client configuration, verifies the handler is picked up and finally restores the

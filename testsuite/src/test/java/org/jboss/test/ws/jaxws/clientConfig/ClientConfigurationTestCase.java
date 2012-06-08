@@ -43,25 +43,48 @@ public class ClientConfigurationTestCase extends JBossWSTest
       return new JBossWSTestSetup(ClientConfigurationTestCase.class, "jaxws-clientConfig.war,jaxws-clientConfig-client.jar, jaxws-clientConfig-inContainer-client.war");
    }
    
+   /**
+    * Verifies the client configurer is properly resolved
+    */
    public void testClientConfigurer() {
-      Helper helper = new Helper();
-      assertTrue(helper.testClientConfigurer());
-   }
-
-   public void testCustomClientConfiguration() throws Exception {
-      Helper helper = new Helper();
-      helper.setTargetEndpoint("http://" + getServerHost() + ":8080/jaxws-clientConfig/EndpointImpl");
-      assertTrue(helper.testCustomClientConfigurationFromFile());
+      assertTrue(getHelper().testClientConfigurer());
    }
    
    public void testClientConfigurerInContainer() throws Exception {
       assertEquals("1", runTestInContainer("testClientConfigurer"));
    }
    
+   /**
+    * Verifies a custom client configuration can be read from conf file and set
+    * 
+    * @throws Exception
+    */
+   public void testCustomClientConfigurationFromFile() throws Exception {
+      assertTrue(getHelper().testCustomClientConfigurationFromFile());
+   }
+
    public void testCustomClientConfigurationFromFileInContainer() throws Exception {
       assertEquals("1", runTestInContainer("testCustomClientConfigurationFromFile"));
    }
    
+   /**
+    * Verifies a client configuration can be changed after another one has been set
+    * 
+    * @throws Exception
+    */
+   public void testConfigurationChange() throws Exception {
+      assertTrue(getHelper().testConfigurationChange());
+   }
+
+   public void testConfigurationChangeInContainer() throws Exception {
+      assertEquals("1", runTestInContainer("testConfigurationChange"));
+   }
+
+   /**
+    * Verifies the default client configuration from AS model is used
+    * 
+    * @throws Exception
+    */
    public void testDefaultClientConfigurationInContainer() throws Exception {
       if (true) {
          System.out.println("FIXME: [JBWS-3335] Add client-configuration to AS7 domain model");
@@ -70,8 +93,21 @@ public class ClientConfigurationTestCase extends JBossWSTest
       assertEquals("1", runTestInContainer("testDefaultClientConfiguration"));
    }
    
+   /**
+    * Verifies a client configuration from AS model can be set
+    * 
+    * @throws Exception
+    */
    public void testCustomClientConfigurationInContainer() throws Exception {
       assertEquals("1", runTestInContainer("testCustomClientConfiguration"));
+   }
+   
+   // -------------------------
+   
+   private Helper getHelper() {
+      Helper helper = new Helper();
+      helper.setTargetEndpoint("http://" + getServerHost() + ":8080/jaxws-clientConfig/EndpointImpl");
+      return helper;
    }
    
    private String runTestInContainer(String test) throws Exception
