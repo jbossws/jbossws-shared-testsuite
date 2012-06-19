@@ -86,11 +86,9 @@ public class ClientConfigurationTestCase extends JBossWSTest
     * @throws Exception
     */
    public void testDefaultClientConfigurationInContainer() throws Exception {
-      if (true) {
-         System.out.println("FIXME: [JBWS-3335] Add client-configuration to AS7 domain model");
-         return;
+      if (!isTargetJBoss71()) {
+         assertEquals("1", runTestInContainer("testDefaultClientConfiguration"));
       }
-      assertEquals("1", runTestInContainer("testDefaultClientConfiguration"));
    }
    
    /**
