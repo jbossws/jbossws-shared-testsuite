@@ -411,7 +411,7 @@
       <fileset dir="${jboss.home}/modules/org/jboss/marshalling/river/main/">
         <include name="jboss-marshalling-river-*.jar"/>
       </fileset>
-      <fileset dir="${jboss.home}/modules/org/jboss/remoting3/remoting-jmx/main/">
+      <fileset dir="${jboss.home}/modules/org/jboss/remoting-jmx/main/">
         <include name="remoting-jmx-*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/org/jboss/sasl/main/">
