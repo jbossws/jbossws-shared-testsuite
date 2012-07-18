@@ -357,4 +357,14 @@ public class JBossWSTestHelper
    {
       getDeployer().removeSecurityDomain(name);
    }
+   
+   public static void addHttpsConnector(Map<String, String> sslOptions) throws Exception
+   {
+      getDeployer().addHttpsConnector(sslOptions);
+   }
+   
+   public static void removeHttpsConnector() throws Exception
+   {
+      getDeployer().removeHttpsConnector();
+   }
 }
