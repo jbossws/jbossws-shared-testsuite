@@ -476,6 +476,12 @@
           <filter token="jboss.bind.address" value="${node0}"/>
         </filterset>
       </copy>
+      <copy todir="${tests.output.dir}/test-classes">
+        <fileset dir="@{srcdir}/etc">
+          <include name="*.keystore"/>
+          <include name="*.truststore"/>
+        </fileset>
+      </copy>
       
       <!-- copy handler definitions -->
       <copy todir="${tests.output.dir}/test-classes">
@@ -582,6 +588,10 @@
       <sysproperty key="java.endorsed.dirs" value="${endorsed.dirs}"/>
       <sysproperty key="java.naming.provider.url" value="${node0.jndi.url}"/>
       <sysproperty key="java.protocol.handler.pkgs" value="org.jboss.net.protocol|org.jboss.vfs.protocol|org.jboss.virtual.protocol"/>
+      <sysproperty key="javax.net.ssl.trustStore" value="${tests.output.dir}/test-classes/test.truststore"/>
+      <sysproperty key="javax.net.ssl.trustStorePassword" value="changeit"/>
+      <sysproperty key="javax.net.ssl.trustStoreType" value="jks"/>
+      <sysproperty key="org.jboss.security.ignoreHttpsHost" value="true"/>
       <sysproperty key="java.security.policy" value="${tests.output.dir}/test-classes/tst.policy"/>
       <sysproperty key="jboss.home" value="${jboss.home}"/>
       <sysproperty key="jboss.bind.address" value="${node0}"/>
@@ -592,6 +602,7 @@
       <sysproperty key="jmx.authentication.password" value="${jmx.authentication.password}"/>
       <sysproperty key="org.jboss.ws.testsuite.securityDomain.users.propfile" value="${tests.output.dir}/test-classes/jbossws-users.properties"/>
       <sysproperty key="org.jboss.ws.testsuite.securityDomain.roles.propfile" value="${tests.output.dir}/test-classes/jbossws-roles.properties"/>
+      <sysproperty key="org.jboss.ws.testsuite.server.keystore" value="${tests.output.dir}/test-classes/test.keystore"/>
       <sysproperty key="org.jboss.ws.wsse.keyStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.keystore"/>
       <sysproperty key="org.jboss.ws.wsse.trustStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.truststore"/>
       <sysproperty key="org.jboss.ws.wsse.keyStorePassword" value="jbossws"/>
@@ -637,6 +648,10 @@
       <sysproperty key="java.endorsed.dirs" value="${endorsed.dirs}"/>
       <sysproperty key="java.naming.provider.url" value="${node0.jndi.url}"/>
       <sysproperty key="java.protocol.handler.pkgs" value="org.jboss.net.protocol|org.jboss.vfs.protocol|org.jboss.virtual.protocol"/>
+      <sysproperty key="javax.net.ssl.trustStore" value="${tests.output.dir}/test-classes/test.truststore"/>
+      <sysproperty key="javax.net.ssl.trustStorePassword" value="changeit"/>
+      <sysproperty key="javax.net.ssl.trustStoreType" value="jks"/>
+      <sysproperty key="org.jboss.security.ignoreHttpsHost" value="true"/>
       <sysproperty key="java.security.policy" value="${tests.output.dir}/test-classes/tst.policy"/>
       <sysproperty key="jboss.home" value="${jboss.home}"/>
       <sysproperty key="jboss.bind.address" value="${node0}"/>
@@ -645,19 +660,9 @@
       <sysproperty key="jbossws.deployer.authentication.password" value="${jbossws.deployer.authentication.password}"/>
       <sysproperty key="jmx.authentication.username" value="${jmx.authentication.username}"/>
       <sysproperty key="jmx.authentication.password" value="${jmx.authentication.password}"/>
-      <!--
-      http://jira.jboss.com/jira/browse/JBWS-917
-      <sysproperty key="javax.net.ssl.keyStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.keystore"/>
-      <sysproperty key="javax.net.ssl.trustStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.truststore"/>
-      <sysproperty key="javax.net.ssl.keyStorePassword" value="jbossws"/>
-      <sysproperty key="javax.net.ssl.trustStorePassword" value="jbossws"/>
-      <sysproperty key="javax.net.ssl.keyStoreType" value="jks"/>
-      <sysproperty key="javax.net.ssl.trustStoreType" value="jks"/>
-      -->
-      <!-- HTTPS hostname wrong:  should be <localhost> -->
-      <sysproperty key="org.jboss.security.ignoreHttpsHost" value="true"/>
       <sysproperty key="org.jboss.ws.testsuite.securityDomain.users.propfile" value="${tests.output.dir}/test-classes/jbossws-users.properties"/>
       <sysproperty key="org.jboss.ws.testsuite.securityDomain.roles.propfile" value="${tests.output.dir}/test-classes/jbossws-roles.properties"/>
+      <sysproperty key="org.jboss.ws.testsuite.server.keystore" value="${tests.output.dir}/test-classes/test.keystore"/>
       <sysproperty key="org.jboss.ws.wsse.keyStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.keystore"/>
       <sysproperty key="org.jboss.ws.wsse.trustStore" value="${tests.output.dir}/test-resources/jaxws/samples/wssecurity/wsse.truststore"/>
       <sysproperty key="org.jboss.ws.wsse.keyStorePassword" value="jbossws"/>
