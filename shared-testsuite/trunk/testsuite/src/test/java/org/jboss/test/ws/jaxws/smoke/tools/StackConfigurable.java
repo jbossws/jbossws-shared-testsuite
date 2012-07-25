@@ -25,7 +25,5 @@ public interface StackConfigurable
 {
    public void setIsNative(boolean integrationNative);
 
-   public void setIsMetro(boolean integrationMetro);
-
    public void setIsCXF(boolean integrationCXF);
 }
