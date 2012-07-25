@@ -156,21 +156,40 @@ public class WSConsumerPlugin extends JBossWSTest implements WSConsumerPluginDel
       assertTrue("Source directory switch ignored", sei.exists());
    }
 
-   public void testNocompileNoKeep() throws Exception
+   public void testNoCompile() throws Exception
    {
-      File sourceDir = new File(workDirectory, "wsconsumeNoCPNOKeepsource/java/");
-      File outputDir = new File(workDirectory, "wsconsumeNoCPNOKeepOutput/java/");
+      File sourceDir = new File(workDirectory, "wsconsumeNoCPSources/java/");
+      File outputDir = new File(workDirectory, "wsconsumeNoCPOutput/java/");
       consumer.setTargetPackage("org.jboss.test.ws.tools.testSourceDirectory");
       consumer.setSourceDirectory(sourceDir);
       consumer.setOutputDirectory(outputDir);
+      consumer.setGenerateSource(true);
 
       consumer.consume(getResourceFile("jaxws/smoke/tools/wsdl/TestService.wsdl").getCanonicalPath());
 
-      File sei = new File(workDirectory, "wsconsumeNoCPNOKeepOutput/java/org/jboss/test/ws/tools/testSourceDirectory/EndpointInterface.java");
+      File sei = new File(workDirectory, "wsconsumeNoCPSources/java/org/jboss/test/ws/tools/testSourceDirectory/EndpointInterface.java");
       assertTrue("Expected sei not generated in the expected directory " + outputDir.getPath() , sei.exists());
       
-      File notExistSei = new File(workDirectory, "wsconsumeNoCPNOKeepsource/java/org/jboss/test/ws/tools/testSourceDirectory/EndpointInterface.java");
+      File notExistSei = new File(workDirectory, "wsconsumeNoCPOutput/java/org/jboss/test/ws/tools/testSourceDirectory/EndpointInterface.java");
       assertFalse("Directory " + sourceDir.getPath() + "  is expected to empty", notExistSei.exists());
+   }
+   
+   public void testNoCompileNoKeep() throws Exception
+   {
+      File sourceDir = new File(workDirectory, "wsconsumeNoCPNoKeepsource/java/");
+      File outputDir = new File(workDirectory, "wsconsumeNoCPNoKeepOutput/java/");
+      consumer.setTargetPackage("org.jboss.test.ws.tools.testSourceDirectory");
+      consumer.setSourceDirectory(sourceDir);
+      consumer.setOutputDirectory(outputDir);
+      consumer.setGenerateSource(false);
+
+      consumer.consume(getResourceFile("jaxws/smoke/tools/wsdl/TestService.wsdl").getCanonicalPath());
+
+      File sourceSei = new File(workDirectory, "wsconsumeNoCPNoKeepsource/java/org/jboss/test/ws/tools/testSourceDirectory/EndpointInterface.java");
+      assertFalse("Directory " + sourceDir.getPath() + "  is expected to be empty", sourceSei.exists());
+      
+      File outputSei = new File(workDirectory, "wsconsumeNoCPNoKeepOutput/java/org/jboss/test/ws/tools/testSourceDirectory/EndpointInterface.java");
+      assertFalse("Directory " + sourceDir.getPath() + "  is expected to be empty", outputSei.exists());
    }
    
    
@@ -180,7 +199,33 @@ public class WSConsumerPlugin extends JBossWSTest implements WSConsumerPluginDel
     */
    public void testGenerateSource() throws Exception
    {
-      testTargetPackage();
+      File sourceDir = new File(workDirectory, "wsconsumeGenerateSource/java/");
+      consumer.setTargetPackage("org.jboss.test.ws.tools.testGenerateSource");
+      consumer.setSourceDirectory(sourceDir);
+      consumer.setGenerateSource(true);
+      consumer.setNoCompile(true);
+
+      consumeWSDL();
+
+      File packageDir = new File(sourceDir, "org/jboss/test/ws/tools/testGenerateSource");
+      assertTrue("Package not created", packageDir.exists());
+
+      File seiSource = new File(sourceDir, "org/jboss/test/ws/tools/testGenerateSource/EndpointInterface.java");
+      assertTrue("SEI not generated", seiSource.exists());
+      
+      sourceDir = new File(workDirectory, "wsconsumeGenerateSource2/java/");
+      consumer.setTargetPackage("org.jboss.test.ws.tools.testGenerateSource2");
+      consumer.setSourceDirectory(sourceDir);
+      consumer.setGenerateSource(false);
+      consumer.setNoCompile(false);
+
+      consumeWSDL();
+
+      packageDir = new File(sourceDir, "org/jboss/test/ws/tools/testGenerateSource2");
+      assertFalse("Package should not have been created!", packageDir.exists());
+
+      File interfaceClass = new File(outputDirectory, "org/jboss/test/ws/tools/testGenerateSource2/EndpointInterface.class");
+      assertTrue("SEI not generated", interfaceClass.exists());
    }
 
    /**
