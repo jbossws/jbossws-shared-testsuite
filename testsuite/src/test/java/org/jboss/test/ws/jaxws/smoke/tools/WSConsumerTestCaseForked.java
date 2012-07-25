@@ -23,12 +23,11 @@ package org.jboss.test.ws.jaxws.smoke.tools;
 
 /**
  * Test the WSContractConsumer API across different implementations.
- * NOTE: All tests expect to be executed below 'output/tests'.
  * 
  * @author Heiko.Braun@jboss.com
  * @author alessio.soldano@jboss.com
  */
-public class WSConsumerTestCaseForked extends PluginBase implements WSConsumerPluginDelegate
+public class WSConsumerTestCaseForked extends PluginBase
 {
 
    /**
