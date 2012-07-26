@@ -49,7 +49,7 @@ public class Helper implements ClientHelper
       if (configurer == null) {
          return false;
       }
-      return "org.jboss.ws.common.configuration.ConfigHelper".equals(configurer.getClass().getName());
+      return "org.jboss.wsf.stack.cxf.client.configuration.CXFClientConfigurer".equals(configurer.getClass().getName());
    }
    
    public boolean testCustomClientConfigurationFromFile() throws Exception

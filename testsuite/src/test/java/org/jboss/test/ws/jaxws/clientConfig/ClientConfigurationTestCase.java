@@ -47,11 +47,15 @@ public class ClientConfigurationTestCase extends JBossWSTest
     * Verifies the client configurer is properly resolved
     */
    public void testClientConfigurer() {
-      assertTrue(getHelper().testClientConfigurer());
+      if (isIntegrationCXF()) {
+         assertTrue(getHelper().testClientConfigurer());
+      }
    }
    
    public void testClientConfigurerInContainer() throws Exception {
-      assertEquals("1", runTestInContainer("testClientConfigurer"));
+      if (isIntegrationCXF()) {
+         assertEquals("1", runTestInContainer("testClientConfigurer"));
+      }
    }
    
    /**
