@@ -27,6 +27,7 @@ import org.jboss.wsf.test.JBossWSTest;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.ws.WebServiceFeature;
 import java.io.*;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -364,6 +365,18 @@ public class WSConsumerPlugin extends JBossWSTest implements WSConsumerPluginDel
       
       Class<?> sei = loader.loadClass("org.jboss.test.ws.tools.testTarget.EndpointInterface");
       assertTrue("@XmlSeeAlso expected on SEI (types not referenced by the Port in the wsdl)", sei.isAnnotationPresent(XmlSeeAlso.class));
+      
+      boolean featureConstructor = false;
+      for (Constructor<?> c : service.getConstructors()) {
+         for (Class<?> pt : c.getParameterTypes())
+         {
+            if (pt.isArray() && pt.getComponentType().equals(WebServiceFeature.class)) {
+               featureConstructor = true;
+               break;
+            }
+         }
+      }
+      assertFalse("Found JAXWS 2.2 constructor", featureConstructor);
    }
 
    /**
