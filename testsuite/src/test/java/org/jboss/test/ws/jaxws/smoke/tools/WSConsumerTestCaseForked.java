@@ -92,13 +92,20 @@ public class WSConsumerTestCaseForked extends PluginBase implements WSConsumerPl
    
    
    /**
-    *JBWS-3193
-    * If there are "-n" and "-s" flag, without "-k", the generated
-    * artifacts should be placed in output directory 
+    * If there are "-n" and "-s" flag, with "-k", the generated
+    * artifacts should be placed in source directory 
     */
-   public void testNocompileNoKeep() throws Exception
+   public void testNoCompile() throws Exception
    {
-      dispatch("testNocompileNoKeep");
+      dispatch("testNoCompile");
+   }
+
+   /**
+    * If there are "-n" and "-s" flag, without "-k", nothing should be generated 
+    */
+   public void testNoCompileNoKeep() throws Exception
+   {
+      dispatch("testNoCompileNoKeep");
    }
 
    /**
@@ -107,7 +114,7 @@ public class WSConsumerTestCaseForked extends PluginBase implements WSConsumerPl
     */
    public void testGenerateSource() throws Exception
    {
-      testTargetPackage();
+      dispatch("testGenerateSource");
    }
 
    /**
