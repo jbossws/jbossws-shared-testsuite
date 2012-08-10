@@ -41,12 +41,11 @@ public class Client extends HttpServlet
    private static Logger log = Logger.getLogger(Client.class);
 
    @WebServiceRef
-   static EndpointService authorizedService;
+   EndpointService authorizedService;
 
    @WebServiceRef
-   static EndpointService unauthorizedService;
+   EndpointService unauthorizedService;
 
-   
    @Override
    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
    {
