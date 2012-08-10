@@ -64,7 +64,6 @@ public class JBossWSTestSetup extends TestSetup
    private ClassLoader originalClassLoader;
    private Map<String, Map<String, String>> securityDomains;
    private boolean defaultSecurityDomainRequirement = false;
-   private Map<String, String> httpsConnSslOptions;
    private CleanupOperation cleanupOp;
 
    public JBossWSTestSetup(Class<?> testClass, String archiveList)
@@ -211,9 +210,6 @@ public class JBossWSTestSetup extends TestSetup
             log.warn("Could not add default security domain!", e);
          }
       }
-      if (httpsConnSslOptions != null) {
-         JBossWSTestHelper.addHttpsConnector(httpsConnSslOptions);
-      }
 
       List<URL> clientJars = new ArrayList<URL>();
       for (int i = 0; i < archives.length; i++)
@@ -308,10 +304,6 @@ public class JBossWSTestSetup extends TestSetup
          {
             JBossWSTestHelper.removeSecurityDomain(JBOSSWS_SEC_DOMAIN);
          }
-         if (httpsConnSslOptions != null)
-         {
-            JBossWSTestHelper.removeHttpsConnector();
-         }
       }
    }
    
@@ -336,9 +328,5 @@ public class JBossWSTestSetup extends TestSetup
    public void setDefaultSecurityDomainRequirement(boolean defaultSecurityDomainRequirement)
    {
       this.defaultSecurityDomainRequirement = defaultSecurityDomainRequirement;
-   }
-   
-   public void setHttpsConnectorRequirement(Map<String, String> sslOptions) {
-      httpsConnSslOptions = sslOptions;
    }
 }

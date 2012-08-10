@@ -47,7 +47,7 @@ import org.jboss.ws.api.annotation.WebContext;
 )
 @WebContext
 (
-   contextRoot = "/jaxws-jbws2934-ejb",
+   contextRoot = "/jaxws-jbws2934",
    urlPattern = "/*"
 )
 public class EndpointEJB extends AbstractEndpoint

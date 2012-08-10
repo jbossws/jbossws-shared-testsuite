@@ -34,7 +34,7 @@ public class ExceptionServletTestCase extends JBossWSTest
 {
    public static Test suite()
    {
-      return new JBossWSTestSetup(ExceptionServletTestCase.class, "jaxws-samples-exception-jse.war, jaxws-samples-exception-client.war");
+      return new JBossWSTestSetup(ExceptionServletTestCase.class, "jaxws-samples-exception.war, jaxws-samples-exception-client.war");
    }
    
    public void testRuntimeException() throws Exception
@@ -55,7 +55,7 @@ public class ExceptionServletTestCase extends JBossWSTest
    private String runTestInContainer(String test) throws Exception
    {
       URL url = new URL("http://" + getServerHost()
-            + ":8080/jaxws-samples-exception-client?path=/jaxws-samples-exception-jse/ExceptionEndpointService&method=" + test
+            + ":8080/jaxws-samples-exception-client?path=/jaxws-samples-exception/ExceptionEndpointService&method=" + test
             + "&helper=" + ExceptionHelper.class.getName());
       BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
       return br.readLine();
