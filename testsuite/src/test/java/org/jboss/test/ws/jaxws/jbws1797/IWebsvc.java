@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2012, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2006, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -19,25 +19,17 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.test.ws.jaxws.clientConfig;
+package org.jboss.test.ws.jaxws.jbws1797;
 
-import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
-import org.jboss.logging.Logger;
-
-@WebService(name="Endpoint")
-@SOAPBinding(style = SOAPBinding.Style.RPC)
-public class EndpointImpl
+@WebService
+@SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
+public interface IWebsvc
 {
-   // Provide logging
-   private static Logger log = Logger.getLogger(EndpointImpl.class);
-
-   @WebMethod
-   public String echo(String input)
-   {
-      log.info("echo: " + input);
-      return input + "|endpoint";
-   }
+   public String submit(@WebParam(name = "foo") String foo);
+   
+   public String cancel(@WebParam(name = "foo") String foo, @WebParam(name = "bar", header=true) String bar);
 }

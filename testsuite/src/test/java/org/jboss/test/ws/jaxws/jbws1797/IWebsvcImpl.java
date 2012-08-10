@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2011, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2006, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -19,14 +19,20 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.test.ws.jaxws.clientConfig;
+package org.jboss.test.ws.jaxws.jbws1797;
 
 import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
 
-@WebService(name="Endpoint")
-@SOAPBinding(style = SOAPBinding.Style.RPC)
-public interface Endpoint
+@WebService(endpointInterface = "org.jboss.test.ws.jaxws.jbws1797.IWebsvc", serviceName = "JBWS1797Service")
+public class IWebsvcImpl implements IWebsvc
 {
-   public String echo(String input);
+   public String submit(String foo)
+   {
+      return "submit-" + foo;
+   }
+
+   public String cancel(String foo, String bar)
+   {
+      return "cancel-" + foo + bar;
+   }
 }

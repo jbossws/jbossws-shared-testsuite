@@ -42,7 +42,7 @@ import org.w3c.dom.Element;
 /**
  * @author Heiko.Braun <heiko.braun@jboss.com>
  */
-public class WSProviderPlugin extends JBossWSTest
+public class WSProviderPlugin extends JBossWSTest implements WSProviderPluginDelegate
 {
    private static final String FS = System.getProperty("file.separator"); // '/' on unix, '\' on windows
    // tools delegate

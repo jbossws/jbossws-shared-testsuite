@@ -33,6 +33,7 @@ public class MTOMTestImpl implements MTOMTest
 {
    public ResponseType mtomIn(DataType data)
    {
+      System.out.println("---invoking mtom -----");
       ResponseType response = new ResponseType();
       response.setReply(data.getDoc());
       response.setResponse(data.getRequest());

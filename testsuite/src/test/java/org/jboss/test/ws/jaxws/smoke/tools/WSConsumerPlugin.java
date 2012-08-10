@@ -39,7 +39,7 @@ import java.util.List;
  * @author Heiko.Braun <heiko.braun@jboss.com>
  * @author alessio.soldano@jboss.com
  */
-public class WSConsumerPlugin extends JBossWSTest implements StackConfigurable
+public class WSConsumerPlugin extends JBossWSTest implements WSConsumerPluginDelegate, StackConfigurable
 {
    // Tools delegate. Recreated for every test. See setup(...)
    WSContractConsumer consumer;
@@ -447,6 +447,11 @@ public class WSConsumerPlugin extends JBossWSTest implements StackConfigurable
       return integrationNative;
    }
 
+   public boolean getIsMetro()
+   {
+      return integrationMetro;
+   }
+
    public boolean getIsCXF()
    {
       return integrationCXF;
@@ -455,6 +460,11 @@ public class WSConsumerPlugin extends JBossWSTest implements StackConfigurable
    public void setIsNative(boolean integrationNative)
    {
       this.integrationNative = integrationNative;
+   }
+
+   public void setIsMetro(boolean integrationMetro)
+   {
+      this.integrationMetro = integrationMetro;
    }
 
    public void setIsCXF(boolean integrationCXF)
