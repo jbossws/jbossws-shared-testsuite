@@ -78,6 +78,7 @@ public class EndpointPublishServlet extends HttpServlet
          map.put("/pattern2", "org.jboss.test.ws.publish.EndpointImpl2");
          map.put("/pattern3", "org.jboss.test.ws.publish.EndpointImpl3");
          map.put("/pattern4", "org.jboss.test.ws.publish.EndpointImpl4");
+         map.put("/pattern5", "org.jboss.test.ws.publish.EndpointImpl5");
          
          ctx = publisher.publish("ep-publish-test", Thread.currentThread().getContextClassLoader(), map, createMetaData());
          
@@ -97,6 +98,7 @@ public class EndpointPublishServlet extends HttpServlet
          invoke(new URL("http://" + jbossBindAddress + ":8080/ep-publish-test/pattern2?wsdl"), new QName("http://publish.ws.test.jboss.org/", "EndpointService2"));
          invoke(new URL("http://" + jbossBindAddress + ":8080/ep-publish-test/pattern3?wsdl"), new QName("http://publish.ws.test.jboss.org/", "EndpointService3"));
          invoke(new URL("http://" + jbossBindAddress + ":8080/ep-publish-test/pattern4?wsdl"), new QName("http://publish.ws.test.jboss.org/", "EndpointService4"));
+         invoke(new URL("http://" + jbossBindAddress + ":8080/ep-publish-test/pattern5?wsdl"), new QName("http://publish.ws.test.jboss.org/", "EndpointService5"));
          
          res.getWriter().print("1");
       }
@@ -134,6 +136,15 @@ public class EndpointPublishServlet extends HttpServlet
       portComponent.setWsdlPort(new QName("http://publish.ws.test.jboss.org/", "EndpointPort4"));
       portComponent.setWsdlService(new QName("http://publish.ws.test.jboss.org/", "EndpointService4"));
       webserviceDescription.addPortComponent(portComponent);
+      WebserviceDescriptionMetaData webserviceDescription2 = new WebserviceDescriptionMetaData(metadata);
+      metadata.addWebserviceDescription(webserviceDescription2);
+      webserviceDescription2.setWsdlFile("org/jboss/test/ws/publish/EndpointImpl5.xml"); //test JBWS-3540
+      PortComponentMetaData portComponent2 = new PortComponentMetaData(webserviceDescription2);
+      portComponent2.setPortComponentName("PortComponent5"); //unique ID
+      portComponent2.setServiceEndpointInterface("org.jboss.test.ws.publish.EndpointImpl5");
+      portComponent2.setWsdlPort(new QName("http://publish.ws.test.jboss.org/", "EndpointPort5"));
+      portComponent2.setWsdlService(new QName("http://publish.ws.test.jboss.org/", "EndpointService5"));
+      webserviceDescription2.addPortComponent(portComponent2);
       return metadata;
    }
    
