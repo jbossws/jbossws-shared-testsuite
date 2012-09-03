@@ -19,4 +19,11 @@
     </handler>
   </handler-chain>
 
+  <handler-chain>
+    <handler>
+      <handler-name>ManualResourcesHandler</handler-name>
+      <handler-class>org.jboss.test.ws.jaxws.jbws2074.handler.ManualResourcesHandler</handler-class>
+    </handler>
+  </handler-chain>
+
 </handler-chains>

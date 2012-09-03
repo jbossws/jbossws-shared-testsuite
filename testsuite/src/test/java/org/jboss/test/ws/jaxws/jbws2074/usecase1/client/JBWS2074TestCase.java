@@ -54,11 +54,13 @@ public final class JBWS2074TestCase extends JBossWSTest
       String retStr = port.echo("hello");
 
       StringBuffer expStr = new StringBuffer("hello");
+      expStr.append(":Inbound:ManualResourcesHandler");
       expStr.append(":Inbound:JavaResourcesHandler");
       expStr.append(":Inbound:DescriptorResourcesHandler");
       expStr.append(":POJOImpl");
       expStr.append(":Outbound:DescriptorResourcesHandler");
       expStr.append(":Outbound:JavaResourcesHandler");
+      expStr.append(":Outbound:ManualResourcesHandler");
       assertEquals(expStr.toString(), retStr);
    }
 

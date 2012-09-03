@@ -591,6 +591,7 @@
 				<include name="org/jboss/test/ws/jaxws/jbws2074/usecase1/service/POJOImpl.class" />
 				<include name="org/jboss/test/ws/jaxws/jbws2074/handler/DescriptorResourcesHandler.class" />
 				<include name="org/jboss/test/ws/jaxws/jbws2074/handler/JavaResourcesHandler.class" />
+				<include name="org/jboss/test/ws/jaxws/jbws2074/handler/ManualResourcesHandler.class" />
 				<include name="org/jboss/test/ws/jaxws/jbws2074/usecase1/service/jaxws-service-handlers.xml" />
 			</classes>
                         <manifest>
@@ -624,6 +625,7 @@
 				<include name="org/jboss/test/ws/jaxws/jbws2074/usecase4/service/EJB3Impl.class" />
 				<include name="org/jboss/test/ws/jaxws/jbws2074/handler/DescriptorResourcesHandler.class" />
 				<include name="org/jboss/test/ws/jaxws/jbws2074/handler/JavaResourcesHandler.class" />
+				<include name="org/jboss/test/ws/jaxws/jbws2074/handler/ManualResourcesHandler.class" />
 				<include name="org/jboss/test/ws/jaxws/jbws2074/usecase4/service/jaxws-service-handlers.xml" />
 			</fileset>
 			<metainf dir="${tests.output.dir}/test-resources/jaxws/jbws2074/usecase4/META-INF">
