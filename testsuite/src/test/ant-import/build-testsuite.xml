@@ -591,6 +591,9 @@
       <sysproperty key="javax.net.ssl.trustStore" value="${tests.output.dir}/test-classes/test.truststore"/>
       <sysproperty key="javax.net.ssl.trustStorePassword" value="changeit"/>
       <sysproperty key="javax.net.ssl.trustStoreType" value="jks"/>
+      <sysproperty key="javax.net.ssl.keyStore" value="${tests.output.dir}/test-classes/client.keystore"/>
+      <sysproperty key="javax.net.ssl.keyStorePassword" value="changeit"/>
+      <sysproperty key="javax.net.ssl.keyStoreType" value="jks"/>
       <sysproperty key="org.jboss.security.ignoreHttpsHost" value="true"/>
       <sysproperty key="java.security.policy" value="${tests.output.dir}/test-classes/tst.policy"/>
       <sysproperty key="jboss.home" value="${jboss.home}"/>
@@ -603,6 +606,7 @@
       <sysproperty key="org.jboss.ws.testsuite.securityDomain.users.propfile" value="${tests.output.dir}/test-classes/jbossws-users.properties"/>
       <sysproperty key="org.jboss.ws.testsuite.securityDomain.roles.propfile" value="${tests.output.dir}/test-classes/jbossws-roles.properties"/>
       <sysproperty key="org.jboss.ws.testsuite.server.keystore" value="${tests.output.dir}/test-classes/test.keystore"/>
+      <sysproperty key="org.jboss.ws.testsuite.server.truststore" value="${tests.output.dir}/test-classes/test.truststore"/>
       <sysproperty key="test.archive.directory" value="${tests.output.dir}/test-libs"/>
       <sysproperty key="test.classes.directory" value="${tests.output.dir}/test-classes"/>
       <sysproperty key="test.resources.directory" value="${tests.output.dir}/test-resources"/>
@@ -645,6 +649,9 @@
       <sysproperty key="javax.net.ssl.trustStore" value="${tests.output.dir}/test-classes/test.truststore"/>
       <sysproperty key="javax.net.ssl.trustStorePassword" value="changeit"/>
       <sysproperty key="javax.net.ssl.trustStoreType" value="jks"/>
+      <sysproperty key="javax.net.ssl.keyStore" value="${tests.output.dir}/test-classes/client.keystore"/>
+      <sysproperty key="javax.net.ssl.keyStorePassword" value="changeit"/>
+      <sysproperty key="javax.net.ssl.keyStoreType" value="jks"/>
       <sysproperty key="org.jboss.security.ignoreHttpsHost" value="true"/>
       <sysproperty key="java.security.policy" value="${tests.output.dir}/test-classes/tst.policy"/>
       <sysproperty key="jboss.home" value="${jboss.home}"/>
@@ -657,6 +664,7 @@
       <sysproperty key="org.jboss.ws.testsuite.securityDomain.users.propfile" value="${tests.output.dir}/test-classes/jbossws-users.properties"/>
       <sysproperty key="org.jboss.ws.testsuite.securityDomain.roles.propfile" value="${tests.output.dir}/test-classes/jbossws-roles.properties"/>
       <sysproperty key="org.jboss.ws.testsuite.server.keystore" value="${tests.output.dir}/test-classes/test.keystore"/>
+      <sysproperty key="org.jboss.ws.testsuite.server.truststore" value="${tests.output.dir}/test-classes/test.truststore"/>
       <sysproperty key="test.archive.directory" value="${tests.output.dir}/test-libs"/>
       <sysproperty key="test.classes.directory" value="${tests.output.dir}/test-classes"/>
       <sysproperty key="test.resources.directory" value="${tests.output.dir}/test-resources"/>
