@@ -23,7 +23,7 @@
   </scm>
 
   <properties>
-    <jbossws.common.version>2.1.0.Beta3</jbossws.common.version>
+    <jbossws.common.version>2.1.0-SNAPSHOT</jbossws.common.version>
     <jboss.logging.version>2.0.5.GA</jboss.logging.version>
     <junit.version>3.8.2</junit.version>
   </properties>
