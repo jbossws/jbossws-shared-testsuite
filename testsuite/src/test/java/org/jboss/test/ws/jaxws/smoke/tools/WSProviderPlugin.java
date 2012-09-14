@@ -93,10 +93,12 @@ public class WSProviderPlugin extends JBossWSTest
    {
       provider.setGenerateWsdl(true);
       provider.setExtension(true);
+      final String portSoapAddress = "http://www.jboss.org/myEp";
+      provider.setPortSoapAddress(portSoapAddress); //also check portSoapAddress option
       File outputDir = new File(outputDirectory.getAbsolutePath() + "-soap12"); 
       provide(outputDir);
 
-      verifyWSDL(outputDir, true);
+      verifyWSDL(outputDir, true, portSoapAddress);
    }
 
    /**
@@ -196,10 +198,10 @@ public class WSProviderPlugin extends JBossWSTest
    
    private void verifyWSDL(File directory) throws Exception
    {
-      this.verifyWSDL(directory, false);
+      this.verifyWSDL(directory, false, null);
    }
 
-   private void verifyWSDL(File directory, boolean soap12) throws Exception
+   private void verifyWSDL(File directory, boolean soap12, String portSoapAddress) throws Exception
    {
       File wsdl = new File(
         directory.getAbsolutePath()+
@@ -219,6 +221,12 @@ public class WSProviderPlugin extends JBossWSTest
       else
       {
          assertEquals("http://schemas.xmlsoap.org/wsdl/soap/", soapBindingElement.getNamespaceURI());
+      }
+      
+      if (portSoapAddress != null) {
+         Element portElement = DOMUtils.getFirstChildElement(serviceElement, "port");
+         Element addressElement = DOMUtils.getFirstChildElement(portElement, "address");
+         assertEquals(portSoapAddress, addressElement.getAttribute("location"));
       }
    }
 
