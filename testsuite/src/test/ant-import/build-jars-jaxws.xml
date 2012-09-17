@@ -378,6 +378,21 @@
 				<include name="org/jboss/test/ws/jaxws/jbws1666/TestEndpointImpl.class" />
 			</classes>
 		</war>
+        <jar destfile="${tests.output.dir}/test-libs/jaxws-jbws1666-client.jar"
+        	manifest="${tests.output.dir}/test-resources/jaxws/jbws1666/META-INF/MANIFEST.MF">
+			<fileset dir="${tests.output.dir}/test-classes">
+				<include name="org/jboss/test/ws/jaxws/jbws1666/TestClient.class" />
+                <include name="org/jboss/test/ws/jaxws/jbws1666/TestEndpoint.class" />
+			</fileset>
+		</jar>
+        <jar destfile="${tests.output.dir}/test-libs/jaxws-jbws1666-b-client.jar"
+        	manifest="${tests.output.dir}/test-resources/jaxws/jbws1666/META-INF/MANIFEST-jbossws-cxf-client.MF">
+			<fileset dir="${tests.output.dir}/test-classes">
+				<include name="org/jboss/test/ws/jaxws/jbws1666/TestClient.class" />
+                <include name="org/jboss/test/ws/jaxws/jbws1666/TestEndpoint.class" />
+			</fileset>
+		</jar>
+		
 
 		<!-- jaxws-jbws1694 -->
 		<jar jarfile="${tests.output.dir}/test-libs/jaxws-jbws1694.jar">
