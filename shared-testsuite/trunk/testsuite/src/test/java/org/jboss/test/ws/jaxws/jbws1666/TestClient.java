@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2006, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2012, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -25,6 +25,7 @@ import java.net.URL;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
+import javax.xml.ws.spi.Provider;
 
 public class TestClient
 {
@@ -46,6 +47,6 @@ public class TestClient
    {
       String serverHost = args[0];
       String resStr = testPortAccess(serverHost);
-      System.out.println(resStr);
+      System.out.println(Provider.provider().getClass().getName() + ", " + resStr);
    }
 }
