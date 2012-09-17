@@ -44,7 +44,6 @@ import org.jboss.wsf.test.JBossWSTestSetup;
 public class JBWS1666TestCase extends JBossWSTest
 {
    private static final String FS = System.getProperty("file.separator"); // '/' on unix, '\' on windows
-   private static final String PS = System.getProperty("path.separator"); // ':' on unix, ';' on windows
 
    java.util.Properties props = System.getProperties();
    
