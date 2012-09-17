@@ -88,12 +88,6 @@ public class HandlerChainTestCase extends JBossWSTest
 
    private void assertCookies() throws Exception
    {
-      if (isIntegrationCXF())
-      {
-         System.out.println("FIXME: [CXF-1507] CXF client handler cannot set mime header");
-         return;
-      }
-
       assertEquals("server-cookie=true", ClientMimeHandler.inboundCookie);
    }
 }
