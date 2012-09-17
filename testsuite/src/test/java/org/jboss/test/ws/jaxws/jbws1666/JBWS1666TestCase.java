@@ -83,7 +83,6 @@ public class JBWS1666TestCase extends JBossWSTest
       //java -jar $JBOSS_HOME/jboss-modules.jar -mp $JBOSS_HOME/modules -jar client.jar
       String props = " -Dlog4j.output.dir=" + System.getProperty("log4j.output.dir") + " -jar " + jbmjar + " -mp " + jbm; 
       final String command = javaCmd + props + " -jar " + f.getAbsolutePath() + " " + getServerHost();
-      System.out.println("**** " + command);
       ByteArrayOutputStream bout = new ByteArrayOutputStream();
       executeCommand(command, bout);
       String res = null;
