@@ -101,7 +101,7 @@ public class JBWS2278TestCase extends JBossWSTest
       }
       catch (Exception e)
       {
-         assertEquals("Simulated failure", e.getMessage());
+         assertTrue(e.getMessage().startsWith("Simulated failure"));
       }
    }
    
@@ -134,7 +134,7 @@ public class JBWS2278TestCase extends JBossWSTest
       }
       catch (Exception e)
       {
-         assertEquals("Simulated failure", e.getMessage());
+         assertTrue(e.getMessage().startsWith("Simulated failure"));
       }
    }
 
