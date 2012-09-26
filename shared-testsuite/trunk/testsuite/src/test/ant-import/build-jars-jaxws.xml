@@ -1246,6 +1246,17 @@
 	      </classes>
 	    </war>
 
+        <!-- jaxws-jbws3441 -->
+        <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3441.war" needxmlfile="false">
+            <classes dir="${tests.output.dir}/test-classes">
+                <include name="org/jboss/test/ws/jaxws/jbws3441/*.class" />
+                <exclude name="org/jboss/test/ws/jaxws/jbws3441/*TestCase.class" />
+            </classes>
+            <webinf dir="${tests.output.dir}/test-resources/jaxws/jbws3441/WEB-INF">
+                <include name="beans.xml" />
+            </webinf>
+        </war>
+
         <!-- jaxws-jbws3477-custom-provider -->
 	    <war warfile="${tests.output.dir}/test-libs/jaxws-jbws3477-custom-provider.war" needxmlfile="false">
 	      <classes dir="${tests.output.dir}/test-classes">
