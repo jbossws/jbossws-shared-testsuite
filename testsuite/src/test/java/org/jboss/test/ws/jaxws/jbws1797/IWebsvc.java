@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2012, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2006, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -18,18 +18,18 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */ 
-package org.jboss.test.ws.jaxws.jbws3441;
+ */
+package org.jboss.test.ws.jaxws.jbws1797;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 
-import javax.interceptor.InterceptorBinding;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
-@InterceptorBinding
-@Retention(RUNTIME)
-@Target({METHOD, TYPE})
-public @interface EJBInterceptor {}
+@WebService
+@SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
+public interface IWebsvc
+{
+   public String submit(@WebParam(name = "foo") String foo);
+   
+   public String cancel(@WebParam(name = "foo") String foo, @WebParam(name = "bar", header=true) String bar);
+}

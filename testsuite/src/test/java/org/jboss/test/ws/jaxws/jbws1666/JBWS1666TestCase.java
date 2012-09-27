@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2012, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2009, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -25,25 +25,24 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
-import javax.xml.ws.spi.Provider;
-
 import junit.framework.Test;
 
 import org.jboss.wsf.test.JBossWSTest;
-import org.jboss.wsf.test.JBossWSTestHelper;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
 /**
  * [JBWS-1666] Simplify JBossWS jar dependencies
- * [JBWS-3531] Provide testcase for jboss-modules enabled clients
+ * 
+ * http://jira.jboss.org/jira/browse/JBWS-1666
  *
  * @author Thomas.Diesler@jboss.com
- * @author alessio.soldano@jboss.com
  * @since 14-Jun-2007
  */
 public class JBWS1666TestCase extends JBossWSTest
 {
+
    private static final String FS = System.getProperty("file.separator"); // '/' on unix, '\' on windows
+   private static final String PS = System.getProperty("path.separator"); // ':' on unix, ';' on windows
 
    java.util.Properties props = System.getProperties();
    
@@ -52,36 +51,48 @@ public class JBWS1666TestCase extends JBossWSTest
       return new JBossWSTestSetup(JBWS1666TestCase.class, "jaxws-jbws1666.war");
    }
 
-   public void testClientInTestsuiteJVM() throws Exception
+   public void testPortAccess() throws Exception
    {
       String resStr = TestClient.testPortAccess(getServerHost());
       assertEquals(TestClient.REQ_STR, resStr);
    }
-   
-   public void testClientUsingJBossModules() throws Exception {
-      runJBossModulesClient("jaxws-jbws1666-client.jar");
-   }
 
-   public void testClientUsingJBossModulesWithJBossWSClientAggregationModule() throws Exception {
-      if (!isIntegrationCXF()) {
-         return;
-      }
-      runJBossModulesClient("jaxws-jbws1666-b-client.jar");
-   }
-   
-   private void runJBossModulesClient(String clientJar) throws Exception {
+   public void testClientAccess() throws Exception
+   {
       File javaFile = new File (System.getProperty("java.home") + FS + "bin" + FS + "java");
       String javaCmd = javaFile.exists() ? javaFile.getCanonicalPath() : "java";
       
-      final String jbh = System.getProperty("jboss.home");
-      final String jbm = jbh + FS + "modules";
-      final String jbmjar = jbh + FS + "jboss-modules.jar";
+      String jbh = System.getProperty("jboss.home");
+      String jbc = jbh + FS + "client";
+      String jbl = jbh + FS + "lib";
       
-      final File f = new File(JBossWSTestHelper.getTestArchiveDir(), clientJar);
+      // Setup the classpath - do not modify this lightheartedly. 
+      // Maybe you should extend the Class-Path in the MANIFEST instead.
+      StringBuffer cp = new StringBuffer(System.getProperty("test.classes.directory"));
+      String stackName = null;
+      if (isIntegrationCXF())
+      {
+         stackName = "cxf";
+      }
+      else if (isIntegrationNative())
+      {
+         stackName = "native";
+      }
+      else
+      {
+         throw new Exception("unsupported stack");
+      }
+      cp.append(PS + jbc + FS + "jbossws-" + stackName + "-client.jar");
+      cp.append(PS + jbc + FS + "jboss-common-core.jar");
+      cp.append(PS + jbc + FS + "jboss-javaee.jar");
+      cp.append(PS + jbc + FS + "log4j.jar");
+      cp.append(PS + jbc + FS + "resolver.jar");
+      cp.append(PS + jbc + FS + "xercesImpl.jar");
+      cp.append(PS + jbc + FS + "jboss-logging.jar");
 
-      //java -jar $JBOSS_HOME/jboss-modules.jar -mp $JBOSS_HOME/modules -jar client.jar
-      String props = " -Dlog4j.output.dir=" + System.getProperty("log4j.output.dir") + " -jar " + jbmjar + " -mp " + jbm; 
-      final String command = javaCmd + props + " -jar " + f.getAbsolutePath() + " " + getServerHost();
+      String props = " -Djava.endorsed.dirs=" + jbl + FS + "endorsed ";
+      props += " -Dlog4j.output.dir=" + System.getProperty("log4j.output.dir") + " ";
+      String command = javaCmd + props + " -cp " + cp + " " + TestClient.class.getName() + " " + getServerHost();
       ByteArrayOutputStream bout = new ByteArrayOutputStream();
       executeCommand(command, bout);
       String res = null;
@@ -90,7 +101,6 @@ public class JBWS1666TestCase extends JBossWSTest
           BufferedReader reader = new BufferedReader(new java.io.StringReader(output));
           res = reader.readLine();
       }
-      //check result (includes check on Provider impl, which might be affected by missing javax.xml.ws.api module dependency
-      assertEquals(Provider.provider().getClass().getName() + ", " + TestClient.REQ_STR, res);
+      assertEquals(TestClient.REQ_STR, res);
    }
 }

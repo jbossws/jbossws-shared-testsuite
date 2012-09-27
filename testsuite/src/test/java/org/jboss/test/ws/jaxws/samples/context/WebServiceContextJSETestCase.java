@@ -29,7 +29,6 @@ import javax.xml.ws.Service;
 
 import junit.framework.Test;
 
-import org.jboss.wsf.test.CleanupOperation;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -41,23 +40,18 @@ import org.jboss.wsf.test.JBossWSTestSetup;
  */
 public class WebServiceContextJSETestCase extends JBossWSTest
 {
-   private static Endpoint port;
+   private Endpoint port;
    
    public static Test suite()
    {
-      return new JBossWSTestSetup(WebServiceContextJSETestCase.class, "jaxws-samples-context-jse.war", true, new CleanupOperation() {
-         @Override
-         public void cleanUp() {
-            port = null;
-         }
-      });
+      return new JBossWSTestSetup(WebServiceContextJSETestCase.class, "jaxws-samples-context.war", true);
    }
 
    public void setUp() throws Exception
    {
       if (port == null)
       {
-         URL wsdlURL = new URL("http://" + getServerHost() + ":8080/jaxws-samples-context-jse?wsdl");
+         URL wsdlURL = new URL("http://" + getServerHost() + ":8080/jaxws-samples-context?wsdl");
          QName qname = new QName("http://org.jboss.ws/jaxws/context", "EndpointService");
          Service service = Service.create(wsdlURL, qname);
          port =  (Endpoint)service.getPort(Endpoint.class);

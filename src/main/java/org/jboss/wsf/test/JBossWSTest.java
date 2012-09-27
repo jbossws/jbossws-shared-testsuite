@@ -207,14 +207,14 @@ public abstract class JBossWSTest extends TestCase
       return JBossWSTestHelper.isTargetJBoss7();
    }
 
+   public static boolean isTargetJBoss70()
+   {
+      return JBossWSTestHelper.isTargetJBoss70();
+   }
+
    public static boolean isTargetJBoss71()
    {
       return JBossWSTestHelper.isTargetJBoss71();
-   }
-
-   public static boolean isTargetJBoss72()
-   {
-      return JBossWSTestHelper.isTargetJBoss72();
    }
 
    public static boolean isIntegrationNative()

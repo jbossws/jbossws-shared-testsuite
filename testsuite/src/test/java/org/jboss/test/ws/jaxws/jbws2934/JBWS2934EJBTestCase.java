@@ -32,16 +32,8 @@ import org.jboss.wsf.test.JBossWSTestSetup;
  */
 public final class JBWS2934EJBTestCase extends AbstractTestCase
 {
-   private final String ENDPOINT_ADDRESS = "http://" + getServerHost() + ":8080/jaxws-jbws2934-ejb";
-   
    public static Test suite()
    {
-      return new JBossWSTestSetup(JBWS2934EJBTestCase.class, "jaxws-jbws2934-ejb.jar");
-   }
-
-   @Override
-   protected String getEndpointAddress()
-   {
-       return ENDPOINT_ADDRESS;
+      return new JBossWSTestSetup(JBWS2934EJBTestCase.class, "jaxws-jbws2934.jar");
    }
 }

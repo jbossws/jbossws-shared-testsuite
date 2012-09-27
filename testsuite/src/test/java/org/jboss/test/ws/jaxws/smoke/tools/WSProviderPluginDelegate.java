@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2012, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2006, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -19,24 +19,24 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.test.ws.jaxws.jbws3477;
-
-import javax.xml.ws.spi.Provider;
+package org.jboss.test.ws.jaxws.smoke.tools;
 
 /**
- * 
- * @author alessio.soldano@jboss.com
- * @since 02-Apr-2012
- *
+ * @author Heiko.Braun <heiko.braun@jboss.com>
  */
-public class Helper
+public interface WSProviderPluginDelegate
 {
-   public static void verifyJaxWsSpiProvider(String expectedProviderClass)
-   {
-      Provider provider = Provider.provider();
-      String clazz = provider.getClass().getName();
-      if (!clazz.equals(expectedProviderClass)) {
-         throw new RuntimeException("Expected " + expectedProviderClass + " but got " + clazz);
-      }
-   }
+   void testGenerateWsdl() throws Exception;
+
+   void testGenerateSource() throws Exception;
+
+   void testOutputDirectory() throws Exception;
+
+   void testResourceDirectory() throws Exception;
+
+   void testSourceDirectory() throws Exception;
+
+   void testClassLoader() throws Exception;
+
+   void testMessageStream() throws Exception;
 }

@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2012, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2006, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -18,22 +18,21 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */ 
-package org.jboss.test.ws.jaxws.jbws3441;
+ */
+package org.jboss.test.ws.jaxws.jbws1797;
 
 import javax.jws.WebService;
 
-/**
- * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
- */
-@WebService(name = "POJOEndpoint", serviceName="POJOEndpointService", targetNamespace = "http://org.jboss.test.ws/jbws3441")
-public class POJOEndpointImpl implements EndpointIface
+@WebService(endpointInterface = "org.jboss.test.ws.jaxws.jbws1797.IWebsvc", serviceName = "JBWS1797Service")
+public class IWebsvcImpl implements IWebsvc
 {
-    static boolean interceptorCalled;
+   public String submit(String foo)
+   {
+      return "submit-" + foo;
+   }
 
-    @POJOInterceptor
-    public String echo(final String message)
-    {
-        return interceptorCalled ? message + " (including POJO interceptor)" : message;
-    }
+   public String cancel(String foo, String bar)
+   {
+      return "cancel-" + foo + bar;
+   }
 }

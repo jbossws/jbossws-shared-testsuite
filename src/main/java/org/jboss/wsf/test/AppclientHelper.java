@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
 
 import org.jboss.ws.common.concurrent.CopyJob;
 import org.jboss.ws.common.io.TeeOutputStream;
@@ -49,8 +48,7 @@ final class AppclientHelper
    private static final String PS = System.getProperty("path.separator"); // ':' on unix, ';' on windows
    private static final String EXT = ":".equals(PS) ? ".sh" : ".bat";
    private static final String appclientScript = JBOSS_HOME + FS + "bin" + FS + "appclient" + EXT;
-   private static final Semaphore s = new Semaphore(1, true); //one appclient only can be running at the same time ATM
-   private static Map<String, AppclientProcess> appclients = new HashMap<String, AppclientProcess>(1);
+   private static Map<String, AppclientProcess> appclients = new HashMap<String, AppclientProcess>();
    private static ExecutorService es = Executors.newCachedThreadPool();
    private static String appclientOutputDir;
    
@@ -91,7 +89,6 @@ final class AppclientHelper
       }
       finally
       {
-         s.release();
          ap.outTask.kill();
          ap.errTask.kill();
          ap.process.destroy();
@@ -99,53 +96,47 @@ final class AppclientHelper
       }
    }
 
-   private static AppclientProcess newAppclientProcess(final String archive, final OutputStream appclientOS, final String... appclientArgs) throws Exception
+   private static AppclientProcess newAppclientProcess(final String archive, final OutputStream appclientOS, final String... appclientArgs) throws IOException
    {
-      s.acquire();
-      try {
-         final String killFileName = getKillFileName(archive);
-         final String appclientFullName = getAppclientFullName(archive);
-         final String appclientShortName = getAppclientShortName(archive);
-         final AppclientProcess ap = new AppclientProcess();
-         ap.output = new ByteArrayOutputStream();
-         final List<String> args = new LinkedList<String>();
-         args.add(appclientScript);
-         args.add("--appclient-config=appclient-ws.xml");
-         args.add(appclientFullName);
-         if (appclientOS == null)
-         {
-            args.add(killFileName);
-         }
-         else
-         {
-            // propagate appclient args
-            for (final String appclientArg : appclientArgs)
-            {
-               args.add(appclientArg);
-            }
-         }
-         final ProcessBuilder pb = new ProcessBuilder().command(args);
-         // always propagate IPv6 related properties
-         final StringBuilder javaOptsValue = new StringBuilder();
-         javaOptsValue.append("-Djboss.bind.address=").append(undoIPv6Brackets(System.getProperty("jboss.bind.address", "localhost"))).append(" ");
-         javaOptsValue.append("-Djava.net.preferIPv4Stack=").append(System.getProperty("java.net.preferIPv4Stack", "true")).append(" ");
-         javaOptsValue.append("-Djava.net.preferIPv6Addresses=").append(System.getProperty("java.net.preferIPv6Addresses", "false")).append(" ");
-         pb.environment().put("JAVA_OPTS", javaOptsValue.toString());
-         ap.process = pb.start();
-         ap.log = new FileOutputStream(new File(getAppclientOutputDir(), appclientShortName + ".log-" + System.currentTimeMillis()));
-         // appclient out
-         ap.outTask = new CopyJob(ap.process.getInputStream(),
-               appclientOS == null ? new TeeOutputStream(ap.output, ap.log) : new TeeOutputStream(ap.output, ap.log, appclientOS));
-         // appclient err
-         ap.errTask = new CopyJob(ap.process.getErrorStream(), ap.log);
-         // unfortunately the following threads are needed because of Windows behavior
-         es.submit(ap.outTask);
-         es.submit(ap.errTask);
-         return ap;
-      } catch (Exception e) {
-         s.release();
-         throw e;
+      final String killFileName = getKillFileName(archive);
+      final String appclientFullName = getAppclientFullName(archive);
+      final String appclientShortName = getAppclientShortName(archive);
+      final AppclientProcess ap = new AppclientProcess();
+      ap.output = new ByteArrayOutputStream();
+      final List<String> args = new LinkedList<String>();
+      args.add(appclientScript);
+      args.add("--appclient-config=appclient-ws.xml");
+      args.add(appclientFullName);
+      if (appclientOS == null)
+      {
+         args.add(killFileName);
       }
+      else
+      {
+         // propagate appclient args
+         for (final String appclientArg : appclientArgs)
+         {
+            args.add(appclientArg);
+         }
+      }
+      final ProcessBuilder pb = new ProcessBuilder().command(args);
+      // always propagate IPv6 related properties
+      final StringBuilder javaOptsValue = new StringBuilder();
+      javaOptsValue.append("-Djboss.bind.address=").append(undoIPv6Brackets(System.getProperty("jboss.bind.address", "localhost"))).append(" ");
+      javaOptsValue.append("-Djava.net.preferIPv4Stack=").append(System.getProperty("java.net.preferIPv4Stack", "true")).append(" ");
+      javaOptsValue.append("-Djava.net.preferIPv6Addresses=").append(System.getProperty("java.net.preferIPv6Addresses", "false")).append(" ");
+      pb.environment().put("JAVA_OPTS", javaOptsValue.toString());
+      ap.process = pb.start();
+      ap.log = new FileOutputStream(new File(getAppclientOutputDir(), appclientShortName + ".log-" + System.currentTimeMillis()));
+      // appclient out
+      ap.outTask = new CopyJob(ap.process.getInputStream(),
+            appclientOS == null ? new TeeOutputStream(ap.output, ap.log) : new TeeOutputStream(ap.output, ap.log, appclientOS));
+      // appclient err
+      ap.errTask = new CopyJob(ap.process.getErrorStream(), ap.log);
+      // unfortunately the following threads are needed because of Windows behavior
+      es.submit(ap.outTask);
+      es.submit(ap.errTask);
+      return ap;
    }
 
    private static String undoIPv6Brackets(final String s)
@@ -177,7 +168,7 @@ final class AppclientHelper
       int countOfAttempts = 0;
       final int maxCountOfAttempts = 120; // max wait time: 2 minutes
       while (!os.toString().contains(patternToMatch))
-      {    	 
+      {
          Thread.sleep(1000);
          if (countOfAttempts++ == maxCountOfAttempts)
          {

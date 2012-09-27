@@ -135,16 +135,16 @@ public class JBossWSTestHelper
        return target.startsWith("jboss7");
    }
 
+   public static boolean isTargetJBoss70()
+   {
+       String target = getIntegrationTarget();
+       return target.startsWith("jboss70");
+   }
+
    public static boolean isTargetJBoss71()
    {
        String target = getIntegrationTarget();
        return target.startsWith("jboss71");
-   }
-
-   public static boolean isTargetJBoss72()
-   {
-       String target = getIntegrationTarget();
-       return target.startsWith("jboss72");
    }
 
    public static boolean isIntegrationNative()
@@ -252,7 +252,12 @@ public class JBossWSTestHelper
    private static MBeanServerConnection getAS7ServerConnection(String integrationTarget)
    {
        String host = getServerHost();
-       String urlString = System.getProperty("jmx.service.url", "service:jmx:remoting-jmx://" + host + ":" + 9999);
+       String urlString;
+       if (integrationTarget.startsWith("jboss70")) {
+          urlString = System.getProperty("jmx.service.url", "service:jmx:rmi:///jndi/rmi://" + host + ":" + 1090 + "/jmxrmi");
+       } else {
+          urlString = System.getProperty("jmx.service.url", "service:jmx:remoting-jmx://" + host + ":" + 9999);
+       }
        try {
            JMXServiceURL serviceURL = new JMXServiceURL(urlString);
            return JMXConnectorFactory.connect(serviceURL, null).getMBeanServerConnection();
@@ -269,6 +274,8 @@ public class JBossWSTestHelper
 
          if (integrationTarget == null)
             throw new IllegalStateException("Cannot obtain system property: " + SYSPROP_JBOSSWS_INTEGRATION_TARGET);
+
+         LOGGER.warn("TODO: [JBWS-3211] implement integrationTarget mismatch check for AS 7.x");
       }
 
       return integrationTarget;
@@ -334,7 +341,7 @@ public class JBossWSTestHelper
    
    public static String getTestUsername() {
       String prop = System.getProperty(TEST_USERNAME);
-      if (prop == null || "".equals(prop) || ("${" + TEST_USERNAME + "}").equals(prop)) {
+      if (prop == null || "".equals(prop)) {
          prop = "kermit";
       }
       return prop; 
@@ -342,7 +349,7 @@ public class JBossWSTestHelper
 
    public static String getTestPassword() {
       String prop = System.getProperty(TEST_PASSWORD);
-      if (prop == null || "".equals(prop) || ("${" + TEST_PASSWORD + "}").equals(prop)) {
+      if (prop == null || "".equals(prop)) {
          prop = "thefrog";
       }
       return prop; 
@@ -356,15 +363,5 @@ public class JBossWSTestHelper
    public static void removeSecurityDomain(String name) throws Exception
    {
       getDeployer().removeSecurityDomain(name);
-   }
-   
-   public static void addHttpsConnector(Map<String, String> sslOptions) throws Exception
-   {
-      getDeployer().addHttpsConnector(sslOptions);
-   }
-   
-   public static void removeHttpsConnector() throws Exception
-   {
-      getDeployer().removeHttpsConnector();
    }
 }

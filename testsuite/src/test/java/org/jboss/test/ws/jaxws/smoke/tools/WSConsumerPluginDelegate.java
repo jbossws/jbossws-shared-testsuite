@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2012, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2006, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -18,16 +18,35 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */ 
-package org.jboss.test.ws.jaxws.jbws3441;
-
-import javax.jws.WebService;
+ */
+package org.jboss.test.ws.jaxws.smoke.tools;
 
 /**
- * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
+ * @author Heiko.Braun <heiko.braun@jboss.com>
  */
-@WebService(name = "EndpointIface", targetNamespace = "http://org.jboss.test.ws/jbws3441")
-public interface EndpointIface
+public interface WSConsumerPluginDelegate
 {
-   public String echo(final String message);
+   void testBindingFiles() throws Exception;
+
+   void testCatalog() throws Exception;
+
+   void testOutputDirectory() throws Exception;
+
+   void testSourceDirectory() throws Exception;
+
+   void testGenerateSource() throws Exception;
+
+   void testTargetPackage() throws Exception;
+
+   void testWsdlLocation() throws Exception;
+
+   void testMessageStream() throws Exception;
+
+   void testAdditionalCompilerClassPath();
+
+   void testTarget() throws Exception;
+
+   void testSOAP12Extension() throws Exception;
+   
+   void testAdditionalHeaders() throws Exception;
 }
