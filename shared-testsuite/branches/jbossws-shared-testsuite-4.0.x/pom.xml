@@ -6,7 +6,7 @@
   <artifactId>jbossws-shared-testsuite</artifactId>
   <description>JBossWS Stack Agnostic Testsuite</description>
 
-  <version>4.0.7-SNAPSHOT</version>
+  <version>4.0.8-SNAPSHOT</version>
 
   <!-- Parent -->
   <parent>
