@@ -26,6 +26,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Action;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 
@@ -41,6 +42,7 @@ public class PingEndpointImpl
    @Resource
    WebServiceContext wsctx;
 
+   @Action(input="uri:placeBuyOrder")
    @WebMethod
    public String ping()
    {
