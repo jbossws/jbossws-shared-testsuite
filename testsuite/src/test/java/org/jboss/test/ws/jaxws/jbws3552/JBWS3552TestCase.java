@@ -55,6 +55,12 @@ public class JBWS3552TestCase extends JBossWSTest {
         return service.getPort(EndpointIface.class);
     }
 
+    public void testEchoCA() throws Exception {
+        EndpointIface endpoint = getProxy();
+        AdaptedObjectCA aoCA = new AdaptedObjectCA("object message", "object description", 444, new ComplexObjectCA("a", "b"));
+        assertEquals("object message,object description,444,a b", endpoint.echoCA(aoCA).toString());
+    }
+
     public void testEchoFA() throws Exception {
         EndpointIface endpoint = getProxy();
         AdaptedObjectFA aoFA = new AdaptedObjectFA("object message", "object description", 444, new ComplexObjectFA("a", "b"));
@@ -71,6 +77,16 @@ public class JBWS3552TestCase extends JBossWSTest {
         EndpointIface endpoint = getProxy();
         AdaptedObjectMA aoMA = new AdaptedObjectMA("object message", "object description", 444, new ComplexObjectMA("a", "b"));
         assertEquals("object message,object description,444,a b", endpoint.echoMA(aoMA).toString());
+    }
+
+    public void testExceptionCA() throws Exception {
+        EndpointIface endpoint = getProxy();
+        try {
+            endpoint.throwExceptionCA();
+            fail("Expected exception not thrown");
+        } catch (AdaptedExceptionCA e) {
+            assertEquals("exception message,exception description,666,c d", e.toString());
+        }
     }
 
     public void testExceptionFA() throws Exception {
