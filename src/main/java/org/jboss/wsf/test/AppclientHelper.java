@@ -49,7 +49,7 @@ final class AppclientHelper
    private static final String EXT = ":".equals(PS) ? ".sh" : ".bat";
    private static final String appclientScript = JBOSS_HOME + FS + "bin" + FS + "appclient" + EXT;
    private static Map<String, AppclientProcess> appclients = new HashMap<String, AppclientProcess>();
-   private static ExecutorService es = Executors.newCachedThreadPool();
+   private static ExecutorService es = Executors.newCachedThreadPool(AppclientDaemonFactory.INSTANCE);
    private static String appclientOutputDir;
    
    private static class AppclientProcess {
@@ -221,5 +221,25 @@ final class AppclientHelper
    {
       final int sharpIndex = archive.indexOf('#');
       return archive.substring(0, sharpIndex);
+   }
+
+   // [JBPAPP-10027] appclient threads are always daemons (to don't block JVM shutdown)
+   private static class AppclientDaemonFactory implements ThreadFactory {
+       static final AppclientDaemonFactory INSTANCE = new AppclientDaemonFactory();
+       final ThreadGroup group;
+       final AtomicInteger threadNumber = new AtomicInteger(1);
+       final String namePrefix;
+
+       AppclientDaemonFactory() {
+           group = Thread.currentThread().getThreadGroup();
+           namePrefix = "appclient-output-processing-daemon-";
+       }
+
+       public Thread newThread(final Runnable r) {
+           final Thread t = new Thread(group, r, namePrefix + threadNumber.getAndIncrement());
+           t.setDaemon(true);
+           t.setPriority(Thread.NORM_PRIORITY);
+           return t;
+       }
    }
 }
