@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jboss.ws.common.concurrent.CopyJob;
 import org.jboss.ws.common.io.TeeOutputStream;
