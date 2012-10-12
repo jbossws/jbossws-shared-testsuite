@@ -34,6 +34,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jboss.ws.common.concurrent.CopyJob;
 import org.jboss.ws.common.io.TeeOutputStream;
@@ -51,7 +53,7 @@ final class AppclientHelper
    private static final String appclientScript = JBOSS_HOME + FS + "bin" + FS + "appclient" + EXT;
    private static final Semaphore s = new Semaphore(1, true); //one appclient only can be running at the same time ATM
    private static Map<String, AppclientProcess> appclients = new HashMap<String, AppclientProcess>(1);
-   private static ExecutorService es = Executors.newCachedThreadPool();
+   private static ExecutorService executors = Executors.newCachedThreadPool(AppclientDaemonFactory.INSTANCE);
    private static String appclientOutputDir;
    
    private static class AppclientProcess {
@@ -139,8 +141,8 @@ final class AppclientHelper
          // appclient err
          ap.errTask = new CopyJob(ap.process.getErrorStream(), ap.log);
          // unfortunately the following threads are needed because of Windows behavior
-         es.submit(ap.outTask);
-         es.submit(ap.errTask);
+         executors.submit(ap.outTask);
+         executors.submit(ap.errTask);
          return ap;
       } catch (Exception e) {
          s.release();
@@ -231,4 +233,25 @@ final class AppclientHelper
       final int sharpIndex = archive.indexOf('#');
       return archive.substring(0, sharpIndex);
    }
+   
+   // [JBPAPP-10027] appclient threads are always daemons (to don't block JVM shutdown)
+   private static class AppclientDaemonFactory implements ThreadFactory {
+       static final AppclientDaemonFactory INSTANCE = new AppclientDaemonFactory();
+       final ThreadGroup group;
+       final AtomicInteger threadNumber = new AtomicInteger(1);
+       final String namePrefix;
+
+       AppclientDaemonFactory() {
+           group = Thread.currentThread().getThreadGroup();
+           namePrefix = "appclient-output-processing-daemon-";
+       }
+
+       public Thread newThread(final Runnable r) {
+           final Thread t = new Thread(group, r, namePrefix + threadNumber.getAndIncrement());
+           t.setDaemon(true);
+           t.setPriority(Thread.NORM_PRIORITY);
+           return t;
+       }
+   }
+   
 }
