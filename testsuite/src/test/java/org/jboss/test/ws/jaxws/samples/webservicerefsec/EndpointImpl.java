@@ -33,6 +33,7 @@ import org.jboss.ws.api.annotation.TransportGuarantee;
 import org.jboss.ws.api.annotation.WebContext;
 
 import javax.annotation.security.RolesAllowed;
+import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 
 @WebService(name = "Endpoint", serviceName = "EndpointService", targetNamespace = "http://org.jboss.ws/wsref")
@@ -47,6 +48,7 @@ import javax.ejb.Stateless;
    secureWSDLAccess = false
 )
 @SecurityDomain("JBossWS")
+@PermitAll
 public class EndpointImpl
 {
    // Provide logging
