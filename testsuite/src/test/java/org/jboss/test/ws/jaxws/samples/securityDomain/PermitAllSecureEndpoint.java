@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2006, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2012, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -28,21 +28,12 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 
-@WebService(name = "SecureEndpoint", targetNamespace = "http://org.jboss.ws/securityDomain")
+@WebService(name = "PermitAllSecureEndpoint", targetNamespace = "http://org.jboss.ws/securityDomain")
 @SOAPBinding(style = Style.RPC)
-public interface SecureEndpoint
+public interface PermitAllSecureEndpoint
 {
 
    @WebMethod
    @WebResult(targetNamespace = "http://org.jboss.ws/securityDomain", partName = "return")
-   public String echoForAll(@WebParam(name = "arg0", partName = "arg0") String arg0);
-
-   @WebMethod
-   @WebResult(targetNamespace = "http://org.jboss.ws/securityDomain", partName = "return")
    public String echo(@WebParam(name = "arg0", partName = "arg0") String arg0);
-
-   @WebMethod
-   @WebResult(targetNamespace = "http://org.jboss.ws/securityDomain", partName = "return")
-   public String restrictedEcho(@WebParam(name = "arg0", partName = "arg0") String arg0);
-
 }
