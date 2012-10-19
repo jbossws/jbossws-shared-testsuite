@@ -25,39 +25,13 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AdaptedObjectGA {
-    private String message;
-    private String description;
-    private int code;
-    private ComplexObjectGA complexObject;
+public class AdaptedObjectGA extends AbstractObjectGA {
 
     public AdaptedObjectGA() {
+        super();
     }
 
     public AdaptedObjectGA(String message, String description, int code, ComplexObjectGA complexObject) {
-        this.message = message;
-        this.description = description;
-        this.code = code;
-        this.complexObject = complexObject;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public ComplexObjectGA getComplexObject() {
-        return complexObject;
-    }
-
-    public String toString() {
-        return message + "," + description + "," + code + "," + complexObject;
+        super(message, description, code, complexObject);
     }
 }

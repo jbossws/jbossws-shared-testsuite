@@ -23,59 +23,15 @@ package org.jboss.test.ws.jaxws.jbws3552;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
-public class AdaptedObjectMA {
-    private String message;
-    private String description;
-    private int code;
-    private ComplexObjectMA complexObject;
+public class AdaptedObjectMA extends AbstractObjectMA {
 
     public AdaptedObjectMA() {
+        super();
     }
 
     public AdaptedObjectMA(String message, String description, int code, ComplexObjectMA complexObject) {
-        this.message = message;
-        this.description = description;
-        this.code = code;
-        this.complexObject = complexObject;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setComplexObject(ComplexObjectMA complexObject) {
-        this.complexObject = complexObject;
-    }
-
-    @XmlJavaTypeAdapter(value = ComplexObjectMAAdapter.class)
-    public ComplexObjectMA getComplexObject() {
-        return complexObject;
-    }
-
-    public String toString() {
-        return message + "," + description + "," + code + "," + complexObject;
+        super(message, description, code, complexObject);
     }
 }

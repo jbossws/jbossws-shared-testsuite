@@ -21,39 +21,44 @@
  */
 package org.jboss.test.ws.jaxws.jbws3552;
 
-import javax.jws.WebService;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-@WebService
-public interface EndpointIface {
-    AdaptedObjectCA echoCA(AdaptedObjectCA ao);
+@XmlTransient
+public class AbstractObjectCA {
+    private String message;
+    private String description;
+    private int code;
+    private ComplexObjectCA complexObject;
 
-    AbstractObjectCA echoAbstractCA(AbstractObjectCA ao);
+    public AbstractObjectCA() {
+        super();
+    }
 
-    AdaptedObjectFA echoFA(AdaptedObjectFA ao);
+    public AbstractObjectCA(String message, String description, int code, ComplexObjectCA complexObject) {
+        this.message = message;
+        this.description = description;
+        this.code = code;
+        this.complexObject = complexObject;
+    }
 
-    AbstractObjectFA echoAbstractFA(AbstractObjectFA ao);
+    public String getMessage() {
+        return message;
+    }
 
-    AdaptedObjectGA echoGA(AdaptedObjectGA ao);
+    public String getDescription() {
+        return description;
+    }
 
-    AbstractObjectGA echoAbstractGA(AbstractObjectGA ao);
+    public int getCode() {
+        return code;
+    }
 
-    AdaptedObjectMA echoMA(AdaptedObjectMA ao);
+    public ComplexObjectCA getComplexObject() {
+        return complexObject;
+    }
 
-    AbstractObjectMA echoAbstractMA(AbstractObjectMA ao);
-
-    void throwExceptionCA() throws AdaptedExceptionCA;
-
-    void throwExtendedExceptionCA() throws ExtendedAdaptedExceptionCA;
-
-    void throwExceptionFA() throws AdaptedExceptionFA;
-    
-    void throwExtendedExceptionFA() throws ExtendedAdaptedExceptionFA;
-
-    void throwExceptionGA() throws AdaptedExceptionGA;
-
-    void throwExtendedExceptionGA() throws ExtendedAdaptedExceptionGA;
-
-    void throwExceptionMA() throws AdaptedExceptionMA;
-
-    void throwExtendedExceptionMA() throws ExtendedAdaptedExceptionMA;
+    public String toString() {
+        return message + "," + description + "," + code + "," + complexObject;
+    }
 }

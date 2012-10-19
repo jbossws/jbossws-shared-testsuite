@@ -25,36 +25,53 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlTransient
-public class AdaptedExceptionCA extends Exception {
+public class AbstractObjectMA {
     private String message;
     private String description;
     private int code;
-    private ComplexObjectCA complexObject;
+    private ComplexObjectMA complexObject;
 
-    public AdaptedExceptionCA() {
+    public AbstractObjectMA() {
         super();
     }
 
-    public AdaptedExceptionCA(String message, String description, int code, ComplexObjectCA complexObject) {
+    public AbstractObjectMA(String message, String description, int code, ComplexObjectMA complexObject) {
         this.message = message;
         this.description = description;
         this.code = code;
         this.complexObject = complexObject;
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public String getMessage() {
         return message;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setCode(int code) {
+        this.code = code;
+    }
+
     public int getCode() {
         return code;
     }
 
-    public ComplexObjectCA getComplexObject() {
+    public void setComplexObject(ComplexObjectMA complexObject) {
+        this.complexObject = complexObject;
+    }
+
+    @XmlJavaTypeAdapter(value = ComplexObjectMAAdapter.class)
+    public ComplexObjectMA getComplexObject() {
         return complexObject;
     }
 

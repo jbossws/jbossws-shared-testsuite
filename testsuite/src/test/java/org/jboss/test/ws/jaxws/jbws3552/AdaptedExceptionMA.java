@@ -21,11 +21,10 @@
  */
 package org.jboss.test.ws.jaxws.jbws3552;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-@XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
+@XmlTransient
 public class AdaptedExceptionMA extends Exception {
     private String message;
     private String description;
@@ -33,6 +32,7 @@ public class AdaptedExceptionMA extends Exception {
     private ComplexObjectMA complexObject;
 
     public AdaptedExceptionMA() {
+        super();
     }
 
     public AdaptedExceptionMA(String message, String description, int code, ComplexObjectMA complexObject) {
