@@ -21,39 +21,17 @@
  */
 package org.jboss.test.ws.jaxws.jbws3552;
 
-import javax.jws.WebService;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-@WebService
-public interface EndpointIface {
-    AdaptedObjectCA echoCA(AdaptedObjectCA ao);
+@XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
+public class ExtendedAdaptedExceptionMA extends AdaptedExceptionMA {
 
-    AbstractObjectCA echoAbstractCA(AbstractObjectCA ao);
+    public ExtendedAdaptedExceptionMA() {
+    }
 
-    AdaptedObjectFA echoFA(AdaptedObjectFA ao);
-
-    AbstractObjectFA echoAbstractFA(AbstractObjectFA ao);
-
-    AdaptedObjectGA echoGA(AdaptedObjectGA ao);
-
-    AbstractObjectGA echoAbstractGA(AbstractObjectGA ao);
-
-    AdaptedObjectMA echoMA(AdaptedObjectMA ao);
-
-    AbstractObjectMA echoAbstractMA(AbstractObjectMA ao);
-
-    void throwExceptionCA() throws AdaptedExceptionCA;
-
-    void throwExtendedExceptionCA() throws ExtendedAdaptedExceptionCA;
-
-    void throwExceptionFA() throws AdaptedExceptionFA;
-    
-    void throwExtendedExceptionFA() throws ExtendedAdaptedExceptionFA;
-
-    void throwExceptionGA() throws AdaptedExceptionGA;
-
-    void throwExtendedExceptionGA() throws ExtendedAdaptedExceptionGA;
-
-    void throwExceptionMA() throws AdaptedExceptionMA;
-
-    void throwExtendedExceptionMA() throws ExtendedAdaptedExceptionMA;
+    public ExtendedAdaptedExceptionMA(String message, String description, int code, ComplexObjectMA complexObject) {
+        super(message, description, code, complexObject);
+    }
 }

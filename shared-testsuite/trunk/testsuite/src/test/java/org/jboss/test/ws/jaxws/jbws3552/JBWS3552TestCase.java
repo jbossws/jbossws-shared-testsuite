@@ -61,10 +61,22 @@ public class JBWS3552TestCase extends JBossWSTest {
         assertEquals("object message,object description,444,a b", endpoint.echoCA(aoCA).toString());
     }
 
+    public void testEchoAbstractCA() throws Exception {
+        EndpointIface endpoint = getProxy();
+        AdaptedObjectCA aoCA = new AdaptedObjectCA("object message", "object description", 444, new ComplexObjectCA("a", "b"));
+        assertEquals("object message,object description,444,a b", endpoint.echoAbstractCA(aoCA).toString());
+    }
+
     public void testEchoFA() throws Exception {
         EndpointIface endpoint = getProxy();
         AdaptedObjectFA aoFA = new AdaptedObjectFA("object message", "object description", 444, new ComplexObjectFA("a", "b"));
         assertEquals("object message,object description,444,a b", endpoint.echoFA(aoFA).toString());
+    }
+
+    public void testEchoAbstractFA() throws Exception {
+        EndpointIface endpoint = getProxy();
+        AdaptedObjectFA aoFA = new AdaptedObjectFA("object message", "object description", 444, new ComplexObjectFA("a", "b"));
+        assertEquals("object message,object description,444,a b", endpoint.echoAbstractFA(aoFA).toString());
     }
 
     public void testEchoGA() throws Exception {
@@ -73,10 +85,22 @@ public class JBWS3552TestCase extends JBossWSTest {
         assertEquals("object message,object description,444,a b", endpoint.echoGA(aoGA).toString());
     }
 
+    public void testEchoAbstractGA() throws Exception {
+        EndpointIface endpoint = getProxy();
+        AdaptedObjectGA aoGA = new AdaptedObjectGA("object message", "object description", 444, new ComplexObjectGA("a", "b"));
+        assertEquals("object message,object description,444,a b", endpoint.echoAbstractGA(aoGA).toString());
+    }
+
     public void testEchoMA() throws Exception {
         EndpointIface endpoint = getProxy();
         AdaptedObjectMA aoMA = new AdaptedObjectMA("object message", "object description", 444, new ComplexObjectMA("a", "b"));
         assertEquals("object message,object description,444,a b", endpoint.echoMA(aoMA).toString());
+    }
+
+    public void testEchoAbstractMA() throws Exception {
+        EndpointIface endpoint = getProxy();
+        AdaptedObjectMA aoMA = new AdaptedObjectMA("object message", "object description", 444, new ComplexObjectMA("a", "b"));
+        assertEquals("object message,object description,444,a b", endpoint.echoAbstractMA(aoMA).toString());
     }
 
     public void testExceptionCA() throws Exception {
@@ -85,6 +109,16 @@ public class JBWS3552TestCase extends JBossWSTest {
             endpoint.throwExceptionCA();
             fail("Expected exception not thrown");
         } catch (AdaptedExceptionCA e) {
+            assertEquals("exception message,exception description,666,c d", e.toString());
+        }
+    }
+
+    public void testExtendedExceptionCA() throws Exception {
+        EndpointIface endpoint = getProxy();
+        try {
+            endpoint.throwExtendedExceptionCA();
+            fail("Expected exception not thrown");
+        } catch (ExtendedAdaptedExceptionCA e) {
             assertEquals("exception message,exception description,666,c d", e.toString());
         }
     }
@@ -99,6 +133,16 @@ public class JBWS3552TestCase extends JBossWSTest {
         }
     }
 
+    public void testExtendedExceptionFA() throws Exception {
+        EndpointIface endpoint = getProxy();
+        try {
+            endpoint.throwExtendedExceptionFA();
+            fail("Expected exception not thrown");
+        } catch (ExtendedAdaptedExceptionFA e) {
+            assertEquals("exception message,exception description,666,c d", e.toString());
+        }
+    }
+
     public void testExceptionGA() throws Exception {
         EndpointIface endpoint = getProxy();
         try {
@@ -109,12 +153,32 @@ public class JBWS3552TestCase extends JBossWSTest {
         }
     }
 
+    public void testExtendedExceptionGA() throws Exception {
+        EndpointIface endpoint = getProxy();
+        try {
+            endpoint.throwExtendedExceptionGA();
+            fail("Expected exception not thrown");
+        } catch (ExtendedAdaptedExceptionGA e) {
+            assertEquals("exception message,exception description,666,c d", e.toString());
+        }
+    }
+
     public void testExceptionMA() throws Exception {
         EndpointIface endpoint = getProxy();
         try {
             endpoint.throwExceptionMA();
             fail("Expected exception not thrown");
         } catch (AdaptedExceptionMA e) {
+            assertEquals("exception message,exception description,666,c d", e.toString());
+        }
+    }
+
+    public void testExtendedExceptionMA() throws Exception {
+        EndpointIface endpoint = getProxy();
+        try {
+            endpoint.throwExtendedExceptionMA();
+            fail("Expected exception not thrown");
+        } catch (ExtendedAdaptedExceptionMA e) {
             assertEquals("exception message,exception description,666,c d", e.toString());
         }
     }

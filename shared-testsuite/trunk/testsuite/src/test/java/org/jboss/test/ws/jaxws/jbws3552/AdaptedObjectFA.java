@@ -23,43 +23,15 @@ package org.jboss.test.ws.jaxws.jbws3552;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AdaptedObjectFA {
-    private String message;
-    private String description;
-    private int code;
-    @XmlJavaTypeAdapter(value = ComplexObjectFAAdapter.class)
-    private ComplexObjectFA complexObject;
+public class AdaptedObjectFA extends AbstractObjectFA {
 
     public AdaptedObjectFA() {
+        super();
     }
 
     public AdaptedObjectFA(String message, String description, int code, ComplexObjectFA complexObject) {
-        this.message = message;
-        this.description = description;
-        this.code = code;
-        this.complexObject = complexObject;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public ComplexObjectFA getComplexObject() {
-        return complexObject;
-    }
-
-    public String toString() {
-        return message + "," + description + "," + code + "," + complexObject;
+        super(message, description, code, complexObject);
     }
 }
