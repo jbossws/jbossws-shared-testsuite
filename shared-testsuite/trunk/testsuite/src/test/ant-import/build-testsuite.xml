@@ -31,14 +31,14 @@
   <target name="tests-prepare" depends="prepare">
     
     <!-- Define jboss.home -->
-    <condition property="jboss.home" value="${jboss710.home}">
-      <equals arg1="${jbossws.integration.target}" arg2="jboss710"/>
-    </condition>
     <condition property="jboss.home" value="${jboss711.home}">
       <equals arg1="${jbossws.integration.target}" arg2="jboss711"/>
     </condition>
     <condition property="jboss.home" value="${jboss712.home}">
       <equals arg1="${jbossws.integration.target}" arg2="jboss712"/>
+    </condition>
+    <condition property="jboss.home" value="${jboss713.home}">
+      <equals arg1="${jbossws.integration.target}" arg2="jboss713"/>
     </condition>
     <condition property="jboss.home" value="${jboss720.home}">
       <equals arg1="${jbossws.integration.target}" arg2="jboss720"/>
