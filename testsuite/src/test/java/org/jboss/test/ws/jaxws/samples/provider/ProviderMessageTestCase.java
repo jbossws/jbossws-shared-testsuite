@@ -126,12 +126,15 @@ public class ProviderMessageTestCase extends JBossWSTest
       URL epURL = new URL("http://" + getServerHost() + ":8080/jaxws-samples-provider-message");
       SOAPConnection con = SOAPConnectionFactory.newInstance().createConnection();
       SOAPMessage resMsg = con.call(reqMsg, epURL);
-      SOAPPart soapPart = resMsg.getSOAPPart();
-      //verify there's either nothing in the reply or at least the response body is empty
-      if (soapPart != null && soapPart.getEnvelope() != null && soapPart.getEnvelope().getBody() != null)
+      if (resMsg != null)
       {
-         SOAPBody soapBody = soapPart.getEnvelope().getBody();
-         assertFalse(soapBody.getChildElements().hasNext());
+         SOAPPart soapPart = resMsg.getSOAPPart();
+         //verify there's either nothing in the reply or at least the response body is empty
+         if (soapPart != null && soapPart.getEnvelope() != null && soapPart.getEnvelope().getBody() != null)
+         {
+            SOAPBody soapBody = soapPart.getEnvelope().getBody();
+            assertFalse(soapBody.getChildElements().hasNext());
+         }
       }
    }
    
