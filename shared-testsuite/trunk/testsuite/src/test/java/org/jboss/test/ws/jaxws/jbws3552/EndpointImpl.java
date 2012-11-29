@@ -61,7 +61,7 @@ public class EndpointImpl {
         throw new ExtendedAdaptedExceptionCA("exception message", "exception description", 666, new ComplexObjectCA("c", "d"));
     }
 
-    public void throwExtendedExceptionCA() throws AdaptedExceptionCA {
+    public void throwExtendedExceptionCA() throws ExtendedAdaptedExceptionCA {
         throw new ExtendedAdaptedExceptionCA("exception message", "exception description", 666, new ComplexObjectCA("c", "d"));
     }
 
@@ -77,7 +77,7 @@ public class EndpointImpl {
         throw new ExtendedAdaptedExceptionGA("exception message", "exception description", 666, new ComplexObjectGA("c", "d"));
     }
 
-    public void throwExtendedExceptionGA() throws AdaptedExceptionGA {
+    public void throwExtendedExceptionGA() throws ExtendedAdaptedExceptionGA {
         throw new ExtendedAdaptedExceptionGA("exception message", "exception description", 666, new ComplexObjectGA("c", "d"));
     }
 
@@ -85,7 +85,7 @@ public class EndpointImpl {
         throw new ExtendedAdaptedExceptionMA("exception message", "exception description", 666, new ComplexObjectMA("c", "d"));
     }
 
-    public void throwExtendedExceptionMA() throws AdaptedExceptionMA {
+    public void throwExtendedExceptionMA() throws ExtendedAdaptedExceptionMA {
         throw new ExtendedAdaptedExceptionMA("exception message", "exception description", 666, new ComplexObjectMA("c", "d"));
     }
 }

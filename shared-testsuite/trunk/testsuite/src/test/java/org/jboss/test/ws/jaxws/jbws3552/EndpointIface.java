@@ -46,7 +46,7 @@ public interface EndpointIface {
     void throwExtendedExceptionCA() throws ExtendedAdaptedExceptionCA;
 
     void throwExceptionFA() throws AdaptedExceptionFA;
-    
+
     void throwExtendedExceptionFA() throws ExtendedAdaptedExceptionFA;
 
     void throwExceptionGA() throws AdaptedExceptionGA;
