@@ -27,11 +27,25 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
 public class ExtendedAdaptedExceptionMA extends AdaptedExceptionMA {
+    private int code;
 
     public ExtendedAdaptedExceptionMA() {
     }
 
-    public ExtendedAdaptedExceptionMA(String message, String description, int code, ComplexObjectMA complexObject) {
-        super(message, description, code, complexObject);
+    public ExtendedAdaptedExceptionMA(int code, String message, String description, ComplexObjectMA complexObject) {
+        super(message, description, complexObject);
+        this.code = code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String toString() {
+        return code + "," + super.toString();
     }
 }

@@ -28,7 +28,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class AdaptedExceptionFA extends Exception {
     private String message;
     private String description;
-    private int code;
     @XmlJavaTypeAdapter(value = ComplexObjectFAAdapter.class)
     private ComplexObjectFA complexObject;
 
@@ -36,10 +35,9 @@ public class AdaptedExceptionFA extends Exception {
         super();
     }
 
-    public AdaptedExceptionFA(String message, String description, int code, ComplexObjectFA complexObject) {
+    public AdaptedExceptionFA(String message, String description, ComplexObjectFA complexObject) {
         this.message = message;
         this.description = description;
-        this.code = code;
         this.complexObject = complexObject;
     }
 
@@ -51,15 +49,11 @@ public class AdaptedExceptionFA extends Exception {
         return description;
     }
 
-    public int getCode() {
-        return code;
-    }
-
     public ComplexObjectFA getComplexObject() {
         return complexObject;
     }
 
     public String toString() {
-        return message + "," + description + "," + code + "," + complexObject;
+        return message + "," + description + "," + complexObject;
     }
 }

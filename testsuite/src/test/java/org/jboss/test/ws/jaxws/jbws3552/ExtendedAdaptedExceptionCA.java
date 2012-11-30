@@ -27,11 +27,21 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ExtendedAdaptedExceptionCA extends AdaptedExceptionCA {
+    private int code;
 
     public ExtendedAdaptedExceptionCA() {
     }
 
-    public ExtendedAdaptedExceptionCA(String message, String description, int code, ComplexObjectCA complexObject) {
-        super(message, description, code, complexObject);
+    public ExtendedAdaptedExceptionCA(int code, String message, String description, ComplexObjectCA complexObject) {
+        super(message, description, complexObject);
+        this.code = code;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String toString() {
+        return code + "," + super.toString();
     }
 }

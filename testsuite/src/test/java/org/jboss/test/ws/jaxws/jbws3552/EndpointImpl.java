@@ -58,34 +58,34 @@ public class EndpointImpl {
     }
 
     public void throwExceptionCA() throws AdaptedExceptionCA {
-        throw new ExtendedAdaptedExceptionCA("exception message", "exception description", 666, new ComplexObjectCA("c", "d"));
+        throw new ExtendedAdaptedExceptionCA(666, "exception message", "exception description", new ComplexObjectCA("c", "d"));
     }
 
     public void throwExtendedExceptionCA() throws ExtendedAdaptedExceptionCA {
-        throw new ExtendedAdaptedExceptionCA("exception message", "exception description", 666, new ComplexObjectCA("c", "d"));
+        throw new ExtendedAdaptedExceptionCA(666, "exception message", "exception description", new ComplexObjectCA("c", "d"));
     }
 
     public void throwExceptionFA() throws AdaptedExceptionFA {
-        throw new ExtendedAdaptedExceptionFA("exception message", "exception description", 666, new ComplexObjectFA("c", "d"));
+        throw new ExtendedAdaptedExceptionFA(666, "exception message", "exception description", new ComplexObjectFA("c", "d"));
     }
 
     public void throwExtendedExceptionFA() throws ExtendedAdaptedExceptionFA {
-        throw new ExtendedAdaptedExceptionFA("exception message", "exception description", 666, new ComplexObjectFA("c", "d"));
+        throw new ExtendedAdaptedExceptionFA(666, "exception message", "exception description", new ComplexObjectFA("c", "d"));
     }
 
     public void throwExceptionGA() throws AdaptedExceptionGA {
-        throw new ExtendedAdaptedExceptionGA("exception message", "exception description", 666, new ComplexObjectGA("c", "d"));
+        throw new ExtendedAdaptedExceptionGA(666, "exception message", "exception description", new ComplexObjectGA("c", "d"));
     }
 
     public void throwExtendedExceptionGA() throws ExtendedAdaptedExceptionGA {
-        throw new ExtendedAdaptedExceptionGA("exception message", "exception description", 666, new ComplexObjectGA("c", "d"));
+        throw new ExtendedAdaptedExceptionGA(666, "exception message", "exception description", new ComplexObjectGA("c", "d"));
     }
 
     public void throwExceptionMA() throws AdaptedExceptionMA {
-        throw new ExtendedAdaptedExceptionMA("exception message", "exception description", 666, new ComplexObjectMA("c", "d"));
+        throw new ExtendedAdaptedExceptionMA(666, "exception message", "exception description", new ComplexObjectMA("c", "d"));
     }
 
     public void throwExtendedExceptionMA() throws ExtendedAdaptedExceptionMA {
-        throw new ExtendedAdaptedExceptionMA("exception message", "exception description", 666, new ComplexObjectMA("c", "d"));
+        throw new ExtendedAdaptedExceptionMA(666, "exception message", "exception description", new ComplexObjectMA("c", "d"));
     }
 }
