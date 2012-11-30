@@ -113,7 +113,7 @@ public class JBWS3552TestCase extends JBossWSTest {
             endpoint.throwExceptionCA();
             fail("Expected exception not thrown");
         } catch (AdaptedExceptionCA e) {
-            assertEquals("exception message,exception description,666,c d", e.toString());
+            assertEquals("666,exception message,exception description,c d", e.toString());
         }
     }
 
@@ -123,7 +123,7 @@ public class JBWS3552TestCase extends JBossWSTest {
             endpoint.throwExtendedExceptionCA();
             fail("Expected exception not thrown");
         } catch (ExtendedAdaptedExceptionCA e) {
-            assertEquals("exception message,exception description,666,c d", e.toString());
+            assertEquals("666,exception message,exception description,c d", e.toString());
         }
     }
 
@@ -137,7 +137,7 @@ public class JBWS3552TestCase extends JBossWSTest {
             endpoint.throwExceptionFA();
             fail("Expected exception not thrown");
         } catch (AdaptedExceptionFA e) {
-            assertEquals("exception message,exception description,666,c d", e.toString());
+            assertEquals("666,exception message,exception description,c d", e.toString());
         }
     }
 
@@ -147,7 +147,7 @@ public class JBWS3552TestCase extends JBossWSTest {
             endpoint.throwExtendedExceptionFA();
             fail("Expected exception not thrown");
         } catch (ExtendedAdaptedExceptionFA e) {
-            assertEquals("exception message,exception description,666,c d", e.toString());
+            assertEquals("666,exception message,exception description,c d", e.toString());
         }
     }
 
@@ -161,7 +161,7 @@ public class JBWS3552TestCase extends JBossWSTest {
             endpoint.throwExceptionGA();
             fail("Expected exception not thrown");
         } catch (AdaptedExceptionGA e) {
-            assertEquals("exception message,exception description,666,c d", e.toString());
+            assertEquals("666,exception message,exception description,c d", e.toString());
         }
     }
 
@@ -171,7 +171,7 @@ public class JBWS3552TestCase extends JBossWSTest {
             endpoint.throwExtendedExceptionGA();
             fail("Expected exception not thrown");
         } catch (ExtendedAdaptedExceptionGA e) {
-            assertEquals("exception message,exception description,666,c d", e.toString());
+            assertEquals("666,exception message,exception description,c d", e.toString());
         }
     }
 
@@ -185,7 +185,7 @@ public class JBWS3552TestCase extends JBossWSTest {
             endpoint.throwExceptionMA();
             fail("Expected exception not thrown");
         } catch (AdaptedExceptionMA e) {
-            assertEquals("exception message,exception description,666,c d", e.toString());
+            assertEquals("666,exception message,exception description,c d", e.toString());
         }
     }
 
@@ -195,7 +195,7 @@ public class JBWS3552TestCase extends JBossWSTest {
             endpoint.throwExtendedExceptionMA();
             fail("Expected exception not thrown");
         } catch (ExtendedAdaptedExceptionMA e) {
-            assertEquals("exception message,exception description,666,c d", e.toString());
+            assertEquals("666,exception message,exception description,c d", e.toString());
         }
     }
 }
