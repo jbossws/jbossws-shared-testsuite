@@ -26,12 +26,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AdaptedObjectCA extends AbstractObjectCA {
+    private int code;
 
     public AdaptedObjectCA() {
         super();
     }
 
-    public AdaptedObjectCA(String message, String description, int code, ComplexObjectCA complexObject) {
-        super(message, description, code, complexObject);
+    public AdaptedObjectCA(int code, String message, String description, ComplexObjectCA complexObject) {
+        super(message, description, complexObject);
+        this.code = code;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String toString() {
+        return code + "," + super.toString();
     }
 }

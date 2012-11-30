@@ -57,50 +57,50 @@ public class JBWS3552TestCase extends JBossWSTest {
 
     public void testEchoCA() throws Exception {
         EndpointIface endpoint = getProxy();
-        AdaptedObjectCA aoCA = new AdaptedObjectCA("object message", "object description", 444, new ComplexObjectCA("a", "b"));
-        assertEquals("object message,object description,444,a b", endpoint.echoCA(aoCA).toString());
+        AdaptedObjectCA aoCA = new AdaptedObjectCA(444, "object message", "object description", new ComplexObjectCA("a", "b"));
+        assertEquals("444,object message,object description,a b", endpoint.echoCA(aoCA).toString());
     }
 
     public void testEchoAbstractCA() throws Exception {
         EndpointIface endpoint = getProxy();
-        AdaptedObjectCA aoCA = new AdaptedObjectCA("object message", "object description", 444, new ComplexObjectCA("a", "b"));
-        assertEquals("object message,object description,444,a b", endpoint.echoAbstractCA(aoCA).toString());
+        AbstractObjectCA aoCA = new AdaptedObjectCA(444, "object message", "object description", new ComplexObjectCA("a", "b"));
+        assertEquals("444,object message,object description,a b", endpoint.echoAbstractCA(aoCA).toString());
     }
 
     public void testEchoFA() throws Exception {
         EndpointIface endpoint = getProxy();
-        AdaptedObjectFA aoFA = new AdaptedObjectFA("object message", "object description", 444, new ComplexObjectFA("a", "b"));
-        assertEquals("object message,object description,444,a b", endpoint.echoFA(aoFA).toString());
+        AdaptedObjectFA aoFA = new AdaptedObjectFA(444, "object message", "object description", new ComplexObjectFA("a", "b"));
+        assertEquals("444,object message,object description,a b", endpoint.echoFA(aoFA).toString());
     }
 
     public void testEchoAbstractFA() throws Exception {
         EndpointIface endpoint = getProxy();
-        AdaptedObjectFA aoFA = new AdaptedObjectFA("object message", "object description", 444, new ComplexObjectFA("a", "b"));
-        assertEquals("object message,object description,444,a b", endpoint.echoAbstractFA(aoFA).toString());
+        AbstractObjectFA aoFA = new AdaptedObjectFA(444, "object message", "object description", new ComplexObjectFA("a", "b"));
+        assertEquals("444,object message,object description,a b", endpoint.echoAbstractFA(aoFA).toString());
     }
 
     public void testEchoGA() throws Exception {
         EndpointIface endpoint = getProxy();
-        AdaptedObjectGA aoGA = new AdaptedObjectGA("object message", "object description", 444, new ComplexObjectGA("a", "b"));
-        assertEquals("object message,object description,444,a b", endpoint.echoGA(aoGA).toString());
+        AdaptedObjectGA aoGA = new AdaptedObjectGA(444, "object message", "object description", new ComplexObjectGA("a", "b"));
+        assertEquals("444,object message,object description,a b", endpoint.echoGA(aoGA).toString());
     }
 
     public void testEchoAbstractGA() throws Exception {
         EndpointIface endpoint = getProxy();
-        AdaptedObjectGA aoGA = new AdaptedObjectGA("object message", "object description", 444, new ComplexObjectGA("a", "b"));
-        assertEquals("object message,object description,444,a b", endpoint.echoAbstractGA(aoGA).toString());
+        AbstractObjectGA aoGA = new AdaptedObjectGA(444, "object message", "object description", new ComplexObjectGA("a", "b"));
+        assertEquals("444,object message,object description,a b", endpoint.echoAbstractGA(aoGA).toString());
     }
 
     public void testEchoMA() throws Exception {
         EndpointIface endpoint = getProxy();
-        AdaptedObjectMA aoMA = new AdaptedObjectMA("object message", "object description", 444, new ComplexObjectMA("a", "b"));
-        assertEquals("object message,object description,444,a b", endpoint.echoMA(aoMA).toString());
+        AdaptedObjectMA aoMA = new AdaptedObjectMA(444, "object message", "object description", new ComplexObjectMA("a", "b"));
+        assertEquals("444,object message,object description,a b", endpoint.echoMA(aoMA).toString());
     }
 
     public void testEchoAbstractMA() throws Exception {
         EndpointIface endpoint = getProxy();
-        AdaptedObjectMA aoMA = new AdaptedObjectMA("object message", "object description", 444, new ComplexObjectMA("a", "b"));
-        assertEquals("object message,object description,444,a b", endpoint.echoAbstractMA(aoMA).toString());
+        AbstractObjectMA aoMA = new AdaptedObjectMA(444, "object message", "object description", new ComplexObjectMA("a", "b"));
+        assertEquals("444,object message,object description,a b", endpoint.echoAbstractMA(aoMA).toString());
     }
 
     public void testExceptionCA() throws Exception {

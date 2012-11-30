@@ -28,17 +28,15 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class AbstractObjectMA {
     private String message;
     private String description;
-    private int code;
     private ComplexObjectMA complexObject;
 
     public AbstractObjectMA() {
         super();
     }
 
-    public AbstractObjectMA(String message, String description, int code, ComplexObjectMA complexObject) {
+    public AbstractObjectMA(String message, String description, ComplexObjectMA complexObject) {
         this.message = message;
         this.description = description;
-        this.code = code;
         this.complexObject = complexObject;
     }
 
@@ -58,14 +56,6 @@ public class AbstractObjectMA {
         return description;
     }
 
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
     public void setComplexObject(ComplexObjectMA complexObject) {
         this.complexObject = complexObject;
     }
@@ -76,6 +66,6 @@ public class AbstractObjectMA {
     }
 
     public String toString() {
-        return message + "," + description + "," + code + "," + complexObject;
+        return message + "," + description + "," + complexObject;
     }
 }
