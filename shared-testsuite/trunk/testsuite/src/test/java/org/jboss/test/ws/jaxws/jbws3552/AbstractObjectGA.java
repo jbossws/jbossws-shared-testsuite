@@ -28,17 +28,15 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class AbstractObjectGA {
     private String message;
     private String description;
-    private int code;
     private ComplexObjectGA complexObject;
 
     public AbstractObjectGA() {
         super();
     }
 
-    public AbstractObjectGA(String message, String description, int code, ComplexObjectGA complexObject) {
+    public AbstractObjectGA(String message, String description, ComplexObjectGA complexObject) {
         this.message = message;
         this.description = description;
-        this.code = code;
         this.complexObject = complexObject;
     }
 
@@ -50,15 +48,11 @@ public class AbstractObjectGA {
         return description;
     }
 
-    public int getCode() {
-        return code;
-    }
-
     public ComplexObjectGA getComplexObject() {
         return complexObject;
     }
 
     public String toString() {
-        return message + "," + description + "," + code + "," + complexObject;
+        return message + "," + description + "," + complexObject;
     }
 }
