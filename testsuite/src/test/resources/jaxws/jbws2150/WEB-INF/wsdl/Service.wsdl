@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions name='HelloService' targetNamespace='http://test.jboss.org/addressrewrite' xmlns='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:tns='http://test.jboss.org/addressrewrite' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+ <import namespace="http://test.jboss.org/addressrewrite/wsdlimp" location="inner.wsdl"/>
  <types/>
  <message name='HelloWs_echo'>
   <part name='String_1' type='xsd:string'/>
