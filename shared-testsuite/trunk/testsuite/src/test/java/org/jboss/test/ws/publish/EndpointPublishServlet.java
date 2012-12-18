@@ -124,7 +124,20 @@ public class EndpointPublishServlet extends HttpServlet
          }
       }
    }
-   
+
+   // See https://issues.jboss.org/browse/JBWS-3579
+   //
+   // There's one magic think in endpoint publish when using WebservicesMetaData.
+   // Every URL pattern is transformed to link name using the following algorithm.
+   // Note that in order to match WebservicesMetaData with particular endpoint,
+   // either ejb-link or servlet-link have to be provided.
+   // +-------------------------+----------------+----------------------+-------------------------------------------------------------------+
+   // |      pattern URL        | endpoint class | generated link name  | comment                                                           |
+   // +-------------------------+----------------+----------------------+-------------------------------------------------------------------+
+   // | /*                      | foo.Bar        | foo.Bar              | used class name if pattern is wildcard                            |
+   // | /some/pattern           | foo.Bar        | some.pattern         | used pattern url with dots instead of / and removed all wildcards |
+   // | /some/complex/pattern/* | foo.Bar        | some.complex.pattern | used pattern url with dots instead of / and removed all wildcards |
+   // +-------------------------+----------------+----------------------+-------------------------------------------------------------------+
    private WebservicesMetaData createMetaData() {
       WebservicesMetaData metadata = new WebservicesMetaData();
       WebserviceDescriptionMetaData webserviceDescription = new WebserviceDescriptionMetaData(metadata);
@@ -135,6 +148,9 @@ public class EndpointPublishServlet extends HttpServlet
       portComponent.setServiceEndpointInterface("org.jboss.test.ws.publish.EndpointImpl4");
       portComponent.setWsdlPort(new QName("http://publish.ws.test.jboss.org/", "EndpointPort4"));
       portComponent.setWsdlService(new QName("http://publish.ws.test.jboss.org/", "EndpointService4"));
+      // mandatory servlet link (because endpoint is POJO) - needed for proper matching of endpoint with WebservicesMD
+      portComponent.setServletLink("pattern4");
+      // if endpoint ^ would be EJB, users have to use setEjbLink() method instead
       webserviceDescription.addPortComponent(portComponent);
       WebserviceDescriptionMetaData webserviceDescription2 = new WebserviceDescriptionMetaData(metadata);
       metadata.addWebserviceDescription(webserviceDescription2);
@@ -144,6 +160,9 @@ public class EndpointPublishServlet extends HttpServlet
       portComponent2.setServiceEndpointInterface("org.jboss.test.ws.publish.EndpointImpl5");
       portComponent2.setWsdlPort(new QName("http://publish.ws.test.jboss.org/", "EndpointPort5"));
       portComponent2.setWsdlService(new QName("http://publish.ws.test.jboss.org/", "EndpointService5"));
+      // mandatory servlet link (because endpoint is POJO) - needed for proper matching of endpoint with WebservicesMD
+      portComponent2.setServletLink("pattern5");
+      // if endpoint ^ would be EJB, users have to use setEjbLink() method instead
       webserviceDescription2.addPortComponent(portComponent2);
       return metadata;
    }
