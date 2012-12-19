@@ -1,9 +1,0 @@
-
-# /
-/target
-/profiles.xml
-/.settings
-
-# /hudson/
-/hudson/ant.properties
-/hudson/target
