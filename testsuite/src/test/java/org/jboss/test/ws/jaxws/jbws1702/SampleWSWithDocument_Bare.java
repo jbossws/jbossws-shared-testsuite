@@ -21,13 +21,11 @@
  */
 package org.jboss.test.ws.jaxws.jbws1702;
 
-import org.jboss.test.ws.jaxws.jbws1702.types.ResponseWrapperB;
-import org.jboss.test.ws.jaxws.jbws1702.types.ClassC;
-import org.jboss.test.ws.jaxws.jbws1702.types.ResponseWrapperC;
-
-import javax.jws.soap.SOAPBinding;
 import javax.jws.WebService;
-import javax.jws.WebMethod;
+
+import org.jboss.test.ws.jaxws.jbws1702.types.ClassC;
+import org.jboss.test.ws.jaxws.jbws1702.types.ResponseWrapperB;
+import org.jboss.test.ws.jaxws.jbws1702.types.ResponseWrapperC;
 
 /**
  *
