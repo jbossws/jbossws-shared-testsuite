@@ -30,6 +30,7 @@ import javax.xml.ws.Service;
 import javax.xml.ws.handler.Handler;
 
 import org.jboss.test.helper.ClientHelper;
+import org.jboss.ws.api.configuration.ClientConfigFeature;
 import org.jboss.ws.api.configuration.ClientConfigUtil;
 import org.jboss.ws.api.configuration.ClientConfigurer;
 
@@ -68,6 +69,24 @@ public class Helper implements ClientHelper
       
       ClientConfigUtil.setConfigHandlers(bp, "META-INF/jaxws-client-config.xml", "Custom Client Config");
 
+      String resStr = port.echo("Kermit");
+      return ("Kermit|RoutOut|CustomOut|UserOut|LogOut|endpoint|LogIn|UserIn|CustomIn|RoutIn".equals(resStr));
+   }
+   
+   public boolean testCustomClientConfigurationFromFileUsingFeature() throws Exception
+   {
+      QName serviceName = new QName("http://clientConfig.jaxws.ws.test.jboss.org/", "EndpointImplService");
+      URL wsdlURL = new URL(address + "?wsdl");
+
+      Service service = Service.create(wsdlURL, serviceName);
+      Endpoint port = (Endpoint)service.getPort(Endpoint.class, new ClientConfigFeature("META-INF/jaxws-client-config.xml", "Custom Client Config"));
+      
+      BindingProvider bp = (BindingProvider)port;
+      @SuppressWarnings("rawtypes")
+      List<Handler> hc = bp.getBinding().getHandlerChain();
+      hc.add(new UserHandler());
+      bp.getBinding().setHandlerChain(hc);
+      
       String resStr = port.echo("Kermit");
       return ("Kermit|RoutOut|CustomOut|UserOut|LogOut|endpoint|LogIn|UserIn|CustomIn|RoutIn".equals(resStr));
    }
@@ -168,6 +187,38 @@ public class Helper implements ClientHelper
          bp.getBinding().setHandlerChain(hc);
          
          ClientConfigUtil.setConfigHandlers(bp, null, testConfigName);
+         
+         String resStr = port.echo("Kermit");
+         return ("Kermit|RoutOut|UserOut|endpoint|UserIn|RoutIn".equals(resStr));
+      }
+      finally
+      {
+         // -- remove test client configuration --
+         TestUtils.removeTestCaseClientConfiguration(testConfigName);
+         // --
+      }
+   }
+   
+   public boolean testCustomClientConfigurationUsingFeature() throws Exception
+   {
+      QName serviceName = new QName("http://clientConfig.jaxws.ws.test.jboss.org/", "EndpointImplService");
+      URL wsdlURL = new URL(address + "?wsdl");
+      
+      final String testConfigName = "MyTestConfig";
+      try
+      {
+         //-- add test client configuration
+         TestUtils.addTestCaseClientConfiguration(testConfigName);
+         // --
+         
+         Service service = Service.create(wsdlURL, serviceName);
+         Endpoint port = (Endpoint)service.getPort(Endpoint.class, new ClientConfigFeature(null, testConfigName));
+         
+         BindingProvider bp = (BindingProvider)port;
+         @SuppressWarnings("rawtypes")
+         List<Handler> hc = bp.getBinding().getHandlerChain();
+         hc.add(new UserHandler());
+         bp.getBinding().setHandlerChain(hc);
          
          String resStr = port.echo("Kermit");
          return ("Kermit|RoutOut|UserOut|endpoint|UserIn|RoutIn".equals(resStr));
