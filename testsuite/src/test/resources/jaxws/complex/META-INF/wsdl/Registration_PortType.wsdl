@@ -12,6 +12,8 @@
    <xs:element name="Register" nillable="false" type="tns:Register"/>
    <xs:element name="RegisterForInvoice" nillable="false" type="tns:RegisterForInvoice"/>
    <xs:element name="RegisterForInvoiceResponse" nillable="false" type="tns:RegisterForInvoiceResponse"/>
+   <xs:element name="Echo" nillable="false" type="tns:Echo"/>
+   <xs:element name="EchoResponse" nillable="false" type="tns:EchoResponse"/>
    <xs:element name="RegisterResponse" nillable="false" type="tns:RegisterResponse"/>
    <xs:element name="ValidationFault" nillable="false" type="tns:ValidationFault"/>
    <xs:complexType name="Register">
@@ -20,9 +22,19 @@
      <xs:element name="When" nillable="true" type="xs:anySimpleType"/>
     </xs:sequence>
    </xs:complexType>
+   <xs:complexType name="Echo">
+    <xs:sequence>
+     <xs:element name="Customer" nillable="true" type="ns1:Customer"/>
+    </xs:sequence>
+   </xs:complexType>
    <xs:complexType name="RegisterResponse">
     <xs:sequence>
      <xs:element name="RegisteredID" type="xs:long"/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="EchoResponse">
+    <xs:sequence>
+     <xs:element name="Customer" nillable="true" type="ns1:Customer"/>
     </xs:sequence>
    </xs:complexType>
    <xs:complexType name="AlreadyRegisteredFault">
@@ -134,6 +146,9 @@
   <message name="Registration_RegisterForInvoiceResponse">
     <part name="RegisterForInvoiceResponse" element="ns1:RegisterForInvoiceResponse"/>
   </message>
+  <message name="Registration_EchoResponse">
+    <part name="EchoResponse" element="ns1:EchoResponse"/>
+  </message>
   <message name="Registration_RegisterResponse">
     <part name="RegisterResponse" element="ns1:RegisterResponse"/>
   </message>
@@ -151,6 +166,9 @@
   </message>
   <message name="Registration_RegisterForInvoice">
     <part name="RegisterForInvoice" element="ns1:RegisterForInvoice"/>
+  </message>
+  <message name="Registration_Echo">
+    <part name="Echo" element="ns1:Echo"/>
   </message>
   <message name="ValidationFault">
     <part name="ValidationFault" element="ns1:ValidationFault"/>
@@ -184,6 +202,10 @@
       <fault name="AlreadyRegisteredFault" message="ns1:AlreadyRegisteredFault"/>
       <fault name="ValidationFault" message="ns1:ValidationFault"/>
     </operation>
+    <operation name="Echo" parameterOrder="Echo">
+      <input message="ns1:Registration_Echo"/>
+      <output message="ns1:Registration_EchoResponse"/>
+    </operation>
   </portType>
   <binding name="RegistrationBinding" type="ns1:Registration">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
@@ -201,6 +223,15 @@
       <fault name="ValidationFault">
         <soap:fault name="ValidationFault" use="literal"/>
       </fault>
+    </operation>
+    <operation name="Echo">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
     </operation>
     <operation name="GetStatistics">
       <soap:operation soapAction=""/>
