@@ -41,29 +41,45 @@ import org.jboss.wsf.test.JBossWSTestSetup;
  */
 public class JBWS2241TestCase extends JBossWSTest
 {
-   private EndpointInterface port;
-   
    public static Test suite()
    {
-      return new JBossWSTestSetup(JBWS2241TestCase.class, "jaxws-jbws2241.jar", true);
+      return new JBossWSTestSetup(JBWS2241TestCase.class, isTargetJBoss71() ? "jaxws-jbws2241-as71.jar" : "jaxws-jbws2241.jar", true);
    }
 
-   public void setUp() throws MalformedURLException
-   {
-      if (port == null)
-      {
-         URL wsdlURL = new URL("http://" + getServerHost() + ":8080/contextRoot/urlPattern/test?wsdl");
-         QName serviceName = new QName("http://jbws2241.jaxws.ws.test.jboss.org/", "EJB3BeanService");
-         Service service = Service.create(wsdlURL, serviceName);
-         port = service.getPort(EndpointInterface.class);
-         ((BindingProvider)port).getRequestContext().put(BindingProvider.USERNAME_PROPERTY, "kermit");
-         ((BindingProvider)port).getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, "thefrog");
+   private EndpointInterface getPort(String user, String pwd) throws MalformedURLException {
+      URL wsdlURL = new URL("http://" + getServerHost() + ":8080/contextRoot/urlPattern/test?wsdl");
+      QName serviceName = new QName("http://jbws2241.jaxws.ws.test.jboss.org/", "EJB3BeanService");
+      Service service = Service.create(wsdlURL, serviceName);
+      EndpointInterface port = service.getPort(EndpointInterface.class);
+      if (user != null) {
+         ((BindingProvider)port).getRequestContext().put(BindingProvider.USERNAME_PROPERTY, user);
       }
+      if (pwd != null) {
+         ((BindingProvider)port).getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, pwd);
+      }
+      return port;
    }
 
    public void testInvocation() throws Exception
    {
+      EndpointInterface port = getPort("kermit", "thefrog");
       String hello = port.hello("hello");
       assertEquals("hello", hello);
+      
+      port = getPort("kermit", "notthefrog");
+      try {
+         port.hello("hi");
+         fail("Failure expected with wrong credentials");
+      } catch (Exception e) {
+         
+      }
+      
+      port = getPort(null, null);
+      try {
+         port.hello("hi");
+         fail("Failure expected without credentials");
+      } catch (Exception e) {
+         
+      }
    }
 }
