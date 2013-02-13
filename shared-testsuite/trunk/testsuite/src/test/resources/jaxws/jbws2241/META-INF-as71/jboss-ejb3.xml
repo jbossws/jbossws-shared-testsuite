@@ -10,10 +10,9 @@
   impl-version="2.0">
 
   <spec:assembly-descriptor>
-    <security xmlns="urn:security:1.1">
+    <security xmlns="urn:security">
       <spec:ejb-name>EJB3Bean</spec:ejb-name>
       <security-domain>JBossWS</security-domain>
-      <missing-method-permissions-deny-access>false</missing-method-permissions-deny-access>
     </security>
     <spec:security-role>
       <spec:role-name>friend</spec:role-name>
