@@ -147,6 +147,18 @@ public class JBossWSTestHelper
        return target.startsWith("jboss72");
    }
 
+   public static boolean isTargetJBoss8()
+   {
+       String target = getIntegrationTarget();
+       return target.startsWith("jboss8");
+   }
+
+   public static boolean isTargetJBoss80()
+   {
+       String target = getIntegrationTarget();
+       return target.startsWith("jboss80");
+   }
+
    public static boolean isIntegrationNative()
    {
       String vendor = getImplementationVendor();
@@ -237,7 +249,7 @@ public class JBossWSTestHelper
       if (server == null)
       {
          String integrationTarget = getIntegrationTarget();
-         if (integrationTarget.startsWith("jboss7"))
+         if (integrationTarget.startsWith("jboss7") || integrationTarget.startsWith("jboss8"))
          {
             server = getAS7ServerConnection(integrationTarget);
          }
