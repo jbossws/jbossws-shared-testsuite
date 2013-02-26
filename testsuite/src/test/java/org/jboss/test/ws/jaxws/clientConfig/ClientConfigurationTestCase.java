@@ -67,16 +67,32 @@ public class ClientConfigurationTestCase extends JBossWSTest
       assertTrue(getHelper().testCustomClientConfigurationFromFile());
    }
 
+   public void testCustomClientConfigurationOnDispatchFromFile() throws Exception {
+      assertTrue(getHelper().testCustomClientConfigurationOnDispatchFromFile());
+   }
+
    public void testCustomClientConfigurationFromFileInContainer() throws Exception {
       assertEquals("1", runTestInContainer("testCustomClientConfigurationFromFile"));
    }
    
+   public void testCustomClientConfigurationOnDispatchFromFileInContainer() throws Exception {
+      assertEquals("1", runTestInContainer("testCustomClientConfigurationOnDispatchFromFile"));
+   }
+   
    public void testCustomClientConfigurationFromFileUsingFeature() throws Exception {
-      assertTrue(getHelper().testCustomClientConfigurationFromFile());
+      assertTrue(getHelper().testCustomClientConfigurationFromFileUsingFeature());
+   }
+
+   public void testCustomClientConfigurationFromFileUsingFeatureOnDispatch() throws Exception {
+      assertTrue(getHelper().testCustomClientConfigurationFromFileUsingFeatureOnDispatch());
    }
 
    public void testCustomClientConfigurationFromFileUsingFeatureInContainer() throws Exception {
       assertEquals("1", runTestInContainer("testCustomClientConfigurationFromFileUsingFeature"));
+   }
+   
+   public void testCustomClientConfigurationFromFileUsingFeatureOnDispatchInContainer() throws Exception {
+      assertEquals("1", runTestInContainer("testCustomClientConfigurationFromFileUsingFeatureOnDispatch"));
    }
    
    /**
@@ -88,8 +104,16 @@ public class ClientConfigurationTestCase extends JBossWSTest
       assertTrue(getHelper().testConfigurationChange());
    }
 
+   public void testConfigurationChangeOnDispatch() throws Exception {
+      assertTrue(getHelper().testConfigurationChangeOnDispatch());
+   }
+
    public void testConfigurationChangeInContainer() throws Exception {
       assertEquals("1", runTestInContainer("testConfigurationChange"));
+   }
+
+   public void testConfigurationChangeOnDispatchInContainer() throws Exception {
+      assertEquals("1", runTestInContainer("testConfigurationChangeOnDispatch"));
    }
 
    /**
@@ -103,6 +127,12 @@ public class ClientConfigurationTestCase extends JBossWSTest
       }
    }
    
+   public void testDefaultClientConfigurationOnDispatchInContainer() throws Exception {
+      if (!isTargetJBoss71()) {
+         assertEquals("1", runTestInContainer("testDefaultClientConfigurationOnDispatch"));
+      }
+   }
+   
    /**
     * Verifies a client configuration from AS model can be set
     * 
@@ -112,8 +142,16 @@ public class ClientConfigurationTestCase extends JBossWSTest
       assertEquals("1", runTestInContainer("testCustomClientConfiguration"));
    }
    
+   public void testCustomClientConfigurationOnDispatchInContainer() throws Exception {
+      assertEquals("1", runTestInContainer("testCustomClientConfigurationOnDispatch"));
+   }
+   
    public void testCustomClientConfigurationUsingFeatureInContainer() throws Exception {
       assertEquals("1", runTestInContainer("testCustomClientConfigurationUsingFeature"));
+   }
+   
+   public void testCustomClientConfigurationOnDispatchUsingFeatureInContainer() throws Exception {
+      assertEquals("1", runTestInContainer("testCustomClientConfigurationOnDispatchUsingFeature"));
    }
    
    // -------------------------
