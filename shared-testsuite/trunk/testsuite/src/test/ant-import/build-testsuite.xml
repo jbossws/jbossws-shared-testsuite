@@ -484,7 +484,7 @@
         <include name="jboss-servlet-api_3.0_spec-*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/system/layers/base/javax/annotation/api/main/">
-        <include name="jboss-annotations-api_1.1_spec-*.jar"/>
+        <include name="jboss-annotations-api_1.2_spec-*.jar"/>
       </fileset>
     </path>
     
