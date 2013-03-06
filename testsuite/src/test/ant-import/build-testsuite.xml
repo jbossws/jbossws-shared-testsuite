@@ -510,6 +510,9 @@
       <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/as/controller-client/main/">
         <include name="jboss-as-controller-client-*.jar"/>
       </fileset>
+      <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/as/security-util/main/">
+        <include name="jboss-as-security-util-*.jar"/>
+      </fileset>
       <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/as/server/main/">
         <include name="jboss-as-server-*.jar"/>
       </fileset>
