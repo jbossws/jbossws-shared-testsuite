@@ -559,7 +559,7 @@
         <include name="picketlink-core*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/system/layers/base/javax/ejb/api/main/">
-        <include name="jboss-ejb-api_3.1_spec-*.jar"/>
+        <include name="jboss-ejb-api_3.2_spec-*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/ejb-client/main/">
         <include name="jboss-ejb-client-*.jar"/>
