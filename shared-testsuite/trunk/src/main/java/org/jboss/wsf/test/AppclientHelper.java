@@ -94,10 +94,19 @@ final class AppclientHelper
       finally
       {
          s.release();
-         ap.outTask.kill();
-         ap.errTask.kill();
-         ap.process.destroy();
-         ap.log.close();
+         //NPE checks to avoid hiding other exceptional conditions that led to premature undeploy..
+         if (ap.output != null) {
+            ap.outTask.kill();
+         }
+         if (ap.errTask != null) {
+            ap.errTask.kill();
+         }
+         if (ap.process != null) {
+            ap.process.destroy();
+         }
+         if (ap.log != null) {
+            ap.log.close();
+         }
       }
    }
 
