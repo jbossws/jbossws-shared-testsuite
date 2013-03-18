@@ -67,9 +67,7 @@ public class JBossWSTestHelper
 
    private static MBeanServerConnection server;
    private static String integrationTarget;
-   private static String implVendor;
-   private static String implTitle;
-   private static String implVersion;
+   private static String implInfo;
    private static String testArchiveDir;
    private static String testResourcesDir;
 
@@ -149,31 +147,24 @@ public class JBossWSTestHelper
 
    public static boolean isIntegrationNative()
    {
-      String vendor = getImplementationVendor();
+      String vendor = getImplementationInfo();
       return vendor.toLowerCase().indexOf("jboss") != -1;
    }
 
    public static boolean isIntegrationCXF()
    {
-      String vendor = getImplementationVendor();
+      String vendor = getImplementationInfo();
       return vendor.toLowerCase().indexOf("apache") != -1;
    }
 
-   private static String getImplementationVendor()
+   private static String getImplementationInfo()
    {
-      if (implVendor == null)
+      if (implInfo == null)
       {
          Object obj = getImplementationObject();
-         implVendor = obj.getClass().getPackage().getImplementationVendor();
-         if (implVendor == null)
-            implVendor = getImplementationPackage();
-
-         implTitle = obj.getClass().getPackage().getImplementationTitle();
-         implVersion = obj.getClass().getPackage().getImplementationVersion();
-
-         System.out.println(implVendor + ", " + implTitle + ", " + implVersion);
+         implInfo = obj.getClass().getPackage().getName();
       }
-      return implVendor;
+      return implInfo;
    }
 
    private static Object getImplementationObject()
