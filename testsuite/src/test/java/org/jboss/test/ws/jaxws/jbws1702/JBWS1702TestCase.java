@@ -24,6 +24,7 @@ package org.jboss.test.ws.jaxws.jbws1702;
 import java.net.URL;
 
 import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Service;
 
 import junit.framework.Test;
@@ -65,12 +66,14 @@ public class JBWS1702TestCase extends JBossWSTest
       Service service = Service.create(wsdlURL, serviceName);
 
       SampleWSBareSEI port = service.getPort(SampleWSBareSEI.class);
+      BindingProvider bp = (BindingProvider)port;
+      bp.getRequestContext().put(BindingProvider.SOAPACTION_URI_PROPERTY, "getClassCAsClassB");
       ResponseWrapperB wrapper = port.getClassCAsClassB();
       ClassB b = wrapper.getData();
       assertTrue("Should be an instance of ClassC, but was " + b, (b instanceof ClassC));
-      
+      bp.getRequestContext().put(BindingProvider.SOAPACTION_URI_PROPERTY, "getClassC");
       ResponseWrapperC wrapperC = port.getClassC();
-      assertNotNull(wrapperC.getData());
+      assertNotNull(wrapperC.getData()); 
    }
 
    public void testInheritanceWrapped() throws Exception
