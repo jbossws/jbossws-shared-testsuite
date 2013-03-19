@@ -67,7 +67,6 @@ public class JBWS1702TestCase extends JBossWSTest
       SampleWSBareSEI port = service.getPort(SampleWSBareSEI.class);
       BindingProvider bp = (BindingProvider)port;
       bp.getRequestContext().put(BindingProvider.SOAPACTION_URI_PROPERTY, "getClassCAsClassB");
-      bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://localhost:9090/jbws1702/SampleWSWithDocument_Bare");
       ResponseWrapperB wrapper = port.getClassCAsClassB();
       ClassB b = wrapper.getData();
       assertTrue("Should be an instance of ClassC, but was " + b, (b instanceof ClassC));
