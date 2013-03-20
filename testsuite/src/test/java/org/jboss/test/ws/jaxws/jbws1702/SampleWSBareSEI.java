@@ -41,7 +41,6 @@ public interface SampleWSBareSEI
 {
    @WebMethod(action="getClassCAsClassB")
    ResponseWrapperB getClassCAsClassB();
-
    @WebMethod(action="getClassC")
    ResponseWrapperC getClassC();
 }

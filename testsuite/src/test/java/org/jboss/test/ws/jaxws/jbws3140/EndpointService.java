@@ -98,7 +98,12 @@ public class EndpointService extends Service
    {
       return super.getPort(new QName("http://TestEndpoint.org", "MTOMTestPort"), MTOMTest.class);
    }
-
+   
+   @WebEndpoint(name = "MTOMTestPort2")
+   public MTOMTest getMTOMTestPort2()
+   {
+      return super.getPort(new QName("http://TestEndpoint.org", "MTOMTestPort2"), MTOMTest.class);
+   }
 
    /**
     * 
@@ -115,7 +120,12 @@ public class EndpointService extends Service
       return super.getPort(new QName("http://TestEndpoint.org", "MTOMTestPort"), MTOMTest.class, features);
    }
    
-   
+   @WebEndpoint(name = "MTOMTestPort2")
+   public MTOMTest getMTOMTestPort2(WebServiceFeature... features)
+   {
+      return super.getPort(new QName("http://TestEndpoint.org", "MTOMTestPort2"), MTOMTest.class, features);
+   }
+
    private static URL __getWsdlLocation()
    {
       if (TESTENDPOINTSERVICE_EXCEPTION != null)

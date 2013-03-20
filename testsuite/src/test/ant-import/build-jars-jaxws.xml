@@ -132,9 +132,6 @@
 			<classes dir="${tests.output.dir}/test-resources/jaxws/clientConfig">
 				<include name="META-INF/jaxws-client-config.xml"/>
 			</classes>
-                        <manifest>
-                                <attribute name="Dependencies" value="org.jboss.ws.common"/>
-                        </manifest>
 		</war>
 		
         <!-- jaxws-clientConfig-client -->

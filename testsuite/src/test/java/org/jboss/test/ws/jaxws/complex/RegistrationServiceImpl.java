@@ -69,10 +69,6 @@ public class RegistrationServiceImpl implements Registration
       log.info("registering customer: " + customer);
       return customer.getId();
    }
-   
-   public void echo(javax.xml.ws.Holder<org.jboss.test.ws.jaxws.complex.Customer> customer) {
-      log.info("customer: " + customer);
-   }
 
    public List<Long> bulkRegister(List<Customer> customers, Object when) throws AlreadyRegisteredFault_Exception, ValidationFault_Exception
    {

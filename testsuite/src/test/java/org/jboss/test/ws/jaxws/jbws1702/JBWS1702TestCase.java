@@ -32,7 +32,6 @@ import junit.framework.Test;
 import org.jboss.test.ws.jaxws.jbws1702.types.ClassB;
 import org.jboss.test.ws.jaxws.jbws1702.types.ClassC;
 import org.jboss.test.ws.jaxws.jbws1702.types.ResponseWrapperB;
-import org.jboss.test.ws.jaxws.jbws1702.types.ResponseWrapperC;
 import org.jboss.wsf.test.JBossWSTest;
 import org.jboss.wsf.test.JBossWSTestSetup;
 
@@ -71,9 +70,6 @@ public class JBWS1702TestCase extends JBossWSTest
       ResponseWrapperB wrapper = port.getClassCAsClassB();
       ClassB b = wrapper.getData();
       assertTrue("Should be an instance of ClassC, but was " + b, (b instanceof ClassC));
-      bp.getRequestContext().put(BindingProvider.SOAPACTION_URI_PROPERTY, "getClassC");
-      ResponseWrapperC wrapperC = port.getClassC();
-      assertNotNull(wrapperC.getData()); 
    }
 
    public void testInheritanceWrapped() throws Exception
