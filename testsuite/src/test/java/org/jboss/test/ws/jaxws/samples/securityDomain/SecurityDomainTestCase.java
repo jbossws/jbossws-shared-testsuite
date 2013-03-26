@@ -99,7 +99,7 @@ public class SecurityDomainTestCase extends JBossWSTest
       } catch (Exception e) {
          //expected web layer exception
          assertTrue(e.getMessage().contains("Could not send Message"));
-         assertTrue(e.getCause().getMessage().contains("403: Forbidden"));
+         assertTrue("Exception Cause message: " + e.getCause().getMessage(), e.getCause().getMessage().contains("403: Forbidden"));
       }
       try {
          port.echo("Hello");
@@ -107,7 +107,7 @@ public class SecurityDomainTestCase extends JBossWSTest
       } catch (Exception e) {
          //expected web layer exception
          assertTrue(e.getMessage().contains("Could not send Message"));
-         assertTrue(e.getCause().getMessage().contains("403: Forbidden"));
+         assertTrue("Exception Cause message: " + e.getCause().getMessage(), e.getCause().getMessage().contains("403: Forbidden"));
       }
       try {
          port.restrictedEcho("Hello");
@@ -115,7 +115,7 @@ public class SecurityDomainTestCase extends JBossWSTest
       } catch (Exception e) {
          //expected web layer exception
          assertTrue(e.getMessage().contains("Could not send Message"));
-         assertTrue(e.getCause().getMessage().contains("403: Forbidden"));
+         assertTrue("Exception Cause message: " + e.getCause().getMessage(), e.getCause().getMessage().contains("403: Forbidden"));
       }
    }
    
@@ -129,7 +129,7 @@ public class SecurityDomainTestCase extends JBossWSTest
       } catch (Exception e) {
          //expected web layer exception
          assertTrue(e.getMessage().contains("Could not send Message"));
-         assertTrue(e.getCause().getMessage().contains("401: Unauthorized"));
+         assertTrue("Exception Cause message: " + e.getCause().getMessage(), e.getCause().getMessage().contains("401: Unauthorized"));
       }
       
       try {
@@ -138,7 +138,7 @@ public class SecurityDomainTestCase extends JBossWSTest
       } catch (Exception e) {
          //expected web layer exception
          assertTrue(e.getMessage().contains("Could not send Message"));
-         assertTrue(e.getCause().getMessage().contains("401: Unauthorized"));
+         assertTrue("Exception Cause message: " + e.getCause().getMessage(), e.getCause().getMessage().contains("401: Unauthorized"));
       }
       
       try {
@@ -147,7 +147,7 @@ public class SecurityDomainTestCase extends JBossWSTest
       } catch (Exception e) {
          //expected web layer exception
          assertTrue(e.getMessage().contains("Could not send Message"));
-         assertTrue(e.getCause().getMessage().contains("401: Unauthorized"));
+         assertTrue("Exception Cause message: " + e.getCause().getMessage(), e.getCause().getMessage().contains("401: Unauthorized"));
       }
    }
    
@@ -161,7 +161,7 @@ public class SecurityDomainTestCase extends JBossWSTest
          fail("Authorization exception expected!");
       } catch (Exception e) {
          //expected EJB3 layer authorization exception
-         assertTrue(e.getMessage().contains("not allowed"));
+         assertTrue("Exception message: " + e.getMessage(), e.getMessage().contains("not allowed"));
       }
    }
    
