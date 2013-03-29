@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -95,17 +96,19 @@ final class AppclientHelper
       {
          s.release();
          //NPE checks to avoid hiding other exceptional conditions that led to premature undeploy..
-         if (ap.output != null) {
-            ap.outTask.kill();
-         }
-         if (ap.errTask != null) {
-            ap.errTask.kill();
-         }
-         if (ap.process != null) {
-            ap.process.destroy();
-         }
-         if (ap.log != null) {
-            ap.log.close();
+         if (ap != null) {
+            if (ap.output != null) {
+               ap.outTask.kill();
+            }
+            if (ap.errTask != null) {
+               ap.errTask.kill();
+            }
+            if (ap.process != null) {
+               ap.process.destroy();
+            }
+            if (ap.log != null) {
+               ap.log.close();
+            }
          }
       }
    }
@@ -135,6 +138,11 @@ final class AppclientHelper
                args.add(appclientArg);
             }
          }
+         
+         ap.log = new FileOutputStream(new File(getAppclientOutputDir(), appclientShortName + ".log-" + System.currentTimeMillis()));
+         final OutputStream logOutputStreams = (appclientOS == null) ? ap.log : new TeeOutputStream(ap.log, appclientOS);
+         printLogTrailer(logOutputStreams, appclientFullName);
+         
          final ProcessBuilder pb = new ProcessBuilder().command(args);
          // always propagate IPv6 related properties
          final StringBuilder javaOptsValue = new StringBuilder();
@@ -143,10 +151,8 @@ final class AppclientHelper
          javaOptsValue.append("-Djava.net.preferIPv6Addresses=").append(System.getProperty("java.net.preferIPv6Addresses", "false")).append(" ");
          pb.environment().put("JAVA_OPTS", javaOptsValue.toString());
          ap.process = pb.start();
-         ap.log = new FileOutputStream(new File(getAppclientOutputDir(), appclientShortName + ".log-" + System.currentTimeMillis()));
          // appclient out
-         ap.outTask = new CopyJob(ap.process.getInputStream(),
-               appclientOS == null ? new TeeOutputStream(ap.output, ap.log) : new TeeOutputStream(ap.output, ap.log, appclientOS));
+         ap.outTask = new CopyJob(ap.process.getInputStream(), new TeeOutputStream(ap.output, logOutputStreams));
          // appclient err
          ap.errTask = new CopyJob(ap.process.getErrorStream(), ap.log);
          // unfortunately the following threads are needed because of Windows behavior
@@ -157,6 +163,12 @@ final class AppclientHelper
          s.release();
          throw e;
       }
+   }
+   
+   private static void printLogTrailer(OutputStream logOutputStreams, String appclientFullName) {
+      final PrintWriter pw = new PrintWriter(logOutputStreams);
+      pw.write("Starting appclient process: " + appclientFullName + "...\n");
+      pw.flush();
    }
 
    private static String undoIPv6Brackets(final String s)
