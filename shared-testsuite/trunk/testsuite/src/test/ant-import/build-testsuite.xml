@@ -278,6 +278,10 @@
         <include name="serializer-*.jar"/>
         <include name="xalan-*.jar"/>
       </fileset>
+      <fileset dir="${jboss.home}/modules/org/codehaus/woodstox/main/">
+        <include name="woodstox-core-asl-*.jar"/>
+        <include name="stax2-api-*.jar"/>
+      </fileset>
       <fileset dir="${jboss.home}/modules/org/jboss/xnio/main/">
         <include name="xnio-api-*.jar"/>
       </fileset>
@@ -437,6 +441,10 @@
       <fileset dir="${jboss.home}/modules/system/layers/base/org/apache/xalan/main/">
         <include name="serializer-*.jar"/>
         <include name="xalan-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/system/layers/base/org/codehaus/woodstox/main/">
+        <include name="woodstox-core-asl-*.jar"/>
+        <include name="stax2-api-*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/xnio/main/">
         <include name="xnio-api-*.jar"/>
@@ -600,6 +608,10 @@
       <fileset dir="${jboss.home}/modules/system/layers/base/org/apache/xalan/main/">
         <include name="serializer-*.jar"/>
         <include name="xalan-*.jar"/>
+      </fileset>
+      <fileset dir="${jboss.home}/modules/system/layers/base/org/codehaus/woodstox/main/">
+        <include name="woodstox-core-asl-*.jar"/>
+        <include name="stax2-api-*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/xnio/main/">
         <include name="xnio-api-*.jar"/>
