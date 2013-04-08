@@ -69,14 +69,14 @@ public class JBWS1582TestCase extends JBossWSTest
    public void testSOAPMessage() throws Exception
    {
       String response = getResponse("jaxws/jbws1582/message.xml");
-      assertTrue(response.contains("HTTP/1.1 200 OK"));
+      assertTrue(response.contains("HTTP/1.1 200 OK") || response.contains("HTTP/1.0 200 OK"));
       assertTrue(response.contains("<return>Hello</return>"));
    }
 
    public void testSOAPMessageAttack1() throws Exception
    {
       String response = getResponse("jaxws/jbws1582/attack-message-1.xml");
-      assertTrue(response.contains("HTTP/1.1 500"));
+      assertTrue(response.contains("HTTP/1.1 500") || response.contains("HTTP/1.0 500"));
       if (isIntegrationCXF())
       {
          assertTrue(response.contains("Error reading XMLStreamReader"));
@@ -95,7 +95,7 @@ public class JBWS1582TestCase extends JBossWSTest
    public void testSOAPMessageAttack2() throws Exception
    {
       String response = getResponse("jaxws/jbws1582/attack-message-2.xml");
-      assertTrue(response.contains("HTTP/1.1 500"));
+      assertTrue(response.contains("HTTP/1.1 500") || response.contains("HTTP/1.0 500"));
       if (isIntegrationCXF())
       {
          assertTrue(response.contains("Error reading XMLStreamReader"));
