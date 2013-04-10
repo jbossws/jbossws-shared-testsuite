@@ -781,9 +781,6 @@
 			<webinf dir="${tests.output.dir}/test-resources/jaxws/jbws2259/WEB-INF">
 				<include name="jaxws-endpoint-config.xml" />
 			</webinf>
-            <manifest>
-                <attribute name="Dependencies" value="org.jboss.ws.native.jbossws-native-core"/>
-            </manifest>
 		</war>
 
 		<!-- jaxws-jbws2268 -->
