@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.Currency;
+import java.util.Locale;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -53,6 +55,9 @@ public final class UsecasesTestCase extends JBossWSTest
    
    private static int port1 = 8871;
    private static int port2 = 8872;
+   
+   @SuppressWarnings("unused")
+   private static Currency currency = Currency.getInstance(Locale.US); //workaround for JBWS-3623
 
    public void testDifferentPortsSameContext() throws Exception
    {
