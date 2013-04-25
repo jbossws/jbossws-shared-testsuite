@@ -161,7 +161,7 @@ public class WebFaultTestCase extends JBossWSTest
       }
       catch (Exception e)
       {
-         fail("Wrong exception caught!");
+         fail("Wrong exception caught! Exception: " + e);
       }
       try
       {
@@ -174,7 +174,7 @@ public class WebFaultTestCase extends JBossWSTest
       }
       catch (Exception e)
       {
-         fail("Wrong exception caught!");
+         fail("Wrong exception caught! Exception: " + e);
       }
    }
 }
