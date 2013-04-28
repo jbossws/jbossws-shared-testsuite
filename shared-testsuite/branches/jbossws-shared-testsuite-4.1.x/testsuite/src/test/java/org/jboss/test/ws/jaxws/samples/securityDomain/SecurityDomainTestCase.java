@@ -137,6 +137,7 @@ public class SecurityDomainTestCase extends JBossWSTest
          fail("Authentication exception expected!");
       } catch (Exception e) {
          //expected web layer exception
+         e.printStackTrace();
          assertTrue(e.getMessage().contains("Could not send Message"));
          assertTrue("Exception Cause message: " + e.getCause().getMessage(), e.getCause().getMessage().contains("401: Unauthorized"));
       }
