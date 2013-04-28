@@ -161,7 +161,8 @@ public class WebFaultTestCase extends JBossWSTest
       }
       catch (Exception e)
       {
-         fail("Wrong exception caught!");
+         e.printStackTrace();
+         fail("Wrong exception caught : " + e.getMessage());
       }
       try
       {
