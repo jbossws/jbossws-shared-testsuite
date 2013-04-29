@@ -40,8 +40,8 @@
     <condition property="jboss.home" value="${jboss720.home}">
       <equals arg1="${jbossws.integration.target}" arg2="jboss720"/>
     </condition>
-    <condition property="jboss.home" value="${jboss800.home}">
-      <equals arg1="${jbossws.integration.target}" arg2="jboss800"/>
+    <condition property="jboss.home" value="${wildfly800.home}">
+      <equals arg1="${jbossws.integration.target}" arg2="wildfly800"/>
     </condition>
     
     <!-- Verify required properties that must be set before this file is imported -->
@@ -120,7 +120,7 @@
     </tstamp>
   </target>
   
-  <target name="tests-classpath" depends="tests-classpath-jboss71x,tests-classpath-jboss72x,tests-classpath-jboss80x">
+  <target name="tests-classpath" depends="tests-classpath-jboss71x,tests-classpath-jboss72x,tests-classpath-wildfly80x">
     <path id="tests.javac.classpath">
       <path refid="ws.stack.classpath"/>
       <path refid="integration.target.javac.classpath"/>
@@ -459,7 +459,7 @@
     </path>
   </target>
 	
-  <target name="tests-classpath-jboss80x" depends="tests-prepare" if="jbossws.integration.jboss80x">
+  <target name="tests-classpath-wildfly80x" depends="tests-prepare" if="jbossws.integration.wildfly80x">
     
     <!-- Java Endorsed -->
     <condition property="endorsed.dirs" value="${jboss.home}/modules/system/layers/base/javax/xml/ws/api/main/">

@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2011, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2013, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -40,7 +40,6 @@ import javax.xml.ws.Service;
 import javax.xml.ws.Service.Mode;
 import javax.xml.ws.soap.SOAPBinding;
 
-import org.jboss.logging.Logger;
 import org.jboss.wsf.spi.SPIProvider;
 import org.jboss.wsf.spi.SPIProviderResolver;
 import org.jboss.wsf.spi.deployer.Deployer;
@@ -54,8 +53,6 @@ import org.jboss.wsf.spi.deployer.Deployer;
  */
 public class JBossWSTestHelper
 {
-   private static final Logger LOGGER = Logger.getLogger(JBossWSTestHelper.class);
-   
    private static final String SYSPROP_JBOSSWS_INTEGRATION_TARGET = "jbossws.integration.target";
    private static final String SYSPROP_JBOSS_BIND_ADDRESS = "jboss.bind.address";
    private static final String SYSPROP_TEST_ARCHIVE_DIRECTORY = "test.archive.directory";
@@ -145,16 +142,28 @@ public class JBossWSTestHelper
        return target.startsWith("jboss72");
    }
 
+   @Deprecated
    public static boolean isTargetJBoss8()
    {
-       String target = getIntegrationTarget();
-       return target.startsWith("jboss8");
+      return isTargetJBoss8();
    }
-
-   public static boolean isTargetJBoss80()
+   
+   public static boolean isTargetWildFly8()
    {
        String target = getIntegrationTarget();
-       return target.startsWith("jboss80");
+       return target.startsWith("wildfly8");
+   }
+
+   @Deprecated
+   public static boolean isTargetJBoss80()
+   {
+       return isTargetWildFly80();
+   }
+
+   public static boolean isTargetWildFly80()
+   {
+       String target = getIntegrationTarget();
+       return target.startsWith("wildfly80");
    }
 
    public static boolean isIntegrationNative()
@@ -189,11 +198,6 @@ public class JBossWSTestHelper
          obj = service.createDispatch(new QName("dummyPort"), Source.class, Mode.PAYLOAD);
       }
       return obj;
-   }
-
-   private static String getImplementationPackage()
-   {
-      return getImplementationObject().getClass().getPackage().getName();
    }
 
    /**
@@ -240,7 +244,7 @@ public class JBossWSTestHelper
       if (server == null)
       {
          String integrationTarget = getIntegrationTarget();
-         if (integrationTarget.startsWith("jboss7") || integrationTarget.startsWith("jboss8"))
+         if (integrationTarget.startsWith("jboss7") || integrationTarget.startsWith("wildfly8") || integrationTarget.startsWith("jboss8"))
          {
             server = getAS7ServerConnection(integrationTarget);
          }
@@ -361,9 +365,9 @@ public class JBossWSTestHelper
       getDeployer().removeSecurityDomain(name);
    }
    
-   public static void addHttpsConnector(Map<String, String> sslOptions) throws Exception
+   public static void addHttpsConnector(Map<String, String> options) throws Exception
    {
-      getDeployer().addHttpsConnector(sslOptions);
+      getDeployer().addHttpsConnector(options);
    }
    
    public static void removeHttpsConnector() throws Exception
