@@ -513,19 +513,19 @@
         <include name="jboss-logging-*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/as/controller/main/">
-        <include name="jboss-as-controller-*.jar"/>
+        <include name="wildfly-controller-*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/as/controller-client/main/">
-        <include name="jboss-as-controller-client-*.jar"/>
+        <include name="wildfly-controller-client-*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/as/security-util/main/">
-        <include name="jboss-as-security-util-*.jar"/>
+        <include name="wildfly-security-util-*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/as/server/main/">
-        <include name="jboss-as-server-*.jar"/>
+        <include name="wildfly-server-*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/as/protocol/main/">
-        <include name="jboss-as-protocol-*.jar"/>
+        <include name="wildfly-protocol-*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/dmr/main/">
         <include name="jboss-dmr-*.jar"/>
