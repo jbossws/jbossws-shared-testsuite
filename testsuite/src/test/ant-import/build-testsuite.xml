@@ -518,8 +518,8 @@
       <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/as/controller-client/main/">
         <include name="wildfly-controller-client-*.jar"/>
       </fileset>
-      <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/as/security-util/main/">
-        <include name="wildfly-security-util-*.jar"/>
+      <fileset dir="${jboss.home}/modules/system/layers/base/org/wildfly/security/manager/main/">
+        <include name="wildfly-security-manager-*.jar"/>
       </fileset>
       <fileset dir="${jboss.home}/modules/system/layers/base/org/jboss/as/server/main/">
         <include name="wildfly-server-*.jar"/>
