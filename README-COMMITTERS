@@ -2,3 +2,15 @@
  * If you are using Eclipse then set your check style to eclipse/jboss-format.xml.
  * According to http://community.jboss.org/wiki/CopyrightOwnershipandLicenses
    ensure you're putting correct license headers to Java and XML files.
+
+
+ How to merge shared-testsuite changes from jbossws-cxf trunk
+ ------------------------------------------------------------
+
+The jbossws-shared-testsuite project has been removed upstream and the testsuite
+copied into the jbossws-cxf stack. In order for merging changes, the following 
+procedure is suggested:
+1) generate a diff file in jbossws-cxf stack: 'svn diff -r rev1:rev2 > mydiff.diff'
+2) move to maintenance branch of jbossws-shared-testsuite
+3) move to the testsuite: 'cd testsuite'
+4) patch using diff file: 'patch -p3 < /path/mydiff.diff'
